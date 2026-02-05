@@ -1,5 +1,4 @@
 ---
-import { siteConfig } from '../../config';
 import SectionHeader from './SectionHeader.astro';
 ---
 
@@ -9,25 +8,21 @@ import SectionHeader from './SectionHeader.astro';
   aria-labelledby="about-heading"
 >
   <SectionHeader number="01" title="About" />
-  <div class="grid gap-12 lg:grid-cols-2">
-    <div>
-      <p class="text-lg leading-relaxed text-text-muted">
-        I focus on translating complex business needs into scalable ServiceNow
-        platform designs—covering discovery and roadmap definition, API-led
-        integration strategies, headless channel architectures, governance
-        models, and GenAI adoption. My work includes solution blueprints for
-        Telco B2B marketplace scenarios using TMF Open APIs.
-      </p>
-      <p class="mt-4 text-lg leading-relaxed text-text-muted">
-        I have led initiatives involving AI-powered email automation, Virtual
-        Agent design, multilingual experience enablement, Now Assist, Agentic
-        AI, and advanced UI Builder workspaces. I also support organizations in
-        shaping DevOps enablement strategies within ServiceNow.
-      </p>
-    </div>
-    <div>
-      <p class="font-mono text-sm text-accent">Current focus</p>
-      <p class="mt-2 text-text-muted">{siteConfig.currentFocus}</p>
-    </div>
+  <div class="space-y-5">
+    <p class="text-base leading-relaxed text-text-muted sm:text-lg">
+      I help enterprises modernize operations by designing platforms that
+      automate work, integrate systems, and scale safely. I specialize in
+      GenAI adoption, conversational experiences, and governance—ensuring
+      solutions are not only shipped, but adopted and maintainable.
+    </p>
+    <p class="text-base leading-relaxed text-text-muted sm:text-lg">
+      I lead end-to-end delivery from discovery and roadmap definition through
+      architecture, integration design, and rollout. My recent work includes
+      AI-powered email automation, virtual agent experiences, multilingual
+      enablement, and API-led integrations across ERP and automation ecosystems
+      (e.g., SAP, UiPath, Microsoft Teams). I focus on building durable
+      foundations—clear patterns, guardrails, and documentation—so teams can
+      evolve the platform confidently over time.
+    </p>
   </div>
 </section>

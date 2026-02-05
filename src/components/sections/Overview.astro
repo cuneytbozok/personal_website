@@ -1,0 +1,38 @@
+---
+import SectionHeader from './SectionHeader.astro';
+
+const focusAreas = [
+  'Platform Architecture',
+  'API Integration (REST / TMF Open APIs)',
+  'Information Technology Service Management',
+  'Information Technology Operations Management',
+  'Customer Service Management (CSM)',
+  'Sales and Order Management (SOM)',
+  'Telecom Network Inventory (TNI)',
+  'Headless Marketplace Architecture with ServiceNow',
+  'AI Search',
+  'Generative AI Automation (Now Assist, Agentic AI)',
+  'Engagement Messenger & Virtual Agent',
+  'UI Builder & Workspaces',
+  'DevOps Change Velocity',
+  'Platform Governance & Operating Model',
+];
+---
+
+<section
+  id="overview"
+  class="section-fade mx-auto max-w-5xl px-6 py-24 lg:py-36"
+  aria-labelledby="overview-heading"
+>
+  <SectionHeader number="02" title="Toolbox" />
+  <ul class="grid grid-cols-2 grid-rows-7 gap-x-6 gap-y-3 text-sm text-text-muted sm:text-base">
+    {
+      focusAreas.map((area) => (
+        <li class="flex items-start gap-2">
+          <span class="mt-0.5 shrink-0 text-accent">▹</span>
+          <span>{area}</span>
+        </li>
+      ))
+    }
+  </ul>
+</section>
