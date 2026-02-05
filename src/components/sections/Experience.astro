@@ -136,6 +136,7 @@ const companies = [
             class={`experience-panel ${i === 0 ? '' : 'hidden'}`}
             data-index={i}
             data-active={i === 0 ? '' : undefined}
+            aria-hidden={i === 0 ? 'false' : 'true'}
           >
             <h3 class="text-xl font-semibold text-text break-words">
               {company.name}
@@ -197,9 +198,17 @@ const companies = [
         if (j === i) t.setAttribute('data-active', '');
       });
       panels.forEach((p, j) => {
-        p.setAttribute('data-active', j === i ? '' : null);
-        p.classList.toggle('hidden', j !== i);
-        if (j === i) p.classList.remove('hidden');
+        const isActive = j === i;
+        p.setAttribute('data-active', isActive ? '' : null);
+        p.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+        if (isActive) {
+          p.classList.remove('hidden', 'is-entering');
+          void p.offsetWidth;
+          p.classList.add('is-entering');
+        } else {
+          p.classList.add('hidden');
+          p.classList.remove('is-entering');
+        }
       });
     });
   });

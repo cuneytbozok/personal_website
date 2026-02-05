@@ -27,7 +27,7 @@ const { title, description } = Astro.props;
 
   <main
     id="content"
-    class="min-h-screen pt-20 px-6 lg:pt-24"
+    class="scroll-sections min-h-screen pt-20 px-6 lg:pt-24"
     tabindex="-1"
   >
     <slot />
@@ -36,3 +36,56 @@ const { title, description } = Astro.props;
   <Footer />
   <EmailRail />
 </BaseLayout>
+
+<script type="module">
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const sections = document.querySelectorAll('.section-fade');
+
+  if (prefersReduced.matches || sections.length === 0) {
+    sections.forEach((section) => section.classList.add('is-visible'));
+  } else {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        entry.target.classList.toggle('is-visible', entry.isIntersecting);
+      });
+    },
+    {
+      threshold: 0.25,
+      rootMargin: '0px 0px -10% 0px',
+    }
+  );
+
+  sections.forEach((section) => observer.observe(section));
+
+  let rafId = 0;
+  const updateParallax = () => {
+    const viewportHeight = window.innerHeight || 1;
+    const viewportCenter = viewportHeight / 2;
+
+    sections.forEach((section) => {
+      const rect = section.getBoundingClientRect();
+      const sectionCenter = rect.top + rect.height / 2;
+      const distance = (sectionCenter - viewportCenter) / viewportHeight;
+      const clamped = Math.max(-1, Math.min(1, distance));
+      const parallax = clamped * -90;
+      const scale = 1 - Math.min(0.1, Math.abs(clamped) * 0.07);
+
+      section.style.setProperty('--section-parallax', `${parallax}px`);
+      section.style.setProperty('--section-scale', `${scale}`);
+    });
+  };
+
+  const scheduleParallax = () => {
+    if (rafId) return;
+    rafId = window.requestAnimationFrame(() => {
+      rafId = 0;
+      updateParallax();
+    });
+  };
+
+  window.addEventListener('scroll', scheduleParallax, { passive: true });
+  window.addEventListener('resize', scheduleParallax);
+  updateParallax();
+  }
+</script>
