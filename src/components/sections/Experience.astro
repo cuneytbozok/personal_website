@@ -1,97 +1,6 @@
 ---
 import SectionHeader from './SectionHeader.astro';
 
-// Phrases to highlight (longest first so "Sales and Order Management (SOM)" matches before "SAP")
-const HIGHLIGHT_PHRASES = [
-  'Sales and Order Management (SOM)',
-  'Customer Service Management (CSM)',
-  'Telecom Network Inventory (TNI)',
-  'Headless marketplace architecture',
-  'AI-powered email analyzer',
-  'Outlook Actionable Messages',
-  'Event Management and Monitoring',
-  'Major Incident Management',
-  'Business Impact Analysis',
-  'Multi-instance integration',
-  'Context-aware actions',
-  'Intelligent routing',
-  'Localization testing',
-  'Instance modernization',
-  'TMF Open API mapping',
-  'Telco B2B marketplace',
-  'Walk-Up Experience',
-  'Employee Center Pro',
-  'Scripted REST API',
-  'Problem Management',
-  'Slack Integration',
-  'Angular templates',
-  'Approval workflows',
-  'Registration pages',
-  'Discovery module',
-  'Virtual Agent',
-  'Platform architecture',
-  'Auto-generate tickets',
-  'Live-agent fallback',
-  'Workshops and POCs',
-  'DevOps Change Velocity',
-  'API integrations (REST)',
-  'Universal Requests',
-  'Business Rules',
-  'Script Includes',
-  'Workspaces',
-  'UI Builder',
-  'Microsoft Teams',
-  'VA API',
-  'Workforce Optimization',
-  'Shift Planning',
-  'ITSM data model templates',
-  'Public portals',
-  'Inbound actions',
-  'Service Portal widgets',
-  'CMDB Health Jobs',
-  'ServiceNow Mobile Classic App',
-  'Custom reports',
-  'AI-driven automation',
-  'Now Assist',
-  'Agentic AI',
-  'App Engine',
-  'UiPath',
-  'SAP',
-  'Outlook Actionable Message',
-  'Request Management',
-  'Discovery',
-  'REST API',
-  'ITSM',
-  'CSM',
-].sort((a, b) => b.length - a.length);
-
-function highlightSegments(text: string): { type: 'plain' | 'highlight'; text: string }[] {
-  const segments: { type: 'plain' | 'highlight'; text: string }[] = [];
-  let remaining = text;
-  const lower = text.toLowerCase();
-  let pos = 0;
-  while (pos < remaining.length) {
-    let found: { phrase: string; index: number; length: number } | null = null;
-    for (const phrase of HIGHLIGHT_PHRASES) {
-      const index = lower.indexOf(phrase.toLowerCase(), pos);
-      if (index !== -1 && (found === null || index < found.index)) {
-        found = { phrase, index, length: phrase.length };
-      }
-    }
-    if (found === null) {
-      segments.push({ type: 'plain', text: remaining.slice(pos) });
-      break;
-    }
-    if (found.index > pos) {
-      segments.push({ type: 'plain', text: remaining.slice(pos, found.index) });
-    }
-    // Use actual substring so original casing is preserved
-    segments.push({ type: 'highlight', text: remaining.slice(found.index, found.index + found.length) });
-    pos = found.index + found.length;
-  }
-  return segments;
-}
-
 const companies = [
   {
     name: 'EPAM Systems',
@@ -260,17 +169,7 @@ const companies = [
                         role.highlights.map((h) => (
                           <li class="flex gap-3 text-text-muted">
                             <span class="mt-0.5 shrink-0 text-accent">▹</span>
-                            <span class="min-w-0 break-words text-sm">
-                              {
-                                highlightSegments(h).map((s) =>
-                                  s.type === 'highlight' ? (
-                                    <span class="highlight-neon">{s.text}</span>
-                                  ) : (
-                                    <span>{s.text}</span>
-                                  )
-                                )
-                              }
-                            </span>
+                            <span class="min-w-0 break-words text-sm">{h}</span>
                           </li>
                         ))
                       }

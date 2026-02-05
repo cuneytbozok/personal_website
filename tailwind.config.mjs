@@ -13,7 +13,6 @@ export default {
           DEFAULT: '#3D8276',
           hover: '#73B7A5',
         },
-        neon: '#00ff9f',
         text: {
           DEFAULT: '#E7E9EB',
           muted: 'rgba(231,233,235,0.72)',
