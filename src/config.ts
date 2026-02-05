@@ -9,7 +9,6 @@ export const siteConfig = {
   seoKeywords:
     'ServiceNow, ITSM, IT Service Management, IT transformation, ServiceNow Architect, ServiceNow Consultant, ITOM, CSM, ITIL, CMDB, enterprise automation, GenAI, platform governance, Virtual Agent, Now Assist',
   email: 'cuneyt@cuneytbozok.com',
-  resumeUrl: '/resume.pdf',
   intro: 'Lead ServiceNow Architect & Developer with 8+ years of experience delivering enterprise solutions across ITSM, ITOM, CSM, CMDB/CSDM, and AI-driven automation programs.',
   currentFocus: 'AI-powered automation, Virtual Agent design, Now Assist, Agentic AI, and platform architecture—integrating ServiceNow with SAP, UiPath, Microsoft Teams, and third-party platforms.',
 
