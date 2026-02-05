@@ -1,6 +1,34 @@
 ---
 import SectionHeader from './SectionHeader.astro';
 
+const companyTimeline = [
+  { company: 'EPAM Systems', startYear: 2022 },
+  { company: 'Softtech', startYear: 2018, endYear: 2022 },
+  { company: 'Deloitte Turkey', startYear: 2017, endYear: 2018 },
+];
+
+const currentYear = new Date().getFullYear();
+const minYear = Math.min(...companyTimeline.map((c) => c.startYear));
+const maxYear = currentYear;
+const yearRange = maxYear - minYear;
+const safeRange = yearRange === 0 ? 1 : yearRange;
+const showMidTick = yearRange >= 4;
+const midYear = Math.round((minYear + maxYear) / 2);
+const timelineSegments = companyTimeline.map((company) => {
+  const endYear = company.endYear ?? currentYear;
+  const leftPct = yearRange === 0
+    ? 0
+    : ((maxYear - endYear) / safeRange) * 100;
+  const widthPct = yearRange === 0 ? 100 : ((endYear - company.startYear) / safeRange) * 100;
+
+  return {
+    ...company,
+    endYear,
+    leftPct,
+    widthPct,
+  };
+});
+
 const companies = [
   {
     name: 'EPAM Systems',
@@ -103,27 +131,58 @@ const companies = [
   <SectionHeader number="03" title="Experience" />
 
   <div class="grid gap-8 lg:grid-cols-[200px_1fr]">
-    <div
-      class="-mx-6 flex flex-row gap-4 overflow-x-auto px-6 pb-2 lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0 lg:pb-0 [scrollbar-width:thin]"
-      role="tablist"
-      aria-label="Company tabs"
-    >
-      {
-        companies.map((company, i) => (
-          <button
-            type="button"
-            class="experience-tab shrink-0 -ml-[2px] border-l-2 border-border px-4 py-2 text-left font-mono text-sm text-text-muted transition-colors hover:border-accent hover:text-accent data-[active]:border-accent data-[active]:text-accent lg:shrink"
-            data-index={i}
-            aria-selected={i === 0}
-            aria-controls={`panel-${i}`}
-            id={`tab-${i}`}
-            role="tab"
-            data-active={i === 0 ? '' : undefined}
-          >
-            {company.name}
-          </button>
-        ))
-      }
+    <div class="flex flex-col gap-3">
+      <div class="relative -mx-6 lg:mx-0">
+        <div
+          class="experience-tablist -mx-6 flex flex-row gap-4 overflow-x-auto px-6 pb-2 lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0 lg:pb-0 [scrollbar-width:thin]"
+          role="tablist"
+          aria-label="Company tabs"
+        >
+          {
+            companies.map((company, i) => (
+              <button
+                type="button"
+                class="experience-tab shrink-0 -ml-[2px] border-l-2 border-border px-4 py-2 text-left font-mono text-sm text-text-muted transition-colors hover:border-accent hover:text-accent data-[active]:border-accent data-[active]:text-accent lg:shrink"
+                data-index={i}
+                aria-selected={i === 0}
+                aria-controls={`panel-${i}`}
+                id={`tab-${i}`}
+                role="tab"
+                data-active={i === 0 ? '' : undefined}
+              >
+                {company.name}
+              </button>
+            ))
+          }
+        </div>
+        <div
+          class="pointer-events-none absolute right-0 top-0 h-full w-10 bg-gradient-to-l from-bg to-transparent lg:hidden"
+          aria-hidden="true"
+        ></div>
+      </div>
+
+      <div class="experience-timeline" aria-hidden="true">
+        <div class="experience-timeline-line"></div>
+        <div class="experience-timeline-segments">
+          {
+            timelineSegments.map((segment, i) => (
+              <span
+                class="experience-timeline-segment"
+                data-index={i}
+                data-active={i === 0 ? '' : undefined}
+                style={`--segment-left: ${segment.leftPct}%; --segment-width: ${segment.widthPct}%;`}
+              ></span>
+            ))
+          }
+        </div>
+        <div class="experience-timeline-labels">
+          <span class="experience-timeline-label is-start">Present</span>
+          {showMidTick && (
+            <span class="experience-timeline-label is-mid">{midYear}</span>
+          )}
+          <span class="experience-timeline-label is-end">{minYear}</span>
+        </div>
+      </div>
     </div>
 
     <div class="experience-panels min-w-0">
@@ -189,27 +248,65 @@ const companies = [
 <script>
   const tabs = document.querySelectorAll('.experience-tab');
   const panels = document.querySelectorAll('.experience-panel');
+  const tabList = document.querySelector('.experience-tablist');
+  const timelineSegments = document.querySelectorAll('.experience-timeline-segment');
+
+  const clearHover = () => {
+    timelineSegments.forEach((segment) => segment.removeAttribute('data-hover'));
+  };
+
+  const scrollTabIntoView = (tab) => {
+    if (!tabList || !tab) return;
+    tab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  };
+
+  const setActiveIndex = (index) => {
+    tabs.forEach((t, j) => {
+      t.setAttribute('aria-selected', j === index ? 'true' : 'false');
+      t.removeAttribute('data-active');
+      if (j === index) t.setAttribute('data-active', '');
+    });
+
+    panels.forEach((p, j) => {
+      const isActive = j === index;
+      p.setAttribute('data-active', isActive ? '' : null);
+      p.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+      if (isActive) {
+        p.classList.remove('hidden', 'is-entering');
+        void p.offsetWidth;
+        p.classList.add('is-entering');
+      } else {
+        p.classList.add('hidden');
+        p.classList.remove('is-entering');
+      }
+    });
+
+    timelineSegments.forEach((segment, j) => {
+      segment.removeAttribute('data-active');
+      if (j === index) segment.setAttribute('data-active', '');
+    });
+  };
 
   tabs.forEach((tab, i) => {
     tab.addEventListener('click', () => {
-      tabs.forEach((t, j) => {
-        t.setAttribute('aria-selected', j === i ? 'true' : 'false');
-        t.removeAttribute('data-active');
-        if (j === i) t.setAttribute('data-active', '');
-      });
-      panels.forEach((p, j) => {
-        const isActive = j === i;
-        p.setAttribute('data-active', isActive ? '' : null);
-        p.setAttribute('aria-hidden', isActive ? 'false' : 'true');
-        if (isActive) {
-          p.classList.remove('hidden', 'is-entering');
-          void p.offsetWidth;
-          p.classList.add('is-entering');
-        } else {
-          p.classList.add('hidden');
-          p.classList.remove('is-entering');
-        }
+      setActiveIndex(i);
+      scrollTabIntoView(tab);
+    });
+
+    tab.addEventListener('mouseenter', () => {
+      timelineSegments.forEach((segment, j) => {
+        segment.removeAttribute('data-hover');
+        if (j === i) segment.setAttribute('data-hover', '');
       });
     });
+
+    tab.addEventListener('mouseleave', clearHover);
+    tab.addEventListener('focus', () => {
+      timelineSegments.forEach((segment, j) => {
+        segment.removeAttribute('data-hover');
+        if (j === i) segment.setAttribute('data-hover', '');
+      });
+    });
+    tab.addEventListener('blur', clearHover);
   });
 </script>

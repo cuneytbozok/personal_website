@@ -55,6 +55,91 @@
     transform: scaleX(1);
   }
 
+  .experience-timeline {
+    position: relative;
+    padding-bottom: 1.25rem;
+  }
+
+  .experience-timeline-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 8px;
+    height: 1px;
+    background: rgba(231, 233, 235, 0.18);
+  }
+
+  .experience-timeline-segments {
+    position: relative;
+    height: 18px;
+  }
+
+  .experience-timeline-segment {
+    position: absolute;
+    top: 8px;
+    left: var(--segment-left);
+    width: max(var(--segment-width), 4px);
+    height: 1px;
+    border-radius: 999px;
+    background: rgba(231, 233, 235, 0.35);
+    transition: background 200ms ease, height 200ms ease;
+  }
+
+  .experience-timeline-segment[data-active],
+  .experience-timeline-segment[data-hover] {
+    height: 2px;
+    background: #3d8276;
+  }
+
+  .experience-timeline-segment[data-active]::after,
+  .experience-timeline-segment[data-hover]::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: #3d8276;
+    transform: translate(50%, -50%);
+  }
+
+  .experience-timeline-labels {
+    position: relative;
+    margin-top: 6px;
+    height: 16px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.7rem;
+    color: rgba(231, 233, 235, 0.55);
+  }
+
+  .experience-timeline-label {
+    position: absolute;
+    top: 0;
+    white-space: nowrap;
+  }
+
+  .experience-timeline-label.is-start {
+    left: 0;
+  }
+
+  .experience-timeline-label.is-end {
+    right: 0;
+  }
+
+  .experience-timeline-label.is-mid {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .experience-tablist {
+    scrollbar-width: none;
+  }
+
+  .experience-tablist::-webkit-scrollbar {
+    display: none;
+  }
+
 @layer base {
   html {
     scroll-behavior: smooth;
