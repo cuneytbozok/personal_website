@@ -39,9 +39,10 @@ const { title, description } = Astro.props;
 
 <script type="module">
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const coarsePointer = window.matchMedia('(pointer: coarse)');
   const sections = document.querySelectorAll('.section-fade');
 
-  if (prefersReduced.matches || sections.length === 0) {
+  if (prefersReduced.matches || coarsePointer.matches || sections.length === 0) {
     sections.forEach((section) => section.classList.add('is-visible'));
   } else {
   const observer = new IntersectionObserver(

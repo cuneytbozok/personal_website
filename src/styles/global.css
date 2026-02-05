@@ -108,6 +108,16 @@
       animation: none;
     }
   }
+
+  @media (max-width: 768px) {
+    html {
+      scroll-snap-type: none;
+    }
+
+    .section-fade {
+      transition: none;
+    }
+  }
 }
 
 /* Skip to content - visually hidden until focused */
