@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Section fade-in animation */
+.section-fade {
+  animation: sectionFade 0.5s ease-out forwards;
+}
+
+@keyframes sectionFade {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+
+    .section-fade {
+      animation: none;
+    }
+
+    .loader div {
+      animation: none;
+    }
+  }
+}
+
+/* Skip to content - visually hidden until focused */
+.skip-to-content {
+  @apply fixed left-[-9999px] top-4 z-50 -translate-x-full bg-accent px-4 py-2 text-bg font-medium transition-all focus:left-4 focus:translate-x-0 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg;
+}

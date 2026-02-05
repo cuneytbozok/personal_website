@@ -1,0 +1,38 @@
+---
+// Loader shown on initial page load, fades out after delay
+// Respects prefers-reduced-motion
+---
+
+<div
+  id="loader"
+  class="loader fixed inset-0 z-[100] flex items-center justify-center bg-bg transition-opacity duration-500"
+  aria-hidden="true"
+>
+  <div class="flex flex-col items-center gap-4">
+    <div
+      class="h-12 w-12 animate-pulse rounded-full border-2 border-accent"
+      role="presentation"
+    />
+    <span class="font-mono text-sm text-accent">Loading...</span>
+  </div>
+</div>
+
+<script>
+  function hideLoader() {
+    const loader = document.getElementById('loader');
+    if (loader) {
+      loader.style.opacity = '0';
+      loader.style.pointerEvents = 'none';
+      setTimeout(() => loader.remove(), 500);
+    }
+  }
+
+  if (document.readyState === 'complete') {
+    hideLoader();
+  } else {
+    window.addEventListener('load', hideLoader);
+  }
+
+  // Also hide after a max delay in case load event is slow
+  setTimeout(hideLoader, 1500);
+</script>

@@ -1,0 +1,16 @@
+---
+import { siteConfig } from '../config';
+---
+
+<div
+  class="fixed bottom-0 right-10 z-20 hidden flex-col items-center after:mt-4 after:block after:h-[90px] after:w-px after:bg-text-dimmer lg:flex"
+  aria-hidden="true"
+>
+  <a
+    href={`mailto:${siteConfig.email}`}
+    class="mt-5 font-mono text-xs tracking-widest text-text-muted transition-transform hover:-translate-y-1 hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg"
+    style="writing-mode: vertical-rl"
+  >
+    {siteConfig.email}
+  </a>
+</div>

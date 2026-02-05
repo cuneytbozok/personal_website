@@ -1,0 +1,33 @@
+---
+import { siteConfig } from '../../config';
+import SectionHeader from './SectionHeader.astro';
+---
+
+<section
+  id="about"
+  class="section-fade mx-auto max-w-5xl px-6 py-24 lg:py-36"
+  aria-labelledby="about-heading"
+>
+  <SectionHeader number="01" title="About" />
+  <div class="grid gap-12 lg:grid-cols-2">
+    <div>
+      <p class="text-lg leading-relaxed text-text-muted">
+        I focus on translating complex business needs into scalable ServiceNow
+        platform designs—covering discovery and roadmap definition, API-led
+        integration strategies, headless channel architectures, governance
+        models, and GenAI adoption. My work includes solution blueprints for
+        Telco B2B marketplace scenarios using TMF Open APIs.
+      </p>
+      <p class="mt-4 text-lg leading-relaxed text-text-muted">
+        I have led initiatives involving AI-powered email automation, Virtual
+        Agent design, multilingual experience enablement, Now Assist, Agentic
+        AI, and advanced UI Builder workspaces. I also support organizations in
+        shaping DevOps enablement strategies within ServiceNow.
+      </p>
+    </div>
+    <div>
+      <p class="font-mono text-sm text-accent">Current focus</p>
+      <p class="mt-2 text-text-muted">{siteConfig.currentFocus}</p>
+    </div>
+  </div>
+</section>

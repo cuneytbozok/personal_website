@@ -1,0 +1,30 @@
+---
+import { siteConfig } from '../config';
+import Social from './Social.astro';
+---
+
+<aside
+  class="fixed left-0 top-0 z-30 hidden h-screen w-[320px] flex-col justify-between border-r border-border bg-bg px-8 py-12 lg:flex xl:w-[380px]"
+  aria-label="Profile sidebar"
+>
+  <div>
+    <h1 class="text-2xl font-bold tracking-tight text-text xl:text-3xl">
+      {siteConfig.name}
+    </h1>
+    <p class="mt-1 font-mono text-sm text-accent">
+      {siteConfig.tagline}
+    </p>
+    <p class="mt-6 text-base leading-relaxed text-text-muted">
+      {siteConfig.intro}
+    </p>
+    <a
+      href="/#contact"
+      class="mt-8 inline-block border border-accent px-6 py-2 font-mono text-sm text-accent transition-colors hover:bg-accent/10 hover:text-accent-hover focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg"
+    >
+      Get in touch
+    </a>
+  </div>
+  <div>
+    <Social />
+  </div>
+</aside>

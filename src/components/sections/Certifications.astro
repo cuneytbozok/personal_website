@@ -1,0 +1,75 @@
+---
+import SectionHeader from './SectionHeader.astro';
+
+const serviceNowCerts = [
+  'ITSM Professional – Suite Certification',
+  'Certified Application Developer',
+  'Certified Implementation Specialist – IT Service Management',
+  'Certified System Administrator',
+];
+
+const microCerts = [
+  'Flow Designer',
+  'Service Portal',
+  'IntegrationHub',
+  'Performance Analytics',
+  'Predictive Intelligence',
+  'Virtual Agent',
+  'Agentic AI Executive',
+  'Pre-Sales Core',
+];
+
+const otherCerts = ['Nexthink Basics'];
+---
+
+<section
+  id="certifications"
+  class="section-fade mx-auto max-w-5xl px-6 py-24 lg:py-36"
+  aria-labelledby="certifications-heading"
+>
+  <SectionHeader number="03" title="Certifications" />
+
+  <div class="space-y-12">
+    <div>
+      <h3 class="mb-4 font-mono text-sm text-accent">ServiceNow Certifications</h3>
+      <ul class="space-y-2">
+        {
+          serviceNowCerts.map((cert) => (
+            <li class="flex items-start gap-3 text-text-muted">
+              <span class="text-accent">▹</span>
+              <span>{cert}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="mb-4 font-mono text-sm text-accent">ServiceNow Micro-Certifications</h3>
+      <ul class="space-y-2">
+        {
+          microCerts.map((cert) => (
+            <li class="flex items-start gap-3 text-text-muted">
+              <span class="text-accent">▹</span>
+              <span>{cert}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="mb-4 font-mono text-sm text-accent">Other</h3>
+      <ul class="space-y-2">
+        {
+          otherCerts.map((cert) => (
+            <li class="flex items-start gap-3 text-text-muted">
+              <span class="text-accent">▹</span>
+              <span>{cert}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

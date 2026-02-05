@@ -1,0 +1,206 @@
+---
+import SectionHeader from './SectionHeader.astro';
+
+const companies = [
+  {
+    name: 'EPAM Systems',
+    period: '2022 – Present',
+    progression: 'Senior Developer → Lead Developer',
+    roles: [
+      {
+        title: 'Lead ServiceNow Developer',
+        period: 'Sep 2024 – Present',
+        highlights: [
+          'Designed and delivered advanced ServiceNow solutions across AI-driven automation, platform architecture, and telco marketplace design.',
+          'Implemented AI-powered email analyzer to classify financial requests, auto-generate tickets, and integrate with UiPath and SAP.',
+          'Developed custom Virtual Agent topics with structured conversations, intelligent routing, and seamless live-agent fallback.',
+          'Engineered Outlook Actionable Message notifications for context-aware actions directly from inbox.',
+          'Designed headless Telco B2B marketplace architectures using CSM, Sales and Order Management, Telecom Network Inventory, and TMF Open API mapping.',
+          'Delivered workshops and POCs covering Now Assist, Agentic AI, DevOps Change Velocity, App Engine, Employee Center Pro, and Walk-Up Experience.',
+        ],
+      },
+      {
+        title: 'Senior ServiceNow Developer',
+        period: 'Sep 2022 – Sep 2024',
+        highlights: [
+          'Integrated third-party tools with ServiceNow using REST APIs for seamless data exchange.',
+          'Customized ServiceNow workspaces using UI Builder, enhancing user experience.',
+          'Designed script includes and business rules to integrate Universal Requests and CSM.',
+          'Configured Virtual Agent Bot to integrate with Microsoft Teams using VA API and REST methods.',
+          'Developed custom-scoped application for localization testing with Scripted REST API for multi-instance integration.',
+          'Implemented Workforce Optimization for Shift Planning and custom solution for recurring events.',
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Softtech',
+    period: '2018 – 2022',
+    progression: 'Consultant → Senior Consultant → Architect',
+    roles: [
+      {
+        title: 'ServiceNow Architect',
+        period: 'Apr 2022 – Sep 2022',
+        highlights: [
+          'Led projects for holistic enhancement of ServiceNow instances, ensuring seamless integration with third-party ITSM tools and SAP.',
+          'Customized and optimized workspaces using UI Builder with advanced Problem Management and Major Incident Management.',
+          'Activated Slack Integration and Virtual Agent plugins for seamless interaction channels.',
+          'Conducted business analyses and technical assessments, designing robust ITSM data model templates.',
+        ],
+      },
+      {
+        title: 'Senior ServiceNow Consultant',
+        period: 'Nov 2020 – Apr 2022',
+        highlights: [
+          'Developed public ServiceNow portals with registration pages and OOB approval methodologies.',
+          'Led Event Management and Monitoring, developing custom inbound actions for event monitoring systems.',
+          'Crafted bespoke widgets for service portals including innovative header menu widgets using Angular templates.',
+        ],
+      },
+      {
+        title: 'ServiceNow Consultant',
+        period: 'Nov 2018 – Nov 2020',
+        highlights: [
+          'Customized and enhanced ServiceNow workspaces for Problem and Major Incident Management protocols.',
+          'Implemented workflows and service portal customizations for organizational needs.',
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Deloitte Turkey',
+    period: '2017 – 2018',
+    progression: 'Specialist → Consultant',
+    roles: [
+      {
+        title: 'ServiceNow Consultant',
+        period: 'Jun 2018 – Nov 2018',
+        highlights: [
+          'Enhanced ITSM processes through Discovery Module and CMDB Health Jobs implementation.',
+          'Conducted business analyses for Request and Incident management, developing custom ITSM workflows.',
+          'Designed bespoke Business Impact Analysis form and widget for incident and change impact assessment.',
+        ],
+      },
+      {
+        title: 'ServiceNow Specialist',
+        period: 'Nov 2017 – Jun 2018',
+        highlights: [
+          'Implemented workflows for Request Management, optimizing request handling processes.',
+          'Designed ServiceNow portal according to customer branding guidelines.',
+          'Configured ServiceNow Mobile Classic App and created custom reports for mobile viewing.',
+        ],
+      },
+    ],
+  },
+];
+---
+
+<section
+  id="experience"
+  class="section-fade mx-auto max-w-5xl px-6 py-24 lg:py-36"
+  aria-labelledby="experience-heading"
+>
+  <SectionHeader number="02" title="Experience" />
+
+  <div class="grid gap-8 lg:grid-cols-[200px_1fr]">
+    <div
+      class="-mx-6 flex flex-row gap-4 overflow-x-auto px-6 pb-2 lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0 lg:pb-0 [scrollbar-width:thin]"
+      role="tablist"
+      aria-label="Company tabs"
+    >
+      {
+        companies.map((company, i) => (
+          <button
+            type="button"
+            class="experience-tab shrink-0 -ml-[2px] border-l-2 border-border px-4 py-2 text-left font-mono text-sm text-text-muted transition-colors hover:border-accent hover:text-accent data-[active]:border-accent data-[active]:text-accent lg:shrink"
+            data-index={i}
+            aria-selected={i === 0}
+            aria-controls={`panel-${i}`}
+            id={`tab-${i}`}
+            role="tab"
+            data-active={i === 0 ? '' : undefined}
+          >
+            {company.name}
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="experience-panels min-w-0">
+      {
+        companies.map((company, i) => (
+          <div
+            id={`panel-${i}`}
+            role="tabpanel"
+            aria-labelledby={`tab-${i}`}
+            class={`experience-panel ${i === 0 ? '' : 'hidden'}`}
+            data-index={i}
+            data-active={i === 0 ? '' : undefined}
+          >
+            <h3 class="text-xl font-semibold text-text break-words">
+              {company.name}
+            </h3>
+            <p class="mt-1 font-mono text-sm text-text-dimmer">{company.period}</p>
+            <p class="mt-2 font-mono text-xs text-accent">
+              Progression: {company.progression}
+            </p>
+
+            <div class="mt-8 space-y-8">
+              {
+                company.roles.map((role, roleIndex) => (
+                  <div>
+                    {roleIndex > 0 && (
+                      <div
+                        class="mb-6 flex items-center gap-2 font-mono text-xs text-accent"
+                        aria-hidden="true"
+                      >
+                        <span
+                          class="inline-flex items-center gap-1 rounded border border-accent/50 px-2 py-0.5"
+                        >
+                          <span aria-hidden="true">↑</span> Promotion
+                        </span>
+                      </div>
+                    )}
+                    <h4 class="text-lg font-medium text-text">
+                      {role.title} <span class="text-text-muted">— {role.period}</span>
+                    </h4>
+                    <ul class="mt-3 space-y-2">
+                      {
+                        role.highlights.map((h) => (
+                          <li class="flex gap-3 text-text-muted">
+                            <span class="mt-0.5 shrink-0 text-accent">▹</span>
+                            <span class="min-w-0 break-words text-sm">{h}</span>
+                          </li>
+                        ))
+                      }
+                    </ul>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  const tabs = document.querySelectorAll('.experience-tab');
+  const panels = document.querySelectorAll('.experience-panel');
+
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => {
+      tabs.forEach((t, j) => {
+        t.setAttribute('aria-selected', j === i ? 'true' : 'false');
+        t.removeAttribute('data-active');
+        if (j === i) t.setAttribute('data-active', '');
+      });
+      panels.forEach((p, j) => {
+        p.setAttribute('data-active', j === i ? '' : null);
+        p.classList.toggle('hidden', j !== i);
+        if (j === i) p.classList.remove('hidden');
+      });
+    });
+  });
+</script>

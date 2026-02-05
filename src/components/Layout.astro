@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from './Nav.astro';
+import SocialRail from './SocialRail.astro';
+import EmailRail from './EmailRail.astro';
+import Footer from './Footer.astro';
+import Menu from './Menu.astro';
+import Loader from './Loader.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <Loader />
+  <a href="#content" class="skip-to-content">
+    Skip to Content
+  </a>
+
+  <Nav />
+  <SocialRail />
+  <Menu />
+
+  <main
+    id="content"
+    class="min-h-screen pt-20 px-6 lg:pt-24"
+    tabindex="-1"
+  >
+    <slot />
+  </main>
+
+  <Footer />
+  <EmailRail />
+</BaseLayout>

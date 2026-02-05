@@ -1,0 +1,96 @@
+---
+import { siteConfig } from '../config';
+---
+
+<div
+  id="mobile-menu"
+  class="fixed inset-0 z-50 hidden flex-col items-center justify-center gap-8 bg-bg/95 backdrop-blur-md lg:hidden"
+  aria-hidden="true"
+>
+  <button
+    id="menu-close"
+    type="button"
+    class="absolute right-6 top-6 flex h-10 w-10 items-center justify-center text-text"
+    aria-label="Close menu"
+  >
+    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M6 18L18 6M6 6l12 12"
+      />
+    </svg>
+  </button>
+
+  <nav aria-label="Mobile navigation">
+    <ul class="flex flex-col items-center gap-6">
+      {
+        siteConfig.navLinks.map(({ name, url, number }) => (
+          <li>
+            <a
+              href={url}
+              class="menu-link text-2xl font-medium text-text transition-colors hover:text-accent"
+            >
+              <span class="font-mono text-sm text-accent">{number}.</span> {name}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  <div class="flex flex-col gap-4 sm:flex-row">
+    <a
+      href={siteConfig.resumeUrl}
+      download="Cuneyt_Bozok_Resume.pdf"
+      class="menu-link rounded border border-accent px-6 py-3 font-mono text-sm text-accent transition-colors hover:bg-accent/10"
+    >
+      Resume
+    </a>
+    <a
+      href="/#contact"
+      class="menu-link rounded border border-accent px-6 py-3 font-mono text-sm text-accent transition-colors hover:bg-accent/10"
+    >
+      Get in touch
+    </a>
+  </div>
+</div>
+
+<script>
+  const menu = document.getElementById('mobile-menu');
+  const toggle = document.getElementById('menu-toggle');
+  const closeBtn = document.getElementById('menu-close');
+  const menuLinks = document.querySelectorAll('.menu-link');
+
+  function openMenu() {
+    menu?.classList.remove('hidden');
+    menu?.classList.add('flex');
+    toggle?.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    menu?.classList.add('hidden');
+    menu?.classList.remove('flex');
+    toggle?.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = menu?.classList.contains('flex');
+    isOpen ? closeMenu() : openMenu();
+  });
+
+  closeBtn?.addEventListener('click', closeMenu);
+
+  menuLinks.forEach((link) => {
+    link.addEventListener('click', closeMenu);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu?.classList.contains('flex')) {
+      closeMenu();
+    }
+  });
+</script>
