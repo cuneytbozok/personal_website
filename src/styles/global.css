@@ -4,19 +4,16 @@
 
 /* Section reveal animation */
 .section-fade {
-  --section-reveal: 20px;
   --section-parallax: 0px;
   --section-scale: 1;
   opacity: 0;
-  transform: translateY(calc(var(--section-reveal) + var(--section-parallax)))
-    scale(var(--section-scale));
-  transition: opacity 600ms ease, transform 600ms ease;
+  transform: translateY(var(--section-parallax)) scale(var(--section-scale));
+  transition: opacity 600ms ease;
   will-change: opacity, transform;
 }
 
 .section-fade.is-visible {
   opacity: 1;
-  --section-reveal: 0px;
 }
 
   .experience-panel.is-entering {
