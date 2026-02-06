@@ -1,5 +1,6 @@
 ---
 import SectionHeader from './SectionHeader.astro';
+import FeaturedProjectCard from '../FeaturedProjectCard.astro';
 
 const companyTimeline = [
   { company: 'EPAM Systems', startYear: 2022 },
@@ -121,6 +122,47 @@ const companies = [
     ],
   },
 ];
+
+const focusAreas = [
+  'Platform Architecture',
+  'API Integration (REST / TMF Open APIs)',
+  'Information Technology Service Management',
+  'Information Technology Operations Management',
+  'Customer Service Management (CSM)',
+  'Sales and Order Management (SOM)',
+  'Telecom Network Inventory (TNI)',
+  'Headless Marketplace Architecture with ServiceNow',
+  'AI Search',
+  'Generative AI Automation (Now Assist, Agentic AI)',
+  'Engagement Messenger & Virtual Agent',
+  'UI Builder & Workspaces',
+  'DevOps Change Velocity',
+  'Platform Governance & Operating Model',
+];
+
+const vibeProject = {
+  title: 'Vecta',
+  live: 'https://bist-phi.vercel.app/',
+  github: 'https://github.com/cuneytbozok/bist',
+  description:
+    'A lightweight app built during vibe-coding sessions to rapidly ship and validate small product ideas.',
+  image: '/images/vecta-home.png',
+  imageAlt: 'Vecta homepage preview',
+};
+
+const vibeTech = ['Nest.js', 'Vercel', 'shadcn/ui', 'Supabase', 'Cursor'];
+
+const vibeTooling = [
+  'Next.js',
+  'shadcn/ui',
+  'Vercel',
+  'Supabase',
+  'Clerk',
+  'Resend',
+  'Cursor',
+  'Antigravity',
+  'Codex',
+];
 ---
 
 <section
@@ -128,119 +170,166 @@ const companies = [
   class="section-fade mx-auto max-w-5xl px-6 py-24 lg:py-36"
   aria-labelledby="experience-heading"
 >
-  <SectionHeader number="03" title="Experience" />
+  <SectionHeader number="02" title="Experience" />
 
-  <div class="grid gap-8 lg:grid-cols-[200px_1fr]">
-    <div class="flex flex-col gap-3">
-      <div class="relative -mx-6 lg:mx-0">
-        <div
-          class="experience-tablist -mx-6 flex flex-row gap-4 overflow-x-auto px-6 pb-2 lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0 lg:pb-0 [scrollbar-width:thin]"
-          role="tablist"
-          aria-label="Company tabs"
-        >
+  <div class="space-y-20">
+    <div class="space-y-8">
+      <h3 class="text-2xl font-semibold text-text">Experience</h3>
+
+      <div class="grid gap-8 lg:grid-cols-[200px_1fr]">
+        <div class="flex flex-col gap-3">
+          <div class="relative -mx-6 lg:mx-0">
+            <div
+              class="experience-tablist -mx-6 flex flex-row gap-4 overflow-x-auto px-6 pb-2 lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0 lg:pb-0 [scrollbar-width:thin]"
+              role="tablist"
+              aria-label="Company tabs"
+            >
+              {
+                companies.map((company, i) => (
+                  <button
+                    type="button"
+                    class="experience-tab shrink-0 -ml-[2px] border-l-2 border-border px-4 py-2 text-left font-mono text-sm text-text-muted transition-colors hover:border-accent hover:text-accent data-[active]:border-accent data-[active]:text-accent lg:shrink"
+                    data-index={i}
+                    aria-selected={i === 0}
+                    aria-controls={`panel-${i}`}
+                    id={`tab-${i}`}
+                    role="tab"
+                    data-active={i === 0 ? '' : undefined}
+                  >
+                    {company.name}
+                  </button>
+                ))
+              }
+            </div>
+            <div
+              class="pointer-events-none absolute right-0 top-0 h-full w-10 bg-gradient-to-l from-bg to-transparent lg:hidden"
+              aria-hidden="true"
+            ></div>
+          </div>
+
+          <div class="experience-timeline" aria-hidden="true">
+            <div class="experience-timeline-line"></div>
+            <div class="experience-timeline-segments">
+              {
+                timelineSegments.map((segment, i) => (
+                  <span
+                    class="experience-timeline-segment"
+                    data-index={i}
+                    data-active={i === 0 ? '' : undefined}
+                    style={`--segment-left: ${segment.leftPct}%; --segment-width: ${segment.widthPct}%;`}
+                  ></span>
+                ))
+              }
+            </div>
+            <div class="experience-timeline-labels">
+              <span class="experience-timeline-label is-start">Present</span>
+              {showMidTick && (
+                <span class="experience-timeline-label is-mid">{midYear}</span>
+              )}
+              <span class="experience-timeline-label is-end">{minYear}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="experience-panels min-w-0">
           {
             companies.map((company, i) => (
-              <button
-                type="button"
-                class="experience-tab shrink-0 -ml-[2px] border-l-2 border-border px-4 py-2 text-left font-mono text-sm text-text-muted transition-colors hover:border-accent hover:text-accent data-[active]:border-accent data-[active]:text-accent lg:shrink"
+              <div
+                id={`panel-${i}`}
+                role="tabpanel"
+                aria-labelledby={`tab-${i}`}
+                class={`experience-panel ${i === 0 ? '' : 'hidden'}`}
                 data-index={i}
-                aria-selected={i === 0}
-                aria-controls={`panel-${i}`}
-                id={`tab-${i}`}
-                role="tab"
                 data-active={i === 0 ? '' : undefined}
+                aria-hidden={i === 0 ? 'false' : 'true'}
               >
-                {company.name}
-              </button>
-            ))
-          }
-        </div>
-        <div
-          class="pointer-events-none absolute right-0 top-0 h-full w-10 bg-gradient-to-l from-bg to-transparent lg:hidden"
-          aria-hidden="true"
-        ></div>
-      </div>
+                <h3 class="text-xl font-semibold text-text break-words">
+                  {company.name}
+                </h3>
+                <p class="mt-1 font-mono text-sm text-text-dimmer">{company.period}</p>
+                <p class="mt-2 font-mono text-xs text-accent">
+                  Progression: {company.progression}
+                </p>
 
-      <div class="experience-timeline" aria-hidden="true">
-        <div class="experience-timeline-line"></div>
-        <div class="experience-timeline-segments">
-          {
-            timelineSegments.map((segment, i) => (
-              <span
-                class="experience-timeline-segment"
-                data-index={i}
-                data-active={i === 0 ? '' : undefined}
-                style={`--segment-left: ${segment.leftPct}%; --segment-width: ${segment.widthPct}%;`}
-              ></span>
+                <div class="mt-8 space-y-8">
+                  {
+                    company.roles.map((role, roleIndex) => (
+                      <div>
+                        {roleIndex > 0 && (
+                          <div
+                            class="mb-6 flex items-center gap-2 font-mono text-xs text-accent"
+                            aria-hidden="true"
+                          >
+                            <span
+                              class="inline-flex items-center gap-1 rounded border border-accent/50 px-2 py-0.5"
+                            >
+                              <span aria-hidden="true">↑</span> Promotion
+                            </span>
+                          </div>
+                        )}
+                        <h4 class="text-lg font-medium text-text">
+                          {role.title}{' '}
+                          <span class="text-text-muted">— {role.period}</span>
+                        </h4>
+                        <ul class="mt-3 space-y-2">
+                          {
+                            role.highlights.map((h) => (
+                              <li class="flex gap-3 text-text-muted">
+                                <span class="mt-0.5 shrink-0 text-accent">▹</span>
+                                <span class="min-w-0 break-words text-sm">{h}</span>
+                              </li>
+                            ))
+                          }
+                        </ul>
+                      </div>
+                    ))
+                  }
+                </div>
+              </div>
             ))
           }
-        </div>
-        <div class="experience-timeline-labels">
-          <span class="experience-timeline-label is-start">Present</span>
-          {showMidTick && (
-            <span class="experience-timeline-label is-mid">{midYear}</span>
-          )}
-          <span class="experience-timeline-label is-end">{minYear}</span>
         </div>
       </div>
     </div>
 
-    <div class="experience-panels min-w-0">
-      {
-        companies.map((company, i) => (
-          <div
-            id={`panel-${i}`}
-            role="tabpanel"
-            aria-labelledby={`tab-${i}`}
-            class={`experience-panel ${i === 0 ? '' : 'hidden'}`}
-            data-index={i}
-            data-active={i === 0 ? '' : undefined}
-            aria-hidden={i === 0 ? 'false' : 'true'}
-          >
-            <h3 class="text-xl font-semibold text-text break-words">
-              {company.name}
-            </h3>
-            <p class="mt-1 font-mono text-sm text-text-dimmer">{company.period}</p>
-            <p class="mt-2 font-mono text-xs text-accent">
-              Progression: {company.progression}
-            </p>
+    <div class="space-y-6">
+      <div class="space-y-2">
+        <h3 class="text-2xl font-semibold text-text">Overview / Toolbox</h3>
+        <p class="text-text-muted">
+          A quick snapshot of the domains, platforms, and capabilities I work with most.
+        </p>
+      </div>
+      <ul class="grid grid-cols-2 grid-rows-7 gap-x-6 gap-y-3 text-sm text-text-muted sm:text-base">
+        {
+          focusAreas.map((area) => (
+            <li class="flex items-start gap-2">
+              <span class="mt-0.5 shrink-0 text-accent">▹</span>
+              <span>{area}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
 
-            <div class="mt-8 space-y-8">
-              {
-                company.roles.map((role, roleIndex) => (
-                  <div>
-                    {roleIndex > 0 && (
-                      <div
-                        class="mb-6 flex items-center gap-2 font-mono text-xs text-accent"
-                        aria-hidden="true"
-                      >
-                        <span
-                          class="inline-flex items-center gap-1 rounded border border-accent/50 px-2 py-0.5"
-                        >
-                          <span aria-hidden="true">↑</span> Promotion
-                        </span>
-                      </div>
-                    )}
-                    <h4 class="text-lg font-medium text-text">
-                      {role.title} <span class="text-text-muted">— {role.period}</span>
-                    </h4>
-                    <ul class="mt-3 space-y-2">
-                      {
-                        role.highlights.map((h) => (
-                          <li class="flex gap-3 text-text-muted">
-                            <span class="mt-0.5 shrink-0 text-accent">▹</span>
-                            <span class="min-w-0 break-words text-sm">{h}</span>
-                          </li>
-                        ))
-                      }
-                    </ul>
-                  </div>
-                ))
-              }
-            </div>
-          </div>
-        ))
-      }
+    <div class="space-y-6">
+      <div class="space-y-2">
+        <h3 class="text-2xl font-semibold text-text">Vibe Coding</h3>
+        <p class="text-text-muted">
+          I enjoy occasional "vibe-coding" sessions to rapidly ship small apps. Tools I
+          like to use most: {vibeTooling.join(', ')}.
+        </p>
+      </div>
+
+      <FeaturedProjectCard
+        title={vibeProject.title}
+        label="Featured Project"
+        description="AI-powered portfolio analysis with fast insights on your stocks. Run quick checks and browse the latest public analyses."
+        tech={vibeTech}
+        imageSrc={vibeProject.image}
+        imageAlt={vibeProject.imageAlt}
+        repoUrl={vibeProject.github}
+        liveUrl={vibeProject.live}
+      />
     </div>
   </div>
 </section>

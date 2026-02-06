@@ -14,14 +14,14 @@ export const siteConfig = {
 
   navLinks: [
     { name: 'About', url: '/#about', number: '01' },
-    { name: 'Toolbox', url: '/#overview', number: '02' },
-    { name: 'Experience', url: '/#experience', number: '03' },
-    { name: 'Certifications', url: '/#certifications', number: '04' },
-    { name: 'Contact', url: '/#contact', number: '05' },
+    { name: 'Experience', url: '/#experience', number: '02' },
+    { name: 'Certifications', url: '/#certifications', number: '03' },
+    { name: 'Contact', url: '/#contact', number: '04' },
   ],
 
   socialMedia: [
     { name: 'LinkedIn', url: 'https://www.linkedin.com/in/cuneytbozok/', icon: 'linkedin' },
+    { name: 'GitHub', url: 'https://github.com/cuneytbozok', icon: 'github' },
     { name: 'Instagram', url: 'https://www.instagram.com/cuneytbozokk', icon: 'instagram' },
   ],
 };
