@@ -6,7 +6,10 @@ import { siteConfig } from '../config';
   class="fixed left-0 right-0 top-0 z-40 flex items-center justify-between bg-bg px-6 py-4"
   aria-label="Main navigation"
 >
-  <a href="/" class="font-mono text-sm font-medium text-text">
+  <a
+    href="/"
+    class="nav-brand font-mono text-sm font-medium text-text focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+  >
     {siteConfig.name}
   </a>
 
