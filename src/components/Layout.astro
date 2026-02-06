@@ -27,7 +27,7 @@ const { title, description } = Astro.props;
 
   <main
     id="content"
-    class="scroll-sections min-h-screen pt-20 px-6 lg:pt-24"
+    class="scroll-sections min-h-screen px-6"
     tabindex="-1"
   >
     <slot />
@@ -41,6 +41,8 @@ const { title, description } = Astro.props;
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   const coarsePointer = window.matchMedia('(pointer: coarse)');
   const sections = document.querySelectorAll('.section-fade');
+  const nav = document.querySelector('nav[aria-label="Main navigation"]');
+  let updateParallax = () => {};
 
   if (prefersReduced.matches || coarsePointer.matches || sections.length === 0) {
     sections.forEach((section) => section.classList.add('is-visible'));
@@ -60,7 +62,7 @@ const { title, description } = Astro.props;
   sections.forEach((section) => observer.observe(section));
 
   let rafId = 0;
-  const updateParallax = () => {
+  updateParallax = () => {
     const viewportHeight = window.innerHeight || 1;
     const viewportCenter = viewportHeight / 2;
 
@@ -89,4 +91,113 @@ const { title, description } = Astro.props;
   window.addEventListener('resize', scheduleParallax);
   updateParallax();
   }
+
+  const getNavOffset = () => nav?.getBoundingClientRect().height ?? 0;
+
+  const getElementTop = (element) => {
+    let top = 0;
+    let node = element;
+
+    while (node) {
+      top += node.offsetTop;
+      node = node.offsetParent;
+    }
+
+    return top;
+  };
+
+  const disableSnap = () => {
+    const html = document.documentElement;
+    const prev = html.style.scrollSnapType;
+    html.style.scrollSnapType = 'none';
+    return () => {
+      html.style.scrollSnapType = prev;
+    };
+  };
+
+  const waitForScrollEnd = (callback) => {
+    let lastY = window.scrollY;
+    let sameCount = 0;
+
+    const tick = () => {
+      const y = window.scrollY;
+      if (Math.abs(y - lastY) < 1) {
+        sameCount += 1;
+      } else {
+        sameCount = 0;
+        lastY = y;
+      }
+
+      if (sameCount >= 4) {
+        callback();
+        return;
+      }
+
+      window.requestAnimationFrame(tick);
+    };
+
+    window.requestAnimationFrame(tick);
+  };
+
+  const scrollToHash = (hash, behavior = 'smooth') => {
+    if (!hash) return;
+    const target = document.querySelector(hash);
+    if (!target) return;
+
+    const offset = getNavOffset();
+    const targetTop = getElementTop(target) - offset;
+    const restoreSnap = disableSnap();
+
+    window.scrollTo({
+      top: Math.max(targetTop, 0),
+      behavior: prefersReduced.matches ? 'auto' : behavior,
+    });
+
+    waitForScrollEnd(() => {
+      restoreSnap();
+      updateParallax();
+    });
+  };
+
+  const shouldHandleLink = (link) => {
+    const url = new URL(link.href, window.location.href);
+    if (url.origin !== window.location.origin) return false;
+    if (url.pathname !== window.location.pathname) return false;
+    return Boolean(url.hash);
+  };
+
+  const handleAnchorClick = (event) => {
+    const link = event.currentTarget;
+    if (!(link instanceof HTMLAnchorElement)) return;
+    if (!shouldHandleLink(link)) return;
+
+    event.preventDefault();
+    const { hash } = new URL(link.href, window.location.href);
+    history.pushState(null, '', hash);
+    scrollToHash(hash);
+  };
+
+  document.querySelectorAll('a[href*="#"]').forEach((link) => {
+    if (!(link instanceof HTMLAnchorElement)) return;
+    if (!shouldHandleLink(link)) return;
+    link.addEventListener('click', handleAnchorClick);
+  });
+
+  window.addEventListener('load', () => {
+    if (window.location.hash) {
+      scrollToHash(window.location.hash, 'auto');
+    }
+  });
+
+  window.addEventListener('popstate', () => {
+    if (window.location.hash) {
+      scrollToHash(window.location.hash, 'auto');
+    }
+  });
+
+  window.addEventListener('hashchange', () => {
+    if (window.location.hash) {
+      scrollToHash(window.location.hash, 'auto');
+    }
+  });
 </script>

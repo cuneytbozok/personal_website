@@ -141,14 +141,27 @@
   }
 
 @layer base {
+  :root {
+    --nav-offset: 4rem;
+  }
+
+  @media (min-width: 1024px) {
+    :root {
+      --nav-offset: 5rem;
+    }
+  }
+
   html {
     scroll-behavior: smooth;
     scroll-snap-type: y mandatory;
-    scroll-padding-top: 6rem;
   }
 
   .scroll-sections {
     scroll-snap-type: none;
+  }
+
+  .section-fade {
+    scroll-margin-top: var(--nav-offset);
   }
 
   .scroll-sections > section {
