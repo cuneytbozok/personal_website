@@ -34,30 +34,33 @@ const companies = [
   {
     name: 'EPAM Systems',
     period: '2022 – Present',
-    progression: 'Senior Developer → Lead Developer',
+    progression: 'Senior Developer → Lead Developer → Solution Architect',
     roles: [
       {
-        title: 'Lead ServiceNow Developer',
+        title: 'Solution Architect / Lead ServiceNow Developer',
         period: 'Sep 2024 – Present',
+        industry: 'Telecom · Technology & Networking · Pharma',
         highlights: [
-          'Designed and delivered advanced ServiceNow solutions across AI-driven automation, platform architecture, and telco marketplace design.',
-          'Implemented AI-powered email analyzer to classify financial requests, auto-generate tickets, and integrate with UiPath and SAP.',
-          'Developed custom Virtual Agent topics with structured conversations, intelligent routing, and seamless live-agent fallback.',
-          'Engineered Outlook Actionable Message notifications for context-aware actions directly from inbox.',
-          'Designed headless Telco B2B marketplace architectures using CSM, Sales and Order Management, Telecom Network Inventory, and TMF Open API mapping.',
-          'Delivered workshops and POCs covering Now Assist, Agentic AI, DevOps Change Velocity, App Engine, Employee Center Pro, and Walk-Up Experience.',
+          'Created target-state architecture and implementation guidelines for a headless B2B telco marketplace on ServiceNow (CSM, SOM, TNI, telco orchestration), mapping TM Forum Open APIs to ServiceNow data models and REST interfaces.',
+          'Defined API-driven channel-to-platform integration patterns, responsibility boundaries, and lifecycle/state flows across lead-to-order-to-fulfillment.',
+          'Produced delivery-ready architecture artifacts—HLDs, sequence diagrams, domain model/state diagrams, ADRs, and API contracts—to align teams and vendors.',
+          'Acted as design authority (OOB vs custom) and led architecture workshops/reviews with integrators and platform vendors.',
+          'Led discovery and future-state design across ITSM, Employee Experience, and AI; assessed CMDB/CSDM and ITSM maturity (Change, Major Incident, Knowledge, Universal Request) and produced a phased roadmap with executive presentation.',
+          'Delivered demos and POCs covering Now Assist, Agentic AI, App Engine/Creator Studio, Employee Center Pro, Walk-Up Experience, and DevOps Change Velocity.',
+          'Built Virtual Agent experiences and Service Portal customizations (themes/widgets/UX); developed a Finance Mailbox Queue Management scoped app using AI-assisted classification and SAP document retrieval via UiPath integration.',
+          'Designed custom UI components (UI Macros), Outlook Actionable Messages for context-aware inbox actions, and contributed to AI-based reporting enhancements.',
         ],
       },
       {
         title: 'Senior ServiceNow Developer',
         period: 'Sep 2022 – Sep 2024',
+        industry: 'Wellness & Meditation · Enterprise Software',
         highlights: [
-          'Integrated third-party tools with ServiceNow using REST APIs for seamless data exchange.',
-          'Customized ServiceNow workspaces using UI Builder, enhancing user experience.',
-          'Designed script includes and business rules to integrate Universal Requests and CSM.',
-          'Configured Virtual Agent Bot to integrate with Microsoft Teams using VA API and REST methods.',
-          'Developed custom-scoped application for localization testing with Scripted REST API for multi-instance integration.',
-          'Implemented Workforce Optimization for Shift Planning and custom solution for recurring events.',
+          'Integrated third-party tools with ServiceNow via REST and delivered workforce optimization solutions including shift planning and recurring-event management.',
+          'Customized workspaces with UI Builder and delivered CSM/Universal Request enhancements using Script Includes, Business Rules, and Flow Designer.',
+          'Configured Virtual Agent Bot to integrate with Microsoft Teams using VA API and REST methods; produced developer enablement documentation.',
+          'Developed custom-scoped application (Localization Testing Assistant) with Scripted REST API for multi-instance integration; authored threat model and technical design docs.',
+          'Implemented Jamf and Okta integrations for automated license and role request flows.',
         ],
       },
     ],
@@ -70,28 +73,31 @@ const companies = [
       {
         title: 'ServiceNow Architect',
         period: 'Apr 2022 – Sep 2022',
+        industry: 'E-Commerce · Manufacturing',
         highlights: [
-          'Led projects for holistic enhancement of ServiceNow instances, ensuring seamless integration with third-party ITSM tools and SAP.',
-          'Customized and optimized workspaces using UI Builder with advanced Problem Management and Major Incident Management.',
-          'Activated Slack Integration and Virtual Agent plugins for seamless interaction channels.',
-          'Conducted business analyses and technical assessments, designing robust ITSM data model templates.',
+          'Owned development and maintenance of enterprise ServiceNow instances; delivered multi-system integrations (IBM ServiceNow, SAP, third-party ITSM tools) and event management integrations (Netbrain/Nagios/SCOM).',
+          'Activated Slack Integration and Virtual Agent plugins; designed and delivered a custom Virtual Agent tailored to client-specific usage scenarios.',
+          'Conducted business analyses and technical assessments, designing robust ITSM data model templates with assignment rules, business services, and user criteria.',
         ],
       },
       {
         title: 'Senior ServiceNow Consultant',
         period: 'Nov 2020 – Apr 2022',
+        industry: 'Manufacturing · Food Production · ITSM Platforms',
         highlights: [
-          'Developed public ServiceNow portals with registration pages and OOB approval methodologies.',
-          'Led Event Management and Monitoring, developing custom inbound actions for event monitoring systems.',
-          'Crafted bespoke widgets for service portals including innovative header menu widgets using Angular templates.',
+          'Deployed MID Servers; integrated Azure SSO/LDAP; implemented custom inbound actions for event sources without APIs.',
+          'Designed custom HR Service Delivery Portal with bespoke widgets, Angular-based header menu components, and base64-encoded font/CSS implementation.',
+          'Delivered portal/workflow implementations for ITSM and HR use cases across multiple clients.',
         ],
       },
       {
         title: 'ServiceNow Consultant',
         period: 'Nov 2018 – Nov 2020',
+        industry: 'B2B E-Commerce · Enterprise',
         highlights: [
-          'Customized and enhanced ServiceNow workspaces for Problem and Major Incident Management protocols.',
-          'Implemented workflows and service portal customizations for organizational needs.',
+          'Created a public ServiceNow portal with company registration, OOB approval workflows, and integrated online payment system.',
+          'Built asset and model pipelines using Asset Management; designed portal as an e-commerce experience alongside web designers.',
+          'Implemented SEO for ServiceNow and custom URL configuration for the instance.',
         ],
       },
     ],
@@ -104,19 +110,19 @@ const companies = [
       {
         title: 'ServiceNow Consultant',
         period: 'Jun 2018 – Nov 2018',
+        industry: 'Banking & Financial Services',
         highlights: [
-          'Enhanced ITSM processes through Discovery Module and CMDB Health Jobs implementation.',
-          'Conducted business analyses for Request and Incident management, developing custom ITSM workflows.',
-          'Designed bespoke Business Impact Analysis form and widget for incident and change impact assessment.',
+          'Improved CMDB health using Discovery Module and CMDB Health Jobs; created a CMDB Maintenance lifecycle for duplicate, orphan, and stale CIs.',
+          'Conducted business analyses for Request and Incident Management, developing custom ITSM workflows and a bespoke Business Impact Analysis form and widget.',
         ],
       },
       {
         title: 'ServiceNow Specialist',
         period: 'Nov 2017 – Jun 2018',
+        industry: 'Food & Consumer Goods',
         highlights: [
-          'Implemented workflows for Request Management, optimizing request handling processes.',
-          'Designed ServiceNow portal according to customer branding guidelines.',
-          'Configured ServiceNow Mobile Classic App and created custom reports for mobile viewing.',
+          'Implemented ITSM workflows (Request, Incident, Change) and designed ServiceNow portal according to customer branding guidelines.',
+          'Configured ServiceNow Mobile Classic App and created custom reports, widgets, and portal pages for mobile viewing.',
         ],
       },
     ],
@@ -124,20 +130,22 @@ const companies = [
 ];
 
 const focusAreas = [
-  'Platform Architecture',
-  'API Integration (REST / TMF Open APIs)',
-  'Information Technology Service Management',
-  'Information Technology Operations Management',
-  'Customer Service Management (CSM)',
-  'Sales and Order Management (SOM)',
-  'Telecom Network Inventory (TNI)',
-  'Headless Marketplace Architecture with ServiceNow',
-  'AI Search',
-  'Generative AI Automation (Now Assist, Agentic AI)',
-  'Engagement Messenger & Virtual Agent',
-  'UI Builder & Workspaces',
-  'DevOps Change Velocity',
+  'Target-State Architecture & Blueprints',
+  'ITSM / ITOM / CSM / SOM',
+  'CMDB / CSDM Alignment',
+  'Service Portal & UI Builder / Workspaces',
+  'Virtual Agent & Engagement Messenger',
+  'Flow Designer & IntegrationHub',
+  'API Integration (REST / SOAP / TMF Open APIs)',
+  'Scoped App Development (JavaScript)',
+  'MID Server, SSO / LDAP',
+  'Generative AI (Now Assist, Agentic AI)',
+  'Discovery, Maturity Assessment & Roadmaps',
+  'Architecture Artifacts (HLD, LLD, ADRs, API Contracts)',
+  'Telecom & Headless Marketplace Architecture',
   'Platform Governance & Operating Model',
+  'Technical Mentoring, Trainings & Hiring Interviews',
+  'DevOps Change Velocity',
 ];
 
 const vibeProject = {
@@ -271,6 +279,11 @@ const vibeTooling = [
                           {role.title}{' '}
                           <span class="text-text-muted">— {role.period}</span>
                         </h4>
+                        {role.industry && (
+                          <p class="mt-1 font-mono text-xs text-text-dimmer">
+                            {role.industry}
+                          </p>
+                        )}
                         <ul class="mt-3 space-y-2">
                           {
                             role.highlights.map((h) => (
@@ -299,7 +312,7 @@ const vibeTooling = [
           A quick snapshot of the domains, platforms, and capabilities I work with most.
         </p>
       </div>
-      <ul class="grid grid-cols-2 grid-rows-7 gap-x-6 gap-y-3 text-sm text-text-muted sm:text-base">
+      <ul class="grid grid-cols-2 grid-rows-8 gap-x-6 gap-y-3 text-sm text-text-muted sm:text-base">
         {
           focusAreas.map((area) => (
             <li class="flex items-start gap-2">

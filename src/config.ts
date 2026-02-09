@@ -1,15 +1,15 @@
 export const siteConfig = {
   name: 'Cüneyt Bozok',
-  tagline: 'Lead ServiceNow Architect | Enterprise Transformation, GenAI & Platform Governance | CSA · CIS · CAD',
+  tagline: 'ServiceNow Solution Architect | Lead Engineer | ITSM, CSM/SOM, CMDB/CSDM, Integrations, AI Enablement | CSA · CIS-ITSM · CAD',
   // SEO
   siteUrl: 'https://cuneytbozok.com',
-  seoTitle: 'Cüneyt Bozok | ServiceNow Architect & ITSM Expert | IT Transformation',
+  seoTitle: 'Cüneyt Bozok | ServiceNow Solution Architect & Lead Engineer | ITSM · CSM · CMDB/CSDM · AI Enablement',
   seoDescription:
-    'Cüneyt Bozok – Lead ServiceNow Architect & ITSM expert with 8+ years in IT transformation, ServiceNow implementation, ITSM, ITOM, CSM. Certified CSA, CIS, CAD. Enterprise automation & AI-driven solutions.',
+    'Cüneyt Bozok – ServiceNow Solution Architect & Lead Engineer with 8+ years delivering ITSM, CSM, ITOM, CMDB/CSDM alignment, Virtual Agent experiences, and API integrations. Certified CSA, CIS-ITSM, CAD. Discovery, target-state architecture, Agentic AI enablement & platform governance.',
   seoKeywords:
-    'ServiceNow, ITSM, IT Service Management, IT transformation, ServiceNow Architect, ServiceNow Consultant, ITOM, CSM, ITIL, CMDB, enterprise automation, GenAI, platform governance, Virtual Agent, Now Assist',
+    'ServiceNow, ITSM, IT Service Management, IT transformation, ServiceNow Architect, ServiceNow Solution Architect, ServiceNow Consultant, ITOM, CSM, SOM, ITIL, CMDB, CSDM, Telecom, TMF, enterprise automation, GenAI, Agentic AI, platform governance, Virtual Agent, Now Assist, discovery, roadmap, IntegrationHub',
   email: 'cuneyt@cuneytbozok.com',
-  intro: 'Lead ServiceNow Architect & Developer with 8+ years of experience delivering enterprise solutions across ITSM, ITOM, CSM, CMDB/CSDM, and AI-driven automation programs.',
+  intro: 'ServiceNow Solution Architect & Lead Engineer with 8+ years delivering ITSM/CSM, CMDB/CSDM alignment, Virtual Agent experiences, and API integrations—strong in discovery, target-state architecture, and fit-to-standard decisions.',
   currentFocus: 'AI-powered automation, Virtual Agent design, Now Assist, Agentic AI, and platform architecture—integrating ServiceNow with SAP, UiPath, Microsoft Teams, and third-party platforms.',
 
   navLinks: [
