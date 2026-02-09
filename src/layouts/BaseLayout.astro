@@ -9,7 +9,7 @@ interface Props {
   canonical?: string;
 }
 
-const { title = siteConfig.seoTitle, description = siteConfig.seoDescription, image = `${siteConfig.siteUrl}/favicon.svg`, canonical } = Astro.props;
+const { title = siteConfig.seoTitle, description = siteConfig.seoDescription, image = `${siteConfig.siteUrl}/images/og-image.png`, canonical } = Astro.props;
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, siteConfig.siteUrl).toString();
 ---
 
@@ -21,6 +21,7 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, siteConfig.siteUrl
     <meta name="description" content={description} />
     <meta name="keywords" content={siteConfig.seoKeywords} />
     <meta name="author" content="Cüneyt Bozok" />
+    <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="theme-color" content="#0B0F14" />
@@ -49,9 +50,9 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, siteConfig.siteUrl
       '@type': 'Person',
       name: siteConfig.name,
       url: siteConfig.siteUrl,
-      jobTitle: 'Lead ServiceNow Architect',
+      jobTitle: 'ServiceNow Solution Architect',
       description: siteConfig.seoDescription,
-      knowsAbout: ['ITSM', 'IT Service Management', 'ServiceNow', 'IT transformation', 'ITOM', 'CSM', 'CMDB', 'GenAI', 'Enterprise Automation'],
+      knowsAbout: ['ServiceNow', 'ITSM', 'IT Service Management', 'CSM', 'SOM', 'ITOM', 'CMDB', 'CSDM', 'ITIL', 'Virtual Agent', 'Now Assist', 'Agentic AI', 'GenAI', 'Flow Designer', 'IntegrationHub', 'TMF', 'Telecom', 'IT transformation', 'Enterprise Automation', 'Platform Governance'],
       sameAs: siteConfig.socialMedia.map((s) => s.url),
       email: siteConfig.email,
     })} />
