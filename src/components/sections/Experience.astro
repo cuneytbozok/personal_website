@@ -163,10 +163,11 @@ const vibeProjects = [
     title: 'PDF Splitter',
     description:
       'Local desktop app to split large PDFs into smaller parts, with options to reduce file sizes and fix formatting errors for easy upload to AI tools like NotebookLM, ChatGPT, Claude, and Gemini.',
-    image: 'https://github.com/cuneytbozok/pdf-splitter/raw/main/app-icon-1024.png',
-    imageAlt: 'PDF Splitter app icon',
+    image: '/images/pdf-splitter.png',
+    imageAlt: 'PDF Splitter app interface',
     tech: ['Python', 'pikepdf', 'pywebview', 'Ghostscript'],
     repoUrl: 'https://github.com/cuneytbozok/pdf-splitter',
+    reversed: true,
   },
 ];
 
@@ -355,6 +356,7 @@ const vibeTooling = [
               imageAlt={project.imageAlt}
               repoUrl={project.repoUrl}
               liveUrl={project.liveUrl}
+              reversed={project.reversed}
             />
           ))
         }
