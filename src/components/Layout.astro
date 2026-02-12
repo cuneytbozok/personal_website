@@ -40,54 +40,28 @@ const { title, description } = Astro.props;
   const coarsePointer = window.matchMedia('(pointer: coarse)');
   const sections = document.querySelectorAll('.section-fade');
   const nav = document.querySelector('nav[aria-label="Main navigation"]');
-  let updateParallax = () => {};
 
   if (prefersReduced.matches || coarsePointer.matches || sections.length === 0) {
     sections.forEach((section) => section.classList.add('is-visible'));
   } else {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        entry.target.classList.toggle('is-visible', entry.isIntersecting);
-      });
-    },
-    {
-      threshold: 0.25,
-      rootMargin: '0px 0px -10% 0px',
-    }
-  );
-
-  sections.forEach((section) => observer.observe(section));
-
-  let rafId = 0;
-  updateParallax = () => {
-    const viewportHeight = window.innerHeight || 1;
-    const viewportCenter = viewportHeight / 2;
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          obs.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.15,
+        rootMargin: '0px 0px -8% 0px',
+      }
+    );
 
     sections.forEach((section) => {
-      const rect = section.getBoundingClientRect();
-      const sectionCenter = rect.top + rect.height / 2;
-      const distance = (sectionCenter - viewportCenter) / viewportHeight;
-      const clamped = Math.max(-1, Math.min(1, distance));
-      const parallax = clamped * -90;
-      const scale = 1 - Math.min(0.1, Math.abs(clamped) * 0.07);
-
-      section.style.setProperty('--section-parallax', `${parallax}px`);
-      section.style.setProperty('--section-scale', `${scale}`);
+      if (section.classList.contains('is-visible')) return;
+      observer.observe(section);
     });
-  };
-
-  const scheduleParallax = () => {
-    if (rafId) return;
-    rafId = window.requestAnimationFrame(() => {
-      rafId = 0;
-      updateParallax();
-    });
-  };
-
-  window.addEventListener('scroll', scheduleParallax, { passive: true });
-  window.addEventListener('resize', scheduleParallax);
-  updateParallax();
   }
 
   const getNavOffset = () => nav?.getBoundingClientRect().height ?? 0;
@@ -153,7 +127,6 @@ const { title, description } = Astro.props;
 
     waitForScrollEnd(() => {
       restoreSnap();
-      updateParallax();
     });
   };
 

@@ -4,16 +4,17 @@
 
 /* Section reveal animation */
 .section-fade {
-  --section-parallax: 0px;
-  --section-scale: 1;
   opacity: 0;
-  transform: translateY(var(--section-parallax)) scale(var(--section-scale));
-  transition: opacity 600ms ease;
+  transform: translateY(24px);
+  transition:
+    opacity 420ms ease,
+    transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
 .section-fade.is-visible {
   opacity: 1;
+  transform: translateY(0);
 }
 
   .experience-panel.is-entering {
@@ -339,7 +340,7 @@
 
   html {
     scroll-behavior: smooth;
-    scroll-snap-type: y mandatory;
+    scroll-snap-type: none;
   }
 
   .scroll-sections {
@@ -352,7 +353,13 @@
 
   .scroll-sections > section {
     scroll-snap-align: start;
-    scroll-snap-stop: always;
+    scroll-snap-stop: normal;
+  }
+
+  @media (min-width: 1024px) {
+    html {
+      scroll-snap-type: y proximity;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
