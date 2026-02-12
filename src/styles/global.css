@@ -102,7 +102,8 @@ html[data-motion='on'] [data-motion~='pin-story'][data-pin='active'] .experience
     animation-fill-mode: both;
     animation-timing-function: var(--motion-ease-premium);
     animation-timeline: view(block);
-    animation-range: entry 12% cover 34%;
+    /* Reveal earlier: start when element enters, finish when it covers 15% */
+    animation-range: entry 0% cover 15%;
   }
 
   html[data-motion='on'][data-motion-timeline='css'] [data-motion~='parallax'] {
