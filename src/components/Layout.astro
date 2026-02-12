@@ -36,98 +36,505 @@ const { title, description } = Astro.props;
 </BaseLayout>
 
 <script type="module">
+  const docEl = document.documentElement;
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   const coarsePointer = window.matchMedia('(pointer: coarse)');
-  const sections = document.querySelectorAll('.section-fade');
-  const nav = document.querySelector('nav[aria-label="Main navigation"]');
+  const desktopViewport = window.matchMedia('(min-width: 1024px)');
+  const preferConsistentJsTimelines = true;
+  const hasNativeTimelineConstructors =
+    typeof window !== 'undefined' &&
+    ('ViewTimeline' in window || 'ScrollTimeline' in window);
+  const supportsViewTimeline =
+    !preferConsistentJsTimelines &&
+    hasNativeTimelineConstructors &&
+    typeof CSS !== 'undefined' &&
+    typeof CSS.supports === 'function' &&
+    CSS.supports('animation-timeline: view()') &&
+    CSS.supports('animation-range: entry 0% cover 30%');
 
-  if (prefersReduced.matches || coarsePointer.matches || sections.length === 0) {
-    sections.forEach((section) => section.classList.add('is-visible'));
-  } else {
-    const observer = new IntersectionObserver(
-      (entries, obs) => {
+  document.querySelectorAll('.section-fade').forEach((element) => {
+    const existing = element.getAttribute('data-motion');
+    if (!existing?.includes('reveal')) {
+      element.setAttribute('data-motion', existing ? `${existing} reveal` : 'reveal');
+    }
+    if (!element.hasAttribute('data-motion-once')) {
+      element.setAttribute('data-motion-once', 'false');
+    }
+  });
+
+  const reveals = Array.from(document.querySelectorAll('[data-motion~="reveal"]'));
+  const parallaxElements = Array.from(document.querySelectorAll('[data-motion~="parallax"]'));
+  const pinStories = Array.from(document.querySelectorAll('[data-motion~="pin-story"]'));
+  const handoffStages = Array.from(
+    document.querySelectorAll('section[data-motion~="handoff"] [data-motion-stage]')
+  );
+
+  const nav = document.querySelector('nav[aria-label="Main navigation"]');
+  const activeParallax = new Set();
+  const activeHandoffStages = new Set();
+  const progressMap = new WeakMap();
+
+  let revealObserver;
+  let parallaxObserver;
+  let handoffObserver;
+  let motionState = {
+    reduced: true,
+    cssTimeline: false,
+    pinEnabled: false,
+    handoffEnabled: false,
+  };
+  let ticking = false;
+
+  const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+
+  const toNumber = (value) => {
+    const parsed = Number.parseFloat(value ?? '');
+    return Number.isFinite(parsed) ? parsed : undefined;
+  };
+
+  const getState = (element) => {
+    if (!progressMap.has(element)) {
+      progressMap.set(element, {
+        current: 0,
+        target: 0,
+        lastEmitted: -1,
+      });
+    }
+
+    return progressMap.get(element);
+  };
+
+  const getNavOffset = () => nav?.getBoundingClientRect().height ?? 0;
+  const getPageTop = (element) => element.getBoundingClientRect().top + window.scrollY;
+
+  const setMotionVariables = () => {
+    reveals.forEach((element) => {
+      const delay = toNumber(element.getAttribute('data-motion-delay'));
+      const distance = toNumber(element.getAttribute('data-motion-distance'));
+
+      if (delay !== undefined) {
+        element.style.setProperty('--motion-delay', `${delay}ms`);
+      }
+
+      if (distance !== undefined) {
+        element.style.setProperty('--motion-distance', `${distance}px`);
+      }
+    });
+
+    parallaxElements.forEach((element) => {
+      const speed = toNumber(element.getAttribute('data-motion-speed'));
+      if (speed !== undefined) {
+        element.style.setProperty('--motion-speed', `${clamp(speed, 0.04, 0.2)}`);
+      }
+    });
+  };
+
+  const disconnectObservers = () => {
+    revealObserver?.disconnect();
+    parallaxObserver?.disconnect();
+    handoffObserver?.disconnect();
+    revealObserver = undefined;
+    parallaxObserver = undefined;
+    handoffObserver = undefined;
+    activeParallax.clear();
+    activeHandoffStages.clear();
+  };
+
+  const resetHandoffStage = (stage) => {
+    stage.style.setProperty('--handoff-progress', '0');
+    stage.style.setProperty('--handoff-opacity', '1');
+    stage.style.setProperty('--handoff-translate', '0px');
+    stage.style.setProperty('--handoff-scale', '1');
+    stage.removeAttribute('data-handoff-active');
+  };
+
+  const applyMotionMode = () => {
+    if (prefersReduced.matches) {
+      docEl.removeAttribute('data-motion');
+      docEl.removeAttribute('data-motion-timeline');
+      reveals.forEach((element) => element.classList.add('is-visible'));
+      pinStories.forEach((story) => {
+        story.removeAttribute('data-pin');
+        story.style.setProperty('--story-progress', '0');
+      });
+      handoffStages.forEach(resetHandoffStage);
+
+      return {
+        reduced: true,
+        cssTimeline: false,
+        pinEnabled: false,
+        handoffEnabled: false,
+      };
+    }
+
+    docEl.setAttribute('data-motion', 'on');
+    docEl.setAttribute('data-motion-timeline', supportsViewTimeline ? 'css' : 'js');
+
+    const pinEnabled = !coarsePointer.matches;
+    pinStories.forEach((story) => {
+      if (pinEnabled) {
+        story.setAttribute('data-pin', 'active');
+      } else {
+        story.removeAttribute('data-pin');
+        story.style.setProperty('--story-progress', '0');
+      }
+    });
+
+    const handoffEnabled = !coarsePointer.matches && desktopViewport.matches;
+    if (!handoffEnabled) {
+      handoffStages.forEach(resetHandoffStage);
+    }
+
+    return {
+      reduced: false,
+      cssTimeline: supportsViewTimeline,
+      pinEnabled,
+      handoffEnabled,
+    };
+  };
+
+  const setupRevealObserver = () => {
+    if (motionState.reduced || motionState.cssTimeline || reveals.length === 0) {
+      reveals.forEach((element) => element.classList.add('is-visible'));
+      return;
+    }
+
+    reveals.forEach((element) => {
+      element.classList.remove('is-visible');
+    });
+
+    revealObserver = new IntersectionObserver(
+      (entries, observer) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add('is-visible');
-          obs.unobserve(entry.target);
+          const element = entry.target;
+          const once = element.getAttribute('data-motion-once') !== 'false';
+
+          if (entry.isIntersecting) {
+            element.classList.add('is-visible');
+            if (once) {
+              observer.unobserve(element);
+            }
+            return;
+          }
+
+          if (!once) {
+            element.classList.remove('is-visible');
+          }
         });
       },
       {
-        threshold: 0.15,
-        rootMargin: '0px 0px -8% 0px',
+        threshold: 0.2,
+        rootMargin: '0px 0px -10% 0px',
       }
     );
 
-    sections.forEach((section) => {
-      if (section.classList.contains('is-visible')) return;
-      observer.observe(section);
+    reveals.forEach((element) => {
+      revealObserver?.observe(element);
     });
-  }
+  };
 
-  const getNavOffset = () => nav?.getBoundingClientRect().height ?? 0;
-
-  const getElementTop = (element) => {
-    let top = 0;
-    let node = element;
-
-    while (node) {
-      top += node.offsetTop;
-      node = node.offsetParent;
+  const setupParallaxObserver = () => {
+    if (motionState.reduced || motionState.cssTimeline || parallaxElements.length === 0) {
+      return;
     }
 
-    return top;
+    parallaxObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            activeParallax.add(entry.target);
+          } else {
+            activeParallax.delete(entry.target);
+          }
+        });
+        scheduleTick();
+      },
+      {
+        threshold: 0,
+        rootMargin: '25% 0px 25% 0px',
+      }
+    );
+
+    parallaxElements.forEach((element) => {
+      parallaxObserver?.observe(element);
+    });
   };
 
-  const disableSnap = () => {
-    const html = document.documentElement;
-    const prev = html.style.scrollSnapType;
-    html.style.scrollSnapType = 'none';
-    return () => {
-      html.style.scrollSnapType = prev;
-    };
+  const setupHandoffObserver = () => {
+    if (
+      motionState.reduced ||
+      motionState.cssTimeline ||
+      !motionState.handoffEnabled ||
+      handoffStages.length === 0
+    ) {
+      handoffStages.forEach(resetHandoffStage);
+      return;
+    }
+
+    handoffObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const stage = entry.target;
+          if (entry.isIntersecting) {
+            activeHandoffStages.add(stage);
+            stage.setAttribute('data-handoff-active', 'true');
+          } else {
+            activeHandoffStages.delete(stage);
+            stage.removeAttribute('data-handoff-active');
+          }
+        });
+        scheduleTick();
+      },
+      {
+        threshold: 0,
+        rootMargin: '45% 0px 45% 0px',
+      }
+    );
+
+    handoffStages.forEach((stage) => {
+      handoffObserver?.observe(stage);
+    });
   };
 
-  const waitForScrollEnd = (callback) => {
-    let lastY = window.scrollY;
-    let sameCount = 0;
+  const getElementProgress = (element, viewportHeight) => {
+    const rect = element.getBoundingClientRect();
+    return clamp((viewportHeight - rect.top) / (viewportHeight + rect.height));
+  };
 
-    const tick = () => {
-      const y = window.scrollY;
-      if (Math.abs(y - lastY) < 1) {
-        sameCount += 1;
-      } else {
-        sameCount = 0;
-        lastY = y;
+  const updateParallax = (element, viewportHeight) => {
+    const state = getState(element);
+    const smoothing = 0.28;
+    const speed = clamp(toNumber(element.getAttribute('data-motion-speed')) ?? 0.08, 0.04, 0.2);
+    const customDistance = toNumber(element.getAttribute('data-motion-distance'));
+    const amplitude = customDistance ?? speed * 160;
+    const raw = getElementProgress(element, viewportHeight);
+    state.target = raw;
+    state.current += (state.target - state.current) * smoothing;
+
+    if (Math.abs(state.target - state.current) < 0.001) {
+      state.current = state.target;
+    }
+
+    const offset = (0.5 - state.current) * amplitude * 2;
+    element.style.setProperty('--motion-progress', state.current.toFixed(4));
+    element.style.setProperty('--motion-parallax-offset', `${offset.toFixed(2)}px`);
+
+    return Math.abs(state.target - state.current) > 0.001;
+  };
+
+  const updateStoryProgress = (story, viewportHeight, navOffset) => {
+    const state = getState(story);
+    const isPinned = story.getAttribute('data-pin') === 'active';
+    const stickyOffset = navOffset + 24;
+
+    if (!isPinned) {
+      if (state.current !== 0 || state.lastEmitted !== 0) {
+        state.current = 0;
+        state.target = 0;
+        story.style.setProperty('--story-progress', '0');
+        state.lastEmitted = 0;
+        story.dispatchEvent(
+          new CustomEvent('motion:story-progress', {
+            detail: { progress: 0, rawProgress: 0 },
+          })
+        );
       }
+      return false;
+    }
 
-      if (sameCount >= 4) {
-        callback();
-        return;
-      }
+    const rect = story.getBoundingClientRect();
+    const total = Math.max(rect.height - viewportHeight + stickyOffset, 1);
+    const raw = clamp((stickyOffset - rect.top) / total);
+    const smoothing = 0.28;
+    state.target = raw;
+    state.current += (state.target - state.current) * smoothing;
 
-      window.requestAnimationFrame(tick);
-    };
+    if (Math.abs(state.target - state.current) < 0.0005) {
+      state.current = state.target;
+    }
 
+    story.style.setProperty('--story-progress', state.current.toFixed(4));
+
+    if (Math.abs(state.current - state.lastEmitted) > 0.002) {
+      state.lastEmitted = state.current;
+      story.dispatchEvent(
+        new CustomEvent('motion:story-progress', {
+          detail: { progress: state.current, rawProgress: raw },
+        })
+      );
+    }
+
+    return Math.abs(state.target - state.current) > 0.0005;
+  };
+
+  const updateHandoffStage = (stage, viewportHeight) => {
+    const state = getState(stage);
+    const rect = stage.getBoundingClientRect();
+    const stageCenter = rect.top + rect.height / 2;
+    const viewportCenter = viewportHeight / 2;
+    const range = Math.max(viewportHeight * 0.58, rect.height * 0.35, 1);
+    const raw = clamp((stageCenter - viewportCenter) / range, -1, 1);
+    const smoothing = 0.28;
+    state.target = raw;
+    state.current += (state.target - state.current) * smoothing;
+
+    if (Math.abs(state.target - state.current) < 0.001) {
+      state.current = state.target;
+    }
+
+    const absRaw = Math.abs(state.current);
+    const opacity = 1 - 0.25 * (absRaw * absRaw);
+    const translate = state.current * 45;
+    const scale = 1;
+
+    stage.style.setProperty('--handoff-progress', state.current.toFixed(4));
+    stage.style.setProperty('--handoff-opacity', opacity.toFixed(4));
+    stage.style.setProperty('--handoff-translate', `${translate.toFixed(2)}px`);
+    stage.style.setProperty('--handoff-scale', scale.toFixed(4));
+
+    return Math.abs(state.target - state.current) > 0.001;
+  };
+
+  const tick = () => {
+    ticking = false;
+    const viewportHeight = window.innerHeight || docEl.clientHeight;
+    const navOffset = getNavOffset();
+    let needsAnotherFrame = false;
+
+    if (!motionState.reduced && !motionState.cssTimeline) {
+      activeParallax.forEach((element) => {
+        if (updateParallax(element, viewportHeight)) {
+          needsAnotherFrame = true;
+        }
+      });
+    }
+
+    if (!motionState.reduced && pinStories.length > 0) {
+      pinStories.forEach((story) => {
+        if (updateStoryProgress(story, viewportHeight, navOffset)) {
+          needsAnotherFrame = true;
+        }
+      });
+    }
+
+    if (
+      !motionState.reduced &&
+      !motionState.cssTimeline &&
+      motionState.handoffEnabled &&
+      activeHandoffStages.size > 0
+    ) {
+      activeHandoffStages.forEach((stage) => {
+        if (updateHandoffStage(stage, viewportHeight)) {
+          needsAnotherFrame = true;
+        }
+      });
+    }
+
+    if (needsAnotherFrame) {
+      scheduleTick();
+    }
+  };
+
+  const scheduleTick = () => {
+    if (ticking) return;
+    ticking = true;
     window.requestAnimationFrame(tick);
   };
 
-  const scrollToHash = (hash, behavior = 'smooth') => {
+  const refreshMotionSystem = () => {
+    disconnectObservers();
+    setMotionVariables();
+    motionState = applyMotionMode();
+    setupRevealObserver();
+    setupParallaxObserver();
+    setupHandoffObserver();
+    scheduleTick();
+  };
+
+  const bindMediaChange = (mediaQuery, callback) => {
+    if (typeof mediaQuery.addEventListener === 'function') {
+      mediaQuery.addEventListener('change', callback);
+      return;
+    }
+
+    mediaQuery.addListener(callback);
+  };
+
+  refreshMotionSystem();
+
+  bindMediaChange(prefersReduced, refreshMotionSystem);
+  bindMediaChange(coarsePointer, refreshMotionSystem);
+  bindMediaChange(desktopViewport, refreshMotionSystem);
+
+  window.addEventListener('scroll', scheduleTick, { passive: true });
+  window.addEventListener('resize', scheduleTick, { passive: true });
+  window.addEventListener('orientationchange', scheduleTick, { passive: true });
+
+  const crossesPinnedStory = (fromY, toY) => {
+    const minY = Math.min(fromY, toY);
+    const maxY = Math.max(fromY, toY);
+    const activeStories = pinStories.filter((story) => story.getAttribute('data-pin') === 'active');
+
+    return activeStories.some((story) => {
+      const top = getPageTop(story);
+      const bottom = top + story.offsetHeight;
+      return maxY >= top && minY <= bottom;
+    });
+  };
+
+  const scrollToHash = (hash, behavior = 'smooth', { collapsePinForNav = false, centerInViewport = false } = {}) => {
     if (!hash) return;
     const target = document.querySelector(hash);
-    if (!target) return;
+    if (!(target instanceof HTMLElement)) return;
 
-    const offset = getNavOffset();
-    const targetTop = getElementTop(target) - offset;
-    const restoreSnap = disableSnap();
+    const getDestination = (el) => {
+      const top = getPageTop(el);
+      const height = el.getBoundingClientRect().height;
+      const vh = window.innerHeight || docEl.clientHeight;
+      const no = getNavOffset();
+      const v = vh - no;
+      if (centerInViewport && height <= v) {
+        return Math.max(0, top + height / 2 - vh / 2 - no / 2);
+      }
+      if (hash === '#contact' && height > v) {
+        return Math.max(0, top + height - vh);
+      }
+      return Math.max(top - no, 0);
+    };
 
-    window.scrollTo({
-      top: Math.max(targetTop, 0),
-      behavior: prefersReduced.matches ? 'auto' : behavior,
-    });
+    const destination = getDestination(target);
+    const isCrossingPin = crossesPinnedStory(window.scrollY, destination);
+    const useNavCollapse = collapsePinForNav && isCrossingPin && pinStories.length > 0;
 
-    waitForScrollEnd(() => {
-      restoreSnap();
-    });
+    const performScroll = (el, useAuto = true) => {
+      const dest = getDestination(el);
+      window.scrollTo({
+        top: dest,
+        behavior: prefersReduced.matches || useAuto ? 'auto' : behavior,
+      });
+    };
+
+    if (useNavCollapse) {
+      docEl.setAttribute('data-nav-navigation', '');
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          performScroll(target);
+          docEl.removeAttribute('data-nav-navigation');
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => performScroll(target));
+          });
+        });
+      });
+    } else {
+      performScroll(target, isCrossingPin);
+    }
+  };
+
+  const isNavLink = (link) => {
+    const nav = document.querySelector('nav[aria-label="Main navigation"]');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (!nav) return false;
+    return nav.contains(link) || (mobileMenu?.contains(link) ?? false);
   };
 
   const shouldHandleLink = (link) => {
@@ -137,21 +544,16 @@ const { title, description } = Astro.props;
     return Boolean(url.hash);
   };
 
-  const handleAnchorClick = (event) => {
-    const link = event.currentTarget;
+  document.addEventListener('click', (event) => {
+    const link = event.target?.closest?.('a[href*="#"]');
     if (!(link instanceof HTMLAnchorElement)) return;
     if (!shouldHandleLink(link)) return;
 
     event.preventDefault();
     const { hash } = new URL(link.href, window.location.href);
     history.pushState(null, '', hash);
-    scrollToHash(hash);
-  };
-
-  document.querySelectorAll('a[href*="#"]').forEach((link) => {
-    if (!(link instanceof HTMLAnchorElement)) return;
-    if (!shouldHandleLink(link)) return;
-    link.addEventListener('click', handleAnchorClick);
+    const fromNav = isNavLink(link);
+    scrollToHash(hash, 'auto', { collapsePinForNav: fromNav, centerInViewport: fromNav });
   });
 
   window.addEventListener('load', () => {

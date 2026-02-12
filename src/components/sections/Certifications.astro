@@ -24,39 +24,45 @@ const microCerts = [
 
 <section
   id="certifications"
-  class="section-fade mx-auto max-w-5xl px-6 py-24 lg:py-36"
+  class="section-fade mx-auto max-w-5xl px-6 py-16 lg:py-24"
+  data-motion="reveal handoff"
+  data-motion-once="false"
+  data-motion-distance="24"
   aria-labelledby="certifications-heading"
 >
-  <SectionHeader number="03" title="Certifications" />
-
-  <div class="grid gap-12 md:grid-cols-2">
-    <div>
-      <h3 class="mb-4 font-mono text-sm text-accent">ServiceNow Certifications</h3>
-      <ul class="space-y-2">
-        {
-          serviceNowCerts.map((cert) => (
-            <li class="flex items-start gap-3 text-text-muted">
-              <span class="text-accent">▹</span>
-              <span>{cert}</span>
-            </li>
-          ))
-        }
-      </ul>
+  <div data-motion-stage>
+    <div data-motion="parallax" data-motion-speed="0.1">
+      <SectionHeader number="03" title="Certifications" id="certifications-heading" />
     </div>
 
-    <div>
-      <h3 class="mb-4 font-mono text-sm text-accent">ServiceNow Micro-Certifications</h3>
-      <ul class="space-y-2">
-        {
-          microCerts.map((cert) => (
-            <li class="flex items-start gap-3 text-text-muted">
-              <span class="text-accent">▹</span>
-              <span>{cert}</span>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
+    <div class="grid gap-12 md:grid-cols-2" data-motion="parallax" data-motion-speed="0.08">
+      <div data-motion="reveal" data-motion-delay="60">
+        <h3 class="mb-4 font-mono text-sm text-accent">ServiceNow Certifications</h3>
+        <ul class="space-y-2">
+          {
+            serviceNowCerts.map((cert) => (
+              <li class="flex items-start gap-3 text-text-muted">
+                <span class="text-accent">▹</span>
+                <span>{cert}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
 
+      <div data-motion="reveal" data-motion-delay="120">
+        <h3 class="mb-4 font-mono text-sm text-accent">ServiceNow Micro-Certifications</h3>
+        <ul class="space-y-2">
+          {
+            microCerts.map((cert) => (
+              <li class="flex items-start gap-3 text-text-muted">
+                <span class="text-accent">▹</span>
+                <span>{cert}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
   </div>
 </section>

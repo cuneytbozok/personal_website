@@ -4,21 +4,35 @@ import { siteConfig } from '../../config';
 
 <section
   id="contact"
-  class="section-fade mx-auto max-w-5xl px-6 py-24 lg:py-36"
+  class="section-fade mx-auto max-w-5xl px-6 py-16 lg:py-24"
+  data-motion="reveal handoff"
+  data-motion-once="false"
+  data-motion-distance="22"
   aria-labelledby="contact-heading"
 >
-  <p class="font-mono text-sm text-accent">04. What's Next?</p>
-  <h2 id="contact-heading" class="mt-2 text-4xl font-bold tracking-tight text-text sm:text-5xl">
-    Get In Touch
-  </h2>
-  <p class="mt-6 max-w-md text-lg text-text-muted">
-    I'm currently open to new opportunities. Whether you have a question or just
-    want to say hi, I'll do my best to get back to you.
-  </p>
-  <a
-    href={`mailto:${siteConfig.email}`}
-    class="mt-10 inline-block border border-accent px-6 py-3 font-mono text-sm text-accent transition-colors hover:bg-accent/10 hover:text-accent-hover focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg"
-  >
-    Say Hello
-  </a>
+  <div data-motion-stage>
+    <div data-motion="parallax" data-motion-speed="0.11">
+      <p class="font-mono text-sm text-accent" data-motion="reveal" data-motion-delay="40">04. What's Next?</p>
+      <h2
+        id="contact-heading"
+        class="mt-2 text-4xl font-bold tracking-tight text-text sm:text-5xl"
+        data-motion="reveal"
+        data-motion-delay="80"
+      >
+        Get In Touch
+      </h2>
+      <p class="mt-6 max-w-md text-lg text-text-muted" data-motion="reveal" data-motion-delay="120">
+        I'm currently open to new opportunities. Whether you have a question or just
+        want to say hi, I'll do my best to get back to you.
+      </p>
+      <a
+        href={`mailto:${siteConfig.email}`}
+        class="mt-10 inline-block border border-accent px-6 py-3 font-mono text-sm text-accent transition-colors hover:bg-accent/10 hover:text-accent-hover focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg"
+        data-motion="reveal"
+        data-motion-delay="160"
+      >
+        Say Hello
+      </a>
+    </div>
+  </div>
 </section>

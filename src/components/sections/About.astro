@@ -4,33 +4,40 @@ import SectionHeader from './SectionHeader.astro';
 
 <section
   id="about"
-  class="section-fade mx-auto max-w-5xl px-6 py-12 lg:py-36"
+  class="section-fade mx-auto max-w-5xl px-6 py-16 lg:py-24"
+  data-motion="reveal handoff"
+  data-motion-once="false"
+  data-motion-distance="24"
   aria-labelledby="about-heading"
 >
-  <SectionHeader number="01" title="About" />
-  <div class="space-y-5">
-    <p class="text-base leading-relaxed text-text-muted sm:text-lg">
-      I help enterprises modernize operations by leading discovery, defining
-      target-state architecture, and making fit-to-standard decisions that
-      balance out-of-the-box capabilities with purposeful customization. My
-      focus spans ITSM/CSM delivery, CMDB/CSDM alignment, Virtual Agent
-      experiences, and API integrations across ERP and automation ecosystems
-      (i.e., SAP, UiPath, Microsoft Teams, Slack).
-    </p>
-    <p class="text-base leading-relaxed text-text-muted sm:text-lg">
-      I lead end-to-end engagements from maturity assessment and phased roadmap
-      definition through architecture design, integration patterns, and
-      rollout. Recent work includes headless telco marketplace architecture,
-      AI-powered email automation, Now Assist and Agentic AI enablement, and
-      executive-ready discovery artifacts. I produce durable
-      foundations—architecture blueprints, HLDs/LLDs, ADRs, and API
-      contracts—so delivery teams and stakeholders stay aligned.
-    </p>
-    <p class="text-base leading-relaxed text-text-muted sm:text-lg">
-      Beyond delivery, I conduct internal ServiceNow trainings, facilitate
-      architecture workshops with integrators and vendors, and participate in
-      senior-level technical interviews to raise hiring quality and delivery
-      standards.
-    </p>
+  <div data-motion-stage>
+    <div data-motion="parallax" data-motion-speed="0.1">
+      <SectionHeader number="01" title="About" />
+    </div>
+    <div class="space-y-5" data-motion="parallax" data-motion-speed="0.08">
+      <p class="text-base leading-relaxed text-text-muted sm:text-lg" data-motion="reveal" data-motion-delay="60">
+        I help enterprises modernize operations by leading discovery, defining
+        target-state architecture, and making fit-to-standard decisions that
+        balance out-of-the-box capabilities with purposeful customization. My
+        focus spans ITSM/CSM delivery, CMDB/CSDM alignment, Virtual Agent
+        experiences, and API integrations across ERP and automation ecosystems
+        (i.e., SAP, UiPath, Microsoft Teams, Slack).
+      </p>
+      <p class="text-base leading-relaxed text-text-muted sm:text-lg" data-motion="reveal" data-motion-delay="100">
+        I lead end-to-end engagements from maturity assessment and phased roadmap
+        definition through architecture design, integration patterns, and
+        rollout. Recent work includes headless telco marketplace architecture,
+        AI-powered email automation, Now Assist and Agentic AI enablement, and
+        executive-ready discovery artifacts. I produce durable
+        foundations—architecture blueprints, HLDs/LLDs, ADRs, and API
+        contracts—so delivery teams and stakeholders stay aligned.
+      </p>
+      <p class="text-base leading-relaxed text-text-muted sm:text-lg" data-motion="reveal" data-motion-delay="140">
+        Beyond delivery, I conduct internal ServiceNow trainings, facilitate
+        architecture workshops with integrators and vendors, and participate in
+        senior-level technical interviews to raise hiring quality and delivery
+        standards.
+      </p>
+    </div>
   </div>
 </section>

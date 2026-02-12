@@ -2,144 +2,320 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Section reveal animation */
+/* Progressive motion primitives */
 .section-fade {
-  opacity: 0;
-  transform: translateY(24px);
-  transition:
-    opacity 420ms ease,
-    transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
-}
-
-.section-fade.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
+  scroll-margin-top: var(--nav-offset);
 }
 
-  .experience-panel.is-entering {
-    animation: experiencePanelIn 650ms cubic-bezier(0.16, 1, 0.3, 1) both;
+[data-motion~='reveal'] {
+  opacity: 1;
+  transform: none;
+}
+
+[data-motion~='parallax'] {
+  --motion-speed: 0.08;
+  --motion-progress: 0.5;
+  --motion-parallax-offset: 0px;
+  transform: translate3d(0, var(--motion-parallax-offset), 0);
+  backface-visibility: hidden;
+}
+
+[data-motion~='pin-story'] {
+  --story-progress: 0;
+  --story-steps: 1;
+  --story-step-vh: var(--motion-story-step-vh);
+  position: relative;
+}
+
+[data-motion~='handoff'] [data-motion-stage] {
+  --handoff-progress: 0;
+  --handoff-opacity: 1;
+  --handoff-translate: 0px;
+  --handoff-scale: 1;
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  transform-origin: center center;
+  will-change: auto;
+}
+
+[data-motion~='handoff'] [data-motion-stage][data-handoff-active='true'] {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+.experience-story__sticky {
+  position: relative;
+}
+
+html[data-motion='on'] [data-motion~='reveal'] {
+  --motion-distance: var(--motion-distance-default);
+  --motion-delay: 0ms;
+  opacity: 0;
+  transform: translate3d(0, var(--motion-distance), 0);
+  transition:
+    opacity var(--motion-duration-reveal) var(--motion-ease-premium),
+    transform var(--motion-duration-reveal) var(--motion-ease-premium);
+  transition-delay: var(--motion-delay);
+}
+
+html[data-motion='on'][data-motion-timeline='js'] [data-motion~='reveal'].is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+html[data-motion='on'][data-motion-timeline='js'] [data-motion~='parallax'] {
+  transform: translate3d(0, var(--motion-parallax-offset), 0);
+  transition: none;
+}
+
+@media (min-width: 1024px) {
+  html[data-motion='on'][data-motion-timeline='js'] [data-motion~='handoff'] [data-motion-stage] {
+    opacity: var(--handoff-opacity, 1);
+    transform: translate3d(0, var(--handoff-translate, 0px), 0) scale(var(--handoff-scale, 1));
+    transition: none;
+  }
+}
+
+html[data-motion='on'] [data-motion~='pin-story'][data-pin='active'] {
+  min-height: calc(var(--story-steps, 1) * var(--story-step-vh, 82vh));
+}
+
+/* Collapse pin during nav-based scroll so we skip the company switcher animation */
+html[data-nav-navigation] [data-motion~='pin-story'][data-pin='active'] {
+  min-height: auto;
+}
+
+html[data-motion='on'] [data-motion~='pin-story'][data-pin='active'] .experience-story__sticky {
+  position: sticky;
+  top: calc(var(--nav-offset) + clamp(0.75rem, 1.8vw, 1.5rem));
+}
+
+@supports (animation-timeline: view()) {
+  html[data-motion='on'][data-motion-timeline='css'] [data-motion~='reveal'] {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    transition: none;
+    animation-name: motionRevealView;
+    animation-duration: 1ms;
+    animation-fill-mode: both;
+    animation-timing-function: var(--motion-ease-premium);
+    animation-timeline: view(block);
+    animation-range: entry 12% cover 34%;
   }
 
-  @keyframes experiencePanelIn {
+  html[data-motion='on'][data-motion-timeline='css'] [data-motion~='parallax'] {
+    transform: translate3d(0, 0, 0);
+    transition: none;
+    animation-name: motionParallaxView;
+    animation-duration: 1ms;
+    animation-fill-mode: both;
+    animation-timing-function: linear;
+    animation-timeline: view(block);
+    animation-range: entry -10% exit 110%;
+  }
+
+  @media (min-width: 1024px) {
+    html[data-motion='on'][data-motion-timeline='css'] [data-motion~='handoff'] [data-motion-stage] {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+      transition: none;
+      animation-name: motionHandoffView;
+      animation-duration: 1ms;
+      animation-fill-mode: both;
+      animation-timing-function: linear;
+      animation-timeline: view(block);
+      animation-range: entry -22% exit 122%;
+    }
+  }
+
+  @keyframes motionRevealView {
     from {
       opacity: 0;
-      transform: translateY(18px);
+      transform: translate3d(0, var(--motion-distance-default), 0);
     }
+
     to {
       opacity: 1;
-      transform: translateY(0);
+      transform: translate3d(0, 0, 0);
     }
   }
 
-  .experience-tab {
-    position: relative;
-    transition: color 240ms ease, border-color 240ms ease, transform 240ms ease;
+  @keyframes motionParallaxView {
+    from {
+      transform: translate3d(0, calc(var(--motion-speed, 0.08) * 80px), 0);
+    }
+
+    to {
+      transform: translate3d(0, calc(var(--motion-speed, 0.08) * -80px), 0);
+    }
   }
 
-  .experience-tab::after {
-    content: '';
-    position: absolute;
-    left: 10px;
-    right: 10px;
-    bottom: 4px;
-    height: 2px;
-    background: currentColor;
+  @keyframes motionHandoffView {
+    0% {
+      opacity: 0.75;
+      transform: translate3d(0, 45px, 0) scale(1);
+    }
+
+    50% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    100% {
+      opacity: 0.75;
+      transform: translate3d(0, -45px, 0) scale(1);
+    }
+  }
+}
+
+html[data-motion='on'] .experience-panel.is-entering {
+  animation: experiencePanelIn 650ms var(--motion-ease-soft) both;
+}
+
+@keyframes experiencePanelIn {
+  from {
     opacity: 0;
-    transform: scaleX(0.4);
-    transform-origin: left;
-    transition: opacity 320ms ease, transform 480ms cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(18px);
   }
 
-  .experience-tab[data-active]::after {
+  to {
     opacity: 1;
-    transform: scaleX(1);
+    transform: translateY(0);
   }
+}
 
-  .experience-timeline {
-    position: relative;
-    padding-bottom: 1.25rem;
-  }
+.experience-tab {
+  position: relative;
+  transition:
+    color 240ms ease,
+    border-color 240ms ease,
+    transform 240ms ease;
+}
 
-  .experience-timeline-line {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 8px;
-    height: 1px;
-    background: rgba(231, 233, 235, 0.18);
-  }
+.experience-tab::after {
+  content: '';
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 4px;
+  height: 2px;
+  background: currentColor;
+  opacity: 0;
+  transform: scaleX(0.4);
+  transform-origin: left;
+  transition:
+    opacity 320ms ease,
+    transform 480ms var(--motion-ease-soft);
+}
 
-  .experience-timeline-segments {
-    position: relative;
-    height: 18px;
-  }
+.experience-tab[data-active]::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
 
-  .experience-timeline-segment {
-    position: absolute;
-    top: 8px;
-    left: var(--segment-left);
-    width: max(var(--segment-width), 4px);
-    height: 1px;
-    border-radius: 999px;
-    background: rgba(231, 233, 235, 0.35);
-    transition: background 200ms ease, height 200ms ease;
-  }
+.experience-timeline {
+  position: relative;
+  padding-bottom: 1.25rem;
+}
 
-  .experience-timeline-segment[data-active],
-  .experience-timeline-segment[data-hover] {
-    height: 2px;
-    background: #3d8276;
-  }
+.experience-timeline-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 8px;
+  height: 1px;
+  overflow: hidden;
+  background: rgba(231, 233, 235, 0.18);
+}
 
-  .experience-timeline-segment[data-active]::after,
-  .experience-timeline-segment[data-hover]::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 50%;
-    width: 6px;
-    height: 6px;
-    border-radius: 999px;
-    background: #3d8276;
-    transform: translate(50%, -50%);
-  }
+.experience-timeline-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(61, 130, 118, 0.4), rgba(61, 130, 118, 0.95));
+  transform-origin: left center;
+  transform: scaleX(var(--story-progress, 0)) translateZ(0);
+  transition: transform 120ms linear;
+  will-change: transform;
+}
 
-  .experience-timeline-labels {
-    position: relative;
-    margin-top: 6px;
-    height: 16px;
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 0.7rem;
-    color: rgba(231, 233, 235, 0.55);
-  }
+.experience-timeline-segments {
+  position: relative;
+  height: 18px;
+}
 
-  .experience-timeline-label {
-    position: absolute;
-    top: 0;
-    white-space: nowrap;
-  }
+.experience-timeline-segment {
+  position: absolute;
+  top: 8px;
+  left: var(--segment-left);
+  width: max(var(--segment-width), 4px);
+  height: 1px;
+  border-radius: 999px;
+  background: rgba(231, 233, 235, 0.35);
+  transition:
+    background 200ms ease,
+    height 200ms ease,
+    opacity 200ms ease;
+  opacity: 0.8;
+}
 
-  .experience-timeline-label.is-start {
-    left: 0;
-  }
+.experience-timeline-segment[data-active],
+.experience-timeline-segment[data-hover] {
+  height: 2px;
+  background: #3d8276;
+  opacity: 1;
+}
 
-  .experience-timeline-label.is-end {
-    right: 0;
-  }
+.experience-timeline-segment[data-active]::after,
+.experience-timeline-segment[data-hover]::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: #3d8276;
+  transform: translate(50%, -50%);
+}
 
-  .experience-timeline-label.is-mid {
-    left: 50%;
-    transform: translateX(-50%);
-  }
+.experience-timeline-labels {
+  position: relative;
+  margin-top: 6px;
+  height: 16px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.7rem;
+  color: rgba(231, 233, 235, 0.55);
+}
 
-  .experience-tablist {
-    scrollbar-width: none;
-  }
+.experience-timeline-label {
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+}
 
-  .experience-tablist::-webkit-scrollbar {
-    display: none;
-  }
+.experience-timeline-label.is-start {
+  left: 0;
+}
+
+.experience-timeline-label.is-end {
+  right: 0;
+}
+
+.experience-timeline-label.is-mid {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.experience-tablist {
+  scrollbar-width: none;
+}
+
+.experience-tablist::-webkit-scrollbar {
+  display: none;
+}
 
 .featured-project {
   position: relative;
@@ -206,18 +382,23 @@
   0% {
     transform: translateX(0);
   }
+
   20% {
     transform: translateX(-2px) rotate(-1deg);
   }
+
   40% {
     transform: translateX(2px) rotate(1deg);
   }
+
   60% {
     transform: translateX(-1px) rotate(-0.5deg);
   }
+
   80% {
     transform: translateX(1px) rotate(0.5deg);
   }
+
   100% {
     transform: translateX(0);
   }
@@ -244,7 +425,9 @@
   opacity: 0;
   transform: scaleX(0.7);
   transform-origin: left;
-  transition: opacity 220ms ease, transform 320ms ease;
+  transition:
+    opacity 220ms ease,
+    transform 320ms ease;
   z-index: -1;
 }
 
@@ -258,46 +441,6 @@
 .nav-brand:focus-visible::after {
   opacity: 1;
   transform: scaleX(1);
-}
-
-@keyframes heroFadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.hero-intro > * {
-  opacity: 0;
-  animation: heroFadeUp 300ms cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-.hero-intro > *:nth-child(1) {
-  animation-delay: 100ms;
-}
-
-.hero-intro > *:nth-child(2) {
-  animation-delay: 200ms;
-}
-
-.hero-intro > *:nth-child(3) {
-  animation-delay: 300ms;
-}
-
-.hero-intro > *:nth-child(4) {
-  animation-delay: 400ms;
-}
-
-.hero-intro > *:nth-child(5) {
-  animation-delay: 500ms;
-}
-
-.hero-intro > *:nth-child(6) {
-  animation-delay: 600ms;
 }
 
 @media (max-width: 1023px) {
@@ -330,6 +473,12 @@
 @layer base {
   :root {
     --nav-offset: 4rem;
+    --motion-ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+    --motion-ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+    --motion-duration-reveal: 720ms;
+    --motion-duration-fast: 360ms;
+    --motion-distance-default: 24px;
+    --motion-story-step-vh: 56vh;
   }
 
   @media (min-width: 1024px) {
@@ -347,19 +496,9 @@
     scroll-snap-type: none;
   }
 
-  .section-fade {
-    scroll-margin-top: var(--nav-offset);
-  }
-
   .scroll-sections > section {
-    scroll-snap-align: start;
+    scroll-snap-align: none;
     scroll-snap-stop: normal;
-  }
-
-  @media (min-width: 1024px) {
-    html {
-      scroll-snap-type: y proximity;
-    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -378,21 +517,42 @@
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
     }
 
-    .section-fade {
-      opacity: 1;
-      transform: none;
-      transition: none;
+    [data-motion~='reveal'],
+    [data-motion~='parallax'],
+    [data-motion~='pin-story'],
+    [data-motion~='handoff'] {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+      animation: none !important;
     }
 
-    .experience-panel.is-entering {
-      animation: none;
+    [data-motion~='handoff'] [data-motion-stage] {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+      animation: none !important;
+      will-change: auto !important;
     }
 
+    [data-motion~='pin-story'] {
+      min-height: auto !important;
+    }
+
+    .experience-story__sticky {
+      position: relative !important;
+      top: auto !important;
+    }
+
+    .experience-panel.is-entering,
     .experience-tab,
-    .experience-tab::after {
-      transition: none;
+    .experience-tab::after,
+    .experience-timeline-line::after {
+      animation: none !important;
+      transition: none !important;
     }
 
     .loader div {
@@ -404,14 +564,10 @@
     html {
       scroll-snap-type: none;
     }
-
-    .section-fade {
-      transition: none;
-    }
   }
 }
 
 /* Skip to content - visually hidden until focused */
 .skip-to-content {
-  @apply fixed left-[-9999px] top-4 z-50 -translate-x-full bg-accent px-4 py-2 text-bg font-medium transition-all focus:left-4 focus:translate-x-0 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg;
+  @apply fixed left-[-9999px] top-4 z-50 -translate-x-full bg-accent px-4 py-2 font-medium text-bg transition-all focus:left-4 focus:translate-x-0 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg;
 }

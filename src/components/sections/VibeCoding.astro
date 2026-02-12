@@ -1,0 +1,77 @@
+---
+import SectionHeader from './SectionHeader.astro';
+import FeaturedProjectCard from '../FeaturedProjectCard.astro';
+
+const vibeProjects = [
+  {
+    title: 'Vecta',
+    description:
+      'AI-powered portfolio analysis with fast insights on your stocks. Run quick checks and browse the latest public analyses.',
+    image: '/images/vecta-home.png',
+    imageAlt: 'Vecta homepage preview',
+    tech: ['Nest.js', 'Vercel', 'shadcn/ui', 'Supabase', 'Cursor'],
+    repoUrl: 'https://github.com/cuneytbozok/bist',
+    liveUrl: 'https://bist-phi.vercel.app/',
+  },
+  {
+    title: 'PDF Splitter',
+    description:
+      'Local desktop app to split large PDFs into smaller parts, with options to reduce file sizes and fix formatting errors for easy upload to AI tools like NotebookLM, ChatGPT, Claude, and Gemini.',
+    image: '/images/pdf-splitter.png',
+    imageAlt: 'PDF Splitter app interface',
+    tech: ['Python', 'pikepdf', 'pywebview', 'Ghostscript'],
+    repoUrl: 'https://github.com/cuneytbozok/pdf-splitter',
+    reversed: true,
+  },
+];
+
+const vibeTooling = [
+  'Next.js',
+  'shadcn/ui',
+  'Vercel',
+  'Supabase',
+  'Clerk',
+  'Resend',
+  'Cursor',
+  'Antigravity',
+  'Codex',
+];
+---
+
+<section
+  id="vibe-coding"
+  class="section-fade mx-auto max-w-5xl px-6 py-16 lg:py-24"
+  data-motion="reveal handoff"
+  data-motion-once="false"
+  data-motion-distance="24"
+  aria-labelledby="vibe-coding-heading"
+>
+  <div data-motion-stage>
+    <div data-motion="parallax" data-motion-speed="0.1">
+      <SectionHeader title="Vibe Coding" id="vibe-coding-heading" />
+    </div>
+    <div class="space-y-6 pt-2" data-motion="reveal" data-motion-delay="60">
+      <p class="text-text-muted">
+        I enjoy occasional "vibe-coding" sessions to rapidly ship small apps. Tools I
+        like to use most: {vibeTooling.join(', ')}.
+      </p>
+      <div class="space-y-12">
+        {
+          vibeProjects.map((project) => (
+            <FeaturedProjectCard
+              title={project.title}
+              label="Featured Project"
+              description={project.description}
+              tech={project.tech}
+              imageSrc={project.image}
+              imageAlt={project.imageAlt}
+              repoUrl={project.repoUrl}
+              liveUrl={project.liveUrl}
+              reversed={project.reversed}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

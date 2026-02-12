@@ -1,6 +1,5 @@
 ---
 import SectionHeader from './SectionHeader.astro';
-import FeaturedProjectCard from '../FeaturedProjectCard.astro';
 
 const companyTimeline = [
   { company: 'EPAM Systems', startYear: 2022 },
@@ -129,304 +128,340 @@ const companies = [
   },
 ];
 
-const focusAreas = [
-  'Target-State Architecture & Blueprints',
-  'ITSM / ITOM / CSM / SOM',
-  'CMDB / CSDM Alignment',
-  'Service Portal & UI Builder / Workspaces',
-  'Virtual Agent & Engagement Messenger',
-  'Flow Designer & IntegrationHub',
-  'API Integration (REST / SOAP / TMF Open APIs)',
-  'Scoped App Development (JavaScript)',
-  'MID Server, SSO / LDAP',
-  'Generative AI (Now Assist, Agentic AI)',
-  'Discovery, Maturity Assessment & Roadmaps',
-  'Architecture Artifacts (HLD, LLD, ADRs, API Contracts)',
-  'Telecom & Headless Marketplace Architecture',
-  'Platform Governance & Operating Model',
-  'Technical Mentoring, Trainings & Hiring Interviews',
-  'DevOps Change Velocity',
-];
-
-const vibeProjects = [
-  {
-    title: 'Vecta',
-    description:
-      'AI-powered portfolio analysis with fast insights on your stocks. Run quick checks and browse the latest public analyses.',
-    image: '/images/vecta-home.png',
-    imageAlt: 'Vecta homepage preview',
-    tech: ['Nest.js', 'Vercel', 'shadcn/ui', 'Supabase', 'Cursor'],
-    repoUrl: 'https://github.com/cuneytbozok/bist',
-    liveUrl: 'https://bist-phi.vercel.app/',
-  },
-  {
-    title: 'PDF Splitter',
-    description:
-      'Local desktop app to split large PDFs into smaller parts, with options to reduce file sizes and fix formatting errors for easy upload to AI tools like NotebookLM, ChatGPT, Claude, and Gemini.',
-    image: '/images/pdf-splitter.png',
-    imageAlt: 'PDF Splitter app interface',
-    tech: ['Python', 'pikepdf', 'pywebview', 'Ghostscript'],
-    repoUrl: 'https://github.com/cuneytbozok/pdf-splitter',
-    reversed: true,
-  },
-];
-
-const vibeTooling = [
-  'Next.js',
-  'shadcn/ui',
-  'Vercel',
-  'Supabase',
-  'Clerk',
-  'Resend',
-  'Cursor',
-  'Antigravity',
-  'Codex',
-];
+const storyStepCount = companies.length;
 ---
 
 <section
   id="experience"
-  class="section-fade mx-auto max-w-5xl px-6 py-24 lg:py-36"
+  class="section-fade mx-auto max-w-5xl px-6 py-16 lg:py-24"
+  data-motion="reveal handoff"
+  data-motion-once="false"
+  data-motion-distance="26"
   aria-labelledby="experience-heading"
 >
-  <SectionHeader number="02" title="Experience" />
+  <div data-motion-stage>
+    <div data-motion="parallax" data-motion-speed="0.09">
+      <SectionHeader number="02" title="Experience" id="experience-heading" />
+    </div>
 
-  <div class="space-y-20">
-    <div class="space-y-8">
-      <h3 class="text-2xl font-semibold text-text">Experience</h3>
+    <div class="space-y-14">
+      <div
+        class="experience-story"
+        data-motion="pin-story"
+        data-story-steps={storyStepCount}
+        style={`--story-steps: ${storyStepCount};`}
+      >
+        <div class="experience-story__sticky space-y-8">
+          <h3 class="text-2xl font-semibold text-text" data-motion="parallax" data-motion-speed="0.08">
+            Experience
+          </h3>
 
-      <div class="grid gap-8 lg:grid-cols-[200px_1fr]">
-        <div class="flex flex-col gap-3">
-          <div class="relative -mx-6 lg:mx-0">
-            <div
-              class="experience-tablist -mx-6 flex flex-row gap-4 overflow-x-auto px-6 pb-2 lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0 lg:pb-0 [scrollbar-width:thin]"
-              role="tablist"
-              aria-label="Company tabs"
-            >
-              {
-                companies.map((company, i) => (
-                  <button
-                    type="button"
-                    class="experience-tab shrink-0 -ml-[2px] border-l-2 border-border px-4 py-2 text-left font-mono text-sm text-text-muted transition-colors hover:border-accent hover:text-accent data-[active]:border-accent data-[active]:text-accent lg:shrink"
-                    data-index={i}
-                    aria-selected={i === 0}
-                    aria-controls={`panel-${i}`}
-                    id={`tab-${i}`}
-                    role="tab"
-                    data-active={i === 0 ? '' : undefined}
-                  >
-                    {company.name}
-                  </button>
-                ))
-              }
-            </div>
-            <div
-              class="pointer-events-none absolute right-0 top-0 h-full w-10 bg-gradient-to-l from-bg to-transparent lg:hidden"
-              aria-hidden="true"
-            ></div>
-          </div>
-
-          <div class="experience-timeline" aria-hidden="true">
-            <div class="experience-timeline-line"></div>
-            <div class="experience-timeline-segments">
-              {
-                timelineSegments.map((segment, i) => (
-                  <span
-                    class="experience-timeline-segment"
-                    data-index={i}
-                    data-active={i === 0 ? '' : undefined}
-                    style={`--segment-left: ${segment.leftPct}%; --segment-width: ${segment.widthPct}%;`}
-                  ></span>
-                ))
-              }
-            </div>
-            <div class="experience-timeline-labels">
-              <span class="experience-timeline-label is-start">Present</span>
-              {showMidTick && (
-                <span class="experience-timeline-label is-mid">{midYear}</span>
-              )}
-              <span class="experience-timeline-label is-end">{minYear}</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="experience-panels min-w-0">
-          {
-            companies.map((company, i) => (
+        <div class="grid gap-8 lg:grid-cols-[200px_1fr]">
+          <div class="flex flex-col gap-3">
+            <div class="relative -mx-6 lg:mx-0">
               <div
-                id={`panel-${i}`}
-                role="tabpanel"
-                aria-labelledby={`tab-${i}`}
-                class={`experience-panel ${i === 0 ? '' : 'hidden'}`}
-                data-index={i}
-                data-active={i === 0 ? '' : undefined}
-                aria-hidden={i === 0 ? 'false' : 'true'}
+                class="experience-tablist -mx-6 flex flex-row gap-4 overflow-x-auto px-6 pb-2 lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0 lg:pb-0 [scrollbar-width:thin]"
+                role="tablist"
+                aria-label="Company tabs"
               >
-                <h3 class="text-xl font-semibold text-text break-words">
-                  {company.name}
-                </h3>
-                <p class="mt-1 font-mono text-sm text-text-dimmer">{company.period}</p>
-                <p class="mt-2 font-mono text-xs text-accent">
-                  Progression: {company.progression}
-                </p>
-
-                <div class="mt-8 space-y-8">
-                  {
-                    company.roles.map((role, roleIndex) => (
-                      <div>
-                        {roleIndex > 0 && (
-                          <div
-                            class="mb-6 flex items-center gap-2 font-mono text-xs text-accent"
-                            aria-hidden="true"
-                          >
-                            <span
-                              class="inline-flex items-center gap-1 rounded border border-accent/50 px-2 py-0.5"
-                            >
-                              <span aria-hidden="true">↑</span> Promotion
-                            </span>
-                          </div>
-                        )}
-                        <h4 class="text-lg font-medium text-text">
-                          {role.title}{' '}
-                          <span class="text-text-muted">— {role.period}</span>
-                        </h4>
-                        {role.industry && (
-                          <p class="mt-1 font-mono text-xs text-text-dimmer">
-                            {role.industry}
-                          </p>
-                        )}
-                        <ul class="mt-3 space-y-2">
-                          {
-                            role.highlights.map((h) => (
-                              <li class="flex gap-3 text-text-muted">
-                                <span class="mt-0.5 shrink-0 text-accent">▹</span>
-                                <span class="min-w-0 break-words text-sm">{h}</span>
-                              </li>
-                            ))
-                          }
-                        </ul>
-                      </div>
-                    ))
-                  }
-                </div>
+                {
+                  companies.map((company, i) => (
+                    <button
+                      type="button"
+                      class="experience-tab shrink-0 -ml-[2px] border-l-2 border-border px-4 py-2 text-left font-mono text-sm text-text-muted transition-colors hover:border-accent hover:text-accent data-[active]:border-accent data-[active]:text-accent lg:shrink"
+                      data-index={i}
+                      aria-selected={i === 0}
+                      aria-controls={`panel-${i}`}
+                      id={`tab-${i}`}
+                      role="tab"
+                      data-active={i === 0 ? '' : undefined}
+                    >
+                      {company.name}
+                    </button>
+                  ))
+                }
               </div>
-            ))
-          }
+              <div
+                class="pointer-events-none absolute right-0 top-0 h-full w-10 bg-gradient-to-l from-bg to-transparent lg:hidden"
+                aria-hidden="true"
+              ></div>
+            </div>
+
+            <div class="experience-timeline" aria-hidden="true">
+              <div class="experience-timeline-line"></div>
+              <div class="experience-timeline-segments">
+                {
+                  timelineSegments.map((segment, i) => (
+                    <span
+                      class="experience-timeline-segment"
+                      data-index={i}
+                      data-active={i === 0 ? '' : undefined}
+                      style={`--segment-left: ${segment.leftPct}%; --segment-width: ${segment.widthPct}%;`}
+                    ></span>
+                  ))
+                }
+              </div>
+              <div class="experience-timeline-labels">
+                <span class="experience-timeline-label is-start">Present</span>
+                {showMidTick && (
+                  <span class="experience-timeline-label is-mid">{midYear}</span>
+                )}
+                <span class="experience-timeline-label is-end">{minYear}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="experience-panels min-w-0">
+            {
+              companies.map((company, i) => (
+                <div
+                  id={`panel-${i}`}
+                  role="tabpanel"
+                  aria-labelledby={`tab-${i}`}
+                  class={`experience-panel ${i === 0 ? '' : 'hidden'}`}
+                  data-index={i}
+                  data-active={i === 0 ? '' : undefined}
+                  aria-hidden={i === 0 ? 'false' : 'true'}
+                >
+                  <h3 class="text-xl font-semibold text-text break-words">
+                    {company.name}
+                  </h3>
+                  <p class="mt-1 font-mono text-sm text-text-dimmer">{company.period}</p>
+                  <p class="mt-2 font-mono text-xs text-accent">
+                    Progression: {company.progression}
+                  </p>
+
+                  <div class="mt-8 space-y-8">
+                    {
+                      company.roles.map((role, roleIndex) => (
+                        <div>
+                          {roleIndex > 0 && (
+                            <div
+                              class="mb-6 flex items-center gap-2 font-mono text-xs text-accent"
+                              aria-hidden="true"
+                            >
+                              <span
+                                class="inline-flex items-center gap-1 rounded border border-accent/50 px-2 py-0.5"
+                              >
+                                <span aria-hidden="true">↑</span> Promotion
+                              </span>
+                            </div>
+                          )}
+                          <h4 class="text-lg font-medium text-text">
+                            {role.title}{' '}
+                            <span class="text-text-muted">— {role.period}</span>
+                          </h4>
+                          {role.industry && (
+                            <p class="mt-1 font-mono text-xs text-text-dimmer">
+                              {role.industry}
+                            </p>
+                          )}
+                          <ul class="mt-3 space-y-2">
+                            {
+                              role.highlights.map((h) => (
+                                <li class="flex gap-3 text-text-muted">
+                                  <span class="mt-0.5 shrink-0 text-accent">▹</span>
+                                  <span class="min-w-0 break-words text-sm">{h}</span>
+                                </li>
+                              ))
+                            }
+                          </ul>
+                        </div>
+                      ))
+                    }
+                  </div>
+                </div>
+              ))
+            }
+          </div>
         </div>
-      </div>
-    </div>
-
-    <div class="space-y-6">
-      <div class="space-y-2">
-        <h3 class="text-2xl font-semibold text-text">Toolbox</h3>
-        <p class="text-text-muted">
-          A quick snapshot of the domains, platforms, and capabilities I work with most.
-        </p>
-      </div>
-      <ul class="grid grid-cols-2 grid-rows-8 gap-x-6 gap-y-3 text-sm text-text-muted sm:text-base">
-        {
-          focusAreas.map((area) => (
-            <li class="flex items-start gap-2">
-              <span class="mt-0.5 shrink-0 text-accent">▹</span>
-              <span>{area}</span>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-
-    <div class="space-y-6 pt-8 lg:pt-14">
-      <div class="space-y-2">
-        <h3 class="text-2xl font-semibold text-text">Vibe Coding</h3>
-        <p class="text-text-muted">
-          I enjoy occasional "vibe-coding" sessions to rapidly ship small apps. Tools I
-          like to use most: {vibeTooling.join(', ')}.
-        </p>
-      </div>
-
-      <div class="space-y-12">
-        {
-          vibeProjects.map((project) => (
-            <FeaturedProjectCard
-              title={project.title}
-              label="Featured Project"
-              description={project.description}
-              tech={project.tech}
-              imageSrc={project.image}
-              imageAlt={project.imageAlt}
-              repoUrl={project.repoUrl}
-              liveUrl={project.liveUrl}
-              reversed={project.reversed}
-            />
-          ))
-        }
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <script>
-  const tabs = document.querySelectorAll('.experience-tab');
-  const panels = document.querySelectorAll('.experience-panel');
-  const tabList = document.querySelector('.experience-tablist');
-  const timelineSegments = document.querySelectorAll('.experience-timeline-segment');
+  (() => {
+    const section = document.querySelector('#experience');
+    if (!(section instanceof HTMLElement)) return;
 
-  const clearHover = () => {
-    timelineSegments.forEach((segment) => segment.removeAttribute('data-hover'));
-  };
+    const tabs = Array.from(section.querySelectorAll('.experience-tab'));
+    const panels = Array.from(section.querySelectorAll('.experience-panel'));
+    const tabList = section.querySelector('.experience-tablist');
+    const timelineSegments = Array.from(section.querySelectorAll('.experience-timeline-segment'));
+    const story = section.querySelector('[data-motion~="pin-story"]');
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  const scrollTabIntoView = (tab) => {
-    if (!tabList || !tab) return;
-    tab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-  };
+    if (tabs.length === 0 || panels.length === 0 || timelineSegments.length === 0) return;
 
-  const setActiveIndex = (index) => {
-    tabs.forEach((t, j) => {
-      t.setAttribute('aria-selected', j === index ? 'true' : 'false');
-      t.removeAttribute('data-active');
-      if (j === index) t.setAttribute('data-active', '');
-    });
+    let activeIndex = Math.max(
+      0,
+      tabs.findIndex((tab) => tab.hasAttribute('data-active'))
+    );
+    let isManualStoryJump = false;
+    const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+    const getNavOffset = () => {
+      const nav = document.querySelector('nav[aria-label="Main navigation"]');
+      return nav instanceof HTMLElement ? nav.getBoundingClientRect().height : 0;
+    };
+    const getPageTop = (element) => element.getBoundingClientRect().top + window.scrollY;
 
-    panels.forEach((p, j) => {
-      const isActive = j === index;
-      p.setAttribute('data-active', isActive ? '' : null);
-      p.setAttribute('aria-hidden', isActive ? 'false' : 'true');
-      if (isActive) {
-        p.classList.remove('hidden', 'is-entering');
-        void p.offsetWidth;
-        p.classList.add('is-entering');
-      } else {
-        p.classList.add('hidden');
-        p.classList.remove('is-entering');
+    const clearHover = () => {
+      timelineSegments.forEach((segment) => segment.removeAttribute('data-hover'));
+    };
+
+    const scrollTabIntoView = (tab) => {
+      if (!tabList || !tab) return;
+      tab.scrollIntoView({
+        behavior: prefersReduced.matches ? 'auto' : 'smooth',
+        inline: 'center',
+        block: 'nearest',
+      });
+    };
+
+    const setActiveIndex = (index, { animate = true } = {}) => {
+      const nextIndex = Math.min(Math.max(index, 0), panels.length - 1);
+      const isChanged = nextIndex !== activeIndex;
+      activeIndex = nextIndex;
+
+      tabs.forEach((tab, tabIndex) => {
+        const isActive = tabIndex === activeIndex;
+        tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        if (isActive) {
+          tab.setAttribute('data-active', '');
+        } else {
+          tab.removeAttribute('data-active');
+        }
+      });
+
+      panels.forEach((panel, panelIndex) => {
+        const isActive = panelIndex === activeIndex;
+        panel.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+
+        if (isActive) {
+          panel.classList.remove('hidden');
+          panel.setAttribute('data-active', '');
+
+          if (animate && isChanged && !prefersReduced.matches) {
+            panel.classList.remove('is-entering');
+            void panel.offsetWidth;
+            panel.classList.add('is-entering');
+          } else {
+            panel.classList.remove('is-entering');
+          }
+          return;
+        }
+
+        panel.classList.add('hidden');
+        panel.classList.remove('is-entering');
+        panel.removeAttribute('data-active');
+      });
+
+      timelineSegments.forEach((segment, segmentIndex) => {
+        if (segmentIndex === activeIndex) {
+          segment.setAttribute('data-active', '');
+        } else {
+          segment.removeAttribute('data-active');
+        }
+      });
+    };
+
+    const syncProgressToIndex = (progress) => {
+      const boundedProgress = Math.min(Math.max(progress, 0), 1);
+      const nextIndex = Math.min(
+        panels.length - 1,
+        Math.floor(boundedProgress * panels.length)
+      );
+      setActiveIndex(nextIndex, { animate: false });
+    };
+
+    const scrollStoryToIndex = (index) => {
+      if (!(story instanceof HTMLElement)) return;
+      if (story.getAttribute('data-pin') !== 'active') return;
+
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+      const stickyOffset = getNavOffset() + 24;
+      const targetProgress = panels.length <= 1
+        ? 0
+        : clamp((index + 0.5) / panels.length, 0, 1);
+      const total = Math.max(story.offsetHeight - viewportHeight + stickyOffset, 1);
+      const destination = Math.max(
+        getPageTop(story) - stickyOffset + targetProgress * total,
+        0
+      );
+
+      isManualStoryJump = true;
+      story.style.setProperty('--story-progress', targetProgress.toFixed(4));
+
+      window.scrollTo({
+        top: destination,
+        behavior: 'auto',
+      });
+
+      window.requestAnimationFrame(() => {
+        setActiveIndex(index, { animate: false });
+        story.style.setProperty('--story-progress', targetProgress.toFixed(4));
+      });
+
+      // Keep ignoring scroll-driven progress long enough for Layout's smoothing to settle.
+      // Otherwise motion:story-progress fires with intermediate values and causes
+      // panels to flash through Deloitte → Softtech → EPAM before landing.
+      const settleMs = 420;
+      window.setTimeout(() => {
+        isManualStoryJump = false;
+      }, settleMs);
+    };
+
+    const onStoryProgress = (event) => {
+      if (!(story instanceof HTMLElement)) return;
+      if (story.getAttribute('data-pin') !== 'active' || prefersReduced.matches) return;
+      if (isManualStoryJump) return;
+      const rawProgress = Number(event.detail?.rawProgress);
+      if (Number.isFinite(rawProgress)) {
+        syncProgressToIndex(rawProgress);
+        return;
       }
-    });
 
-    timelineSegments.forEach((segment, j) => {
-      segment.removeAttribute('data-active');
-      if (j === index) segment.setAttribute('data-active', '');
-    });
-  };
+      const progress = Number(event.detail?.progress);
+      if (!Number.isFinite(progress)) return;
+      syncProgressToIndex(progress);
+    };
 
-  tabs.forEach((tab, i) => {
-    tab.addEventListener('click', () => {
-      setActiveIndex(i);
-      scrollTabIntoView(tab);
-    });
+    if (story instanceof HTMLElement) {
+      story.addEventListener('motion:story-progress', onStoryProgress);
+    }
 
-    tab.addEventListener('mouseenter', () => {
-      timelineSegments.forEach((segment, j) => {
-        segment.removeAttribute('data-hover');
-        if (j === i) segment.setAttribute('data-hover', '');
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => {
+        setActiveIndex(index, { animate: false });
+        scrollTabIntoView(tab);
+        scrollStoryToIndex(index);
       });
+
+      tab.addEventListener('mouseenter', () => {
+        timelineSegments.forEach((segment, segmentIndex) => {
+          if (segmentIndex === index) {
+            segment.setAttribute('data-hover', '');
+          } else {
+            segment.removeAttribute('data-hover');
+          }
+        });
+      });
+
+      tab.addEventListener('mouseleave', clearHover);
+      tab.addEventListener('focus', () => {
+        timelineSegments.forEach((segment, segmentIndex) => {
+          if (segmentIndex === index) {
+            segment.setAttribute('data-hover', '');
+          } else {
+            segment.removeAttribute('data-hover');
+          }
+        });
+      });
+      tab.addEventListener('blur', clearHover);
     });
 
-    tab.addEventListener('mouseleave', clearHover);
-    tab.addEventListener('focus', () => {
-      timelineSegments.forEach((segment, j) => {
-        segment.removeAttribute('data-hover');
-        if (j === i) segment.setAttribute('data-hover', '');
-      });
-    });
-    tab.addEventListener('blur', clearHover);
-  });
+    setActiveIndex(activeIndex, { animate: false });
+  })();
 </script>

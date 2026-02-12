@@ -1,0 +1,52 @@
+---
+import SectionHeader from './SectionHeader.astro';
+
+const focusAreas = [
+  'Target-State Architecture & Blueprints',
+  'ITSM / ITOM / CSM / SOM',
+  'CMDB / CSDM Alignment',
+  'Service Portal & UI Builder / Workspaces',
+  'Virtual Agent & Engagement Messenger',
+  'Flow Designer & IntegrationHub',
+  'API Integration (REST / SOAP / TMF Open APIs)',
+  'Scoped App Development (JavaScript)',
+  'MID Server, SSO / LDAP',
+  'Generative AI (Now Assist, Agentic AI)',
+  'Discovery, Maturity Assessment & Roadmaps',
+  'Architecture Artifacts (HLD, LLD, ADRs, API Contracts)',
+  'Telecom & Headless Marketplace Architecture',
+  'Platform Governance & Operating Model',
+  'Technical Mentoring, Trainings & Hiring Interviews',
+  'DevOps Change Velocity',
+];
+---
+
+<section
+  id="toolbox"
+  class="section-fade mx-auto max-w-5xl px-6 py-16 lg:py-24"
+  data-motion="reveal handoff"
+  data-motion-once="false"
+  data-motion-distance="24"
+  aria-labelledby="toolbox-heading"
+>
+  <div data-motion-stage>
+    <div data-motion="parallax" data-motion-speed="0.09">
+      <SectionHeader title="Toolbox" id="toolbox-heading" />
+    </div>
+    <div class="space-y-6" data-motion="reveal" data-motion-delay="60">
+      <p class="text-text-muted">
+        A quick snapshot of the domains, platforms, and capabilities I work with most.
+      </p>
+      <ul class="grid grid-cols-2 grid-rows-8 gap-x-6 gap-y-3 text-sm text-text-muted sm:text-base">
+        {
+          focusAreas.map((area) => (
+            <li class="flex items-start gap-2">
+              <span class="mt-0.5 shrink-0 text-accent">▹</span>
+              <span>{area}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
