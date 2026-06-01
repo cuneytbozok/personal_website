@@ -353,6 +353,7 @@ ul { list-style: none; }
   line-height: 1.02;
   letter-spacing: -0.035em;
 }
+.hero h1 .l { display: block; }
 .hero h1 .l2 {
   display: block;
   background: linear-gradient(110deg, var(--accent-bright), var(--accent-deep));
