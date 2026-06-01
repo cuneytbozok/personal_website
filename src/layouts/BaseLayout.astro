@@ -19,32 +19,48 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, siteConfig.siteUrl
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <meta name="keywords" content={siteConfig.seoKeywords} />
     <meta name="author" content="Cüneyt Bozok" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#0A0E13" />
     <title>{title}</title>
     <!-- Open Graph -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="profile" />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={image} />
+    <meta property="og:image:width" content="2848" />
+    <meta property="og:image:height" content="1504" />
+    <meta property="og:image:alt" content="Cüneyt Bozok — ServiceNow Solution Architect" />
     <meta property="og:site_name" content="Cüneyt Bozok" />
     <meta property="og:locale" content="en_US" />
+    <meta property="profile:first_name" content="Cüneyt" />
+    <meta property="profile:last_name" content="Bozok" />
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={image} />
+    <meta name="twitter:image:alt" content="Cüneyt Bozok — ServiceNow Solution Architect" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Load fonts without blocking first paint -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
       rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      />
+    </noscript>
     <script is:inline>
       /* Arm reveal animations before first paint (avoids FOUC).
          A rAF probe disarms them if the animation clock isn't advancing
@@ -61,14 +77,29 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, siteConfig.siteUrl
     </script>
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
-      '@type': 'Person',
-      name: siteConfig.name,
+      '@type': 'ProfilePage',
       url: siteConfig.siteUrl,
-      jobTitle: 'ServiceNow Solution Architect',
-      description: siteConfig.seoDescription,
-      knowsAbout: ['ServiceNow', 'ITSM', 'IT Service Management', 'CSM', 'SOM', 'ITOM', 'CMDB', 'CSDM', 'ITIL', 'Virtual Agent', 'Now Assist', 'Agentic AI', 'GenAI', 'Flow Designer', 'IntegrationHub', 'TMF', 'Telecom', 'IT transformation', 'Enterprise Automation', 'Platform Governance'],
-      sameAs: siteConfig.socialMedia.map((s) => s.url),
-      email: siteConfig.email,
+      name: title,
+      description: description,
+      mainEntity: {
+        '@type': 'Person',
+        '@id': `${siteConfig.siteUrl}/#person`,
+        name: siteConfig.name,
+        url: siteConfig.siteUrl,
+        image: image,
+        jobTitle: siteConfig.jobTitle,
+        description: siteConfig.seoDescription,
+        email: `mailto:${siteConfig.email}`,
+        worksFor: { '@type': 'Organization', name: siteConfig.worksFor },
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: siteConfig.location.city,
+          addressCountry: siteConfig.location.countryCode,
+        },
+        knowsLanguage: siteConfig.knowsLanguage,
+        knowsAbout: ['ServiceNow', 'ITSM', 'IT Service Management', 'CSM', 'SOM', 'ITOM', 'CMDB', 'CSDM', 'ITIL', 'Virtual Agent', 'Now Assist', 'Agentic AI', 'GenAI', 'Flow Designer', 'IntegrationHub', 'TMF', 'Telecom', 'IT transformation', 'Enterprise Automation', 'Platform Governance'],
+        sameAs: siteConfig.socialMedia.map((s) => s.url),
+      },
     })} />
   </head>
   <body>

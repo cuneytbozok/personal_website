@@ -3,12 +3,14 @@ export const siteConfig = {
   tagline: 'ServiceNow Solution Architect | Lead Engineer | ITSM, CSM/SOM, CMDB/CSDM, Integrations, AI Enablement | CSA · CIS-ITSM · CAD',
   // SEO
   siteUrl: 'https://cuneytbozok.com',
-  seoTitle: 'Cüneyt Bozok | ServiceNow Solution Architect & Lead Engineer | ITSM · CSM · CMDB/CSDM · AI Enablement',
+  seoTitle: 'Cüneyt Bozok — ServiceNow Solution Architect',
   seoDescription:
-    'Cüneyt Bozok – ServiceNow Solution Architect & Lead Engineer with 8+ years delivering ITSM, CSM, ITOM, CMDB/CSDM alignment, Virtual Agent experiences, and API integrations. Certified CSA, CIS-ITSM, CAD. Discovery, target-state architecture, Agentic AI enablement & platform governance.',
-  seoKeywords:
-    'ServiceNow, ITSM, IT Service Management, IT transformation, ServiceNow Architect, ServiceNow Solution Architect, ServiceNow Consultant, ITOM, CSM, SOM, ITIL, CMDB, CSDM, Telecom, TMF, enterprise automation, GenAI, Agentic AI, platform governance, Virtual Agent, Now Assist, discovery, roadmap, IntegrationHub',
+    'ServiceNow Solution Architect — 8+ years across ITSM, CSM, ITOM, CMDB/CSDM, Virtual Agent and API integrations, from discovery to rollout and AI enablement.',
   email: 'cuneyt@cuneytbozok.com',
+  jobTitle: 'ServiceNow Solution Architect',
+  worksFor: 'EPAM Systems',
+  location: { city: 'Istanbul', country: 'Türkiye', countryCode: 'TR' },
+  knowsLanguage: ['en', 'tr'],
   intro: 'ServiceNow Solution Architect & Lead Engineer with 8+ years delivering ITSM/CSM, CMDB/CSDM alignment, Virtual Agent experiences, and API integrations—strong in discovery, target-state architecture, and fit-to-standard decisions.',
   currentFocus: 'AI-powered automation, Virtual Agent design, Now Assist, Agentic AI, and platform architecture—integrating ServiceNow with SAP, UiPath, Microsoft Teams, and third-party platforms.',
 

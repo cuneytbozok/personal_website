@@ -2,8 +2,11 @@ export const prerender = true;
 
 const SITE_URL = 'https://cuneytbozok.com';
 
+// Bump when page content changes (keeps lastmod stable across rebuilds).
+const LASTMOD = '2026-06-01';
+
 const urls = [
-  { loc: SITE_URL + '/', changefreq: 'weekly', priority: '1.0' },
+  { loc: SITE_URL + '/', changefreq: 'monthly', priority: '1.0' },
 ];
 
 export async function GET() {
@@ -15,7 +18,7 @@ ${urls
     <loc>${u.loc}</loc>
     <changefreq>${u.changefreq}</changefreq>
     <priority>${u.priority}</priority>
-    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+    <lastmod>${LASTMOD}</lastmod>
   </url>`,
   )
   .join('\n')}

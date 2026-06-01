@@ -1,0 +1,17 @@
+{
+  "name": "Cüneyt Bozok — ServiceNow Solution Architect",
+  "short_name": "Cüneyt Bozok",
+  "description": "ServiceNow Solution Architect with 8+ years across ITSM, CSM, ITOM, CMDB/CSDM, Virtual Agent and API integrations.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0E13",
+  "theme_color": "#0A0E13",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    }
+  ]
+}
