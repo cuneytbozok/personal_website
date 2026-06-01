@@ -1,55 +1,29 @@
 ---
-import { siteConfig } from '../config';
+const links = [
+  { label: 'About', sec: 'about', ix: '01.' },
+  { label: 'Experience', sec: 'experience', ix: '02.' },
+  { label: 'Toolbox', sec: 'toolbox', ix: '03.' },
+  { label: 'Certifications', sec: 'certifications', ix: '04.' },
+  { label: 'Contact', sec: 'contact', ix: '05.' },
+];
 ---
 
-<nav
-  class="fixed left-0 right-0 top-0 z-40 flex items-center justify-between bg-bg px-6 py-4"
-  aria-label="Main navigation"
->
-  <a
-    href="/"
-    class="nav-brand font-mono text-sm font-medium text-text focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
-  >
-    {siteConfig.name}
-  </a>
-
-  <ul class="hidden items-center gap-8 md:flex" role="list">
-    {
-      siteConfig.navLinks.map(({ name, url, number }) => (
-        <li>
-          <a
-            href={url}
-            class="font-mono text-sm text-text-muted transition-colors hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg"
-          >
-            <span class="text-accent">{number}.</span> {name}
-          </a>
-        </li>
-      ))
-    }
-  </ul>
-
-  <!-- Hamburger toggle for mobile - target controlled by Menu -->
-  <button
-    id="menu-toggle"
-    type="button"
-    class="flex h-10 w-10 items-center justify-center rounded lg:hidden"
-    aria-expanded="false"
-    aria-controls="mobile-menu"
-    aria-label="Open menu"
-  >
-    <svg
-      class="h-6 w-6 text-text"
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M4 6h16M4 12h16M4 18h16"
-      />
-    </svg>
-  </button>
+<nav class="nav" id="nav" aria-label="Main navigation">
+  <div class="wrap">
+    <a href="#hero" class="brand">
+      <span class="mark">CB</span>
+      <span>Cüneyt Bozok</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      {links.map((l) => (
+        <a href={`#${l.sec}`} data-sec={l.sec}><span class="ix">{l.ix}</span> {l.label}</a>
+      ))}
+    </div>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-ghost">Let's Connect</a>
+      <button class="burger" id="burger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
 </nav>

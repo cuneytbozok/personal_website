@@ -24,7 +24,7 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, siteConfig.siteUrl
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="theme-color" content="#0B0F14" />
+    <meta name="theme-color" content="#0A0E13" />
     <title>{title}</title>
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -42,9 +42,23 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, siteConfig.siteUrl
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <script is:inline>
+      /* Arm reveal animations before first paint (avoids FOUC).
+         A rAF probe disarms them if the animation clock isn't advancing
+         so content can never get stuck hidden. */
+      (function () {
+        var html = document.documentElement;
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        html.className += ' anim';
+        var frames = 0, ok = false;
+        function tick() { frames++; if (frames >= 2) ok = true; else requestAnimationFrame(tick); }
+        requestAnimationFrame(tick);
+        setTimeout(function () { if (!ok) html.classList.remove('anim'); }, 650);
+      })();
+    </script>
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'Person',
@@ -57,7 +71,7 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, siteConfig.siteUrl
       email: siteConfig.email,
     })} />
   </head>
-  <body class="min-h-screen bg-bg font-sans text-text antialiased">
+  <body>
     <slot />
   </body>
 </html>

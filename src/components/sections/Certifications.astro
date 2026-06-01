@@ -1,67 +1,49 @@
 ---
-import SectionHeader from './SectionHeader.astro';
-
-const serviceNowCerts = [
-  'ITSM Professional – Suite Certification',
-  'Now Assist for ITSM Pro Plus – Suite Certification',
-  'Certified Application Developer',
-  'Certified Implementation Specialist – IT Service Management',
-  'Certified System Administrator',
-];
-
-const microCerts = [
-  'Agentic AI Executive',
-  'Now Assist Executive',
-  'Flow Designer',
-  'Service Portal',
-  'IntegrationHub',
-  'Performance Analytics',
-  'Predictive Intelligence',
-  'Virtual Agent',
-];
-
+import { certMain, certMicro } from '../../data/portfolio';
 ---
 
-<section
-  id="certifications"
-  class="section-fade mx-auto max-w-5xl px-6 py-16 lg:py-24"
-  data-motion="reveal handoff"
-  data-motion-once="false"
-  data-motion-distance="24"
-  aria-labelledby="certifications-heading"
->
-  <div data-motion-stage>
-    <div data-motion="parallax" data-motion-speed="0.1">
-      <SectionHeader number="03" title="Certifications" id="certifications-heading" />
+<section class="section" id="certifications">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="num">04.</span>
+      <h2>Certifications</h2>
+      <span class="rule"></span>
     </div>
-
-    <div class="grid gap-12 md:grid-cols-2" data-motion="parallax" data-motion-speed="0.08">
-      <div data-motion="reveal" data-motion-delay="60">
-        <h3 class="mb-4 font-mono text-sm text-accent">ServiceNow Certifications</h3>
-        <ul class="space-y-2">
-          {
-            serviceNowCerts.map((cert) => (
-              <li class="flex items-start gap-3 text-text-muted">
-                <span class="text-accent">▹</span>
-                <span>{cert}</span>
-              </li>
-            ))
-          }
+    <div class="cert-wrap">
+      <div class="cert-col reveal" data-d="1">
+        <h3>ServiceNow Certifications</h3>
+        <ul>
+          {certMain.map((c) => (
+            <li>
+              <svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>
+              <span>{c}</span>
+            </li>
+          ))}
+        </ul>
+        <a href="https://www.linkedin.com/in/cuneytbozok/" target="_blank" rel="noopener" class="btn btn-ghost">View all Certifications
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <div class="cert-col reveal" data-d="2">
+        <h3>ServiceNow Micro-Certifications</h3>
+        <ul>
+          {certMicro.map((c) => (
+            <li>
+              <svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>
+              <span>{c}</span>
+            </li>
+          ))}
         </ul>
       </div>
-
-      <div data-motion="reveal" data-motion-delay="120">
-        <h3 class="mb-4 font-mono text-sm text-accent">ServiceNow Micro-Certifications</h3>
-        <ul class="space-y-2">
-          {
-            microCerts.map((cert) => (
-              <li class="flex items-start gap-3 text-text-muted">
-                <span class="text-accent">▹</span>
-                <span>{cert}</span>
-              </li>
-            ))
-          }
-        </ul>
+      <div class="hexbadge reveal" data-d="3">
+        <div class="hex">
+          <svg class="cert-medal" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="32" cy="25" r="15"/>
+            <path d="M32 18.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L32 38l-5.2 2.6 1-5.8-4.3-4.1 5.9-.9z" fill="currentColor" fill-opacity="0.18"/>
+            <path d="M24 38l-4 14 12-6 12 6-4-14"/>
+          </svg>
+        </div>
+        <div class="ring"></div>
       </div>
     </div>
   </div>

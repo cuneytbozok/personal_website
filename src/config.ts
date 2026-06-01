@@ -15,8 +15,9 @@ export const siteConfig = {
   navLinks: [
     { name: 'About', url: '/#about', number: '01' },
     { name: 'Experience', url: '/#experience', number: '02' },
-    { name: 'Certifications', url: '/#certifications', number: '03' },
-    { name: 'Contact', url: '/#contact', number: '04' },
+    { name: 'Toolbox', url: '/#toolbox', number: '03' },
+    { name: 'Certifications', url: '/#certifications', number: '04' },
+    { name: 'Contact', url: '/#contact', number: '05' },
   ],
 
   socialMedia: [

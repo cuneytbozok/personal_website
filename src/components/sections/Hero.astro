@@ -1,41 +1,49 @@
 ---
-import { siteConfig } from '../../config';
+const chips = ['CSA', 'CIS-ITSM', 'CAD', 'ITIL', 'CMDB / CSDM', 'AI ENABLEMENT'];
 ---
 
-<section
-  id="hero"
-  class="hero-intro section-fade mx-auto flex min-h-[calc(100svh-4rem)] max-w-5xl flex-col justify-center px-6 pt-14 pb-6 sm:pt-24 sm:pb-16 lg:min-h-[calc(100vh-6rem)] lg:justify-center lg:py-36"
-  data-motion="reveal handoff"
-  data-motion-once="false"
-  data-motion-distance="28"
-  aria-labelledby="hero-heading"
->
-  <div data-motion-stage>
-    <p class="font-mono text-sm text-accent" data-motion="reveal" data-motion-delay="40">
-      Hi, my name is {siteConfig.name}
-    </p>
-    <div data-motion="parallax" data-motion-speed="0.06">
-      <h1
-        id="hero-heading"
-        class="mt-2 text-4xl font-bold tracking-tight text-text sm:text-5xl md:text-6xl"
-      >
-        ServiceNow Solution Architect
-      </h1>
-      <h2 class="mt-2 text-2xl font-semibold tracking-tight text-text-muted sm:text-3xl md:text-4xl">
-        Discovery, target-state architecture & AI enablement
-      </h2>
+<section class="hero" id="hero">
+  <div class="wrap">
+    <div class="hero-copy">
+      <p class="eyebrow reveal">ServiceNow Solution Architect</p>
+      <h1 class="reveal" data-d="1">I design. I architect.<span class="l2">I enable.</span></h1>
+      <p class="lede reveal" data-d="2">8+ years delivering ITSM, CSM, ITOM, CMDB/CSDM alignment, Virtual Agent experiences, API integrations and more — from discovery and fit-to-standard decisions through architecture design and rollout.</p>
+      <div class="cert-chips reveal" data-d="3">
+        {chips.map((c) => <span class="chip">{c}</span>)}
+      </div>
+      <div class="hero-cta reveal" data-d="4">
+        <a href="#contact" class="btn btn-primary">Let's Work Together
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#experience" class="btn btn-ghost">View My Work
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M7 7h10v10"/></svg>
+        </a>
+      </div>
     </div>
-    <p class="mt-4 max-w-xl text-base leading-relaxed text-text-muted sm:mt-6 sm:text-lg" data-motion="reveal" data-motion-delay="120">
-      8+ years delivering ITSM, CSM, CMDB/CSDM alignment, Virtual Agent experiences, and API integrations—from discovery and fit-to-standard decisions through architecture design and rollout.
-    </p>
-    <p class="mt-3 font-mono text-sm text-accent sm:mt-4" data-motion="reveal" data-motion-delay="180">CSA · CIS-ITSM · CAD</p>
-    <a
-      href="/#contact"
-      class="mt-5 inline-block border border-accent px-6 py-3 font-mono text-sm text-accent transition-colors hover:bg-accent/10 hover:text-accent-hover focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg sm:mt-10"
-      data-motion="reveal"
-      data-motion-delay="240"
-    >
-      Get in touch
-    </a>
+
+    <!-- Orbit graphic -->
+    <div class="orbit reveal" data-d="2" aria-hidden="true">
+      <svg class="orbit-dots" viewBox="0 0 460 460" fill="none" stroke="var(--accent-line)" stroke-width="1" stroke-dasharray="3 5">
+        <path d="M139 75 L230 230" />
+        <path d="M330 63 L230 230" />
+        <path d="M112 220 L230 230" />
+        <path d="M348 210 L230 230" />
+        <path d="M148 381 L230 230" />
+        <path d="M321 388 L230 230" />
+      </svg>
+      <div class="orbit-core">
+        <div class="layer l4"></div>
+        <div class="layer l3"></div>
+        <div class="layer l2"></div>
+        <div class="layer l1"></div>
+        <div class="core-mark">now</div>
+      </div>
+      <span class="orbit-node n1">Architecture &amp; Design</span>
+      <span class="orbit-node n2">AI &amp; Automation Enablement</span>
+      <span class="orbit-node n3">Discovery &amp; Assessment</span>
+      <span class="orbit-node n4">Integration &amp; APIs</span>
+      <span class="orbit-node n5">Delivery &amp; Adoption</span>
+      <span class="orbit-node n6">Operate &amp; Optimize</span>
+    </div>
   </div>
 </section>
