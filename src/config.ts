@@ -1,5 +1,7 @@
 export const siteConfig = {
   name: 'Cüneyt Bozok',
+  // Diacritic-free variant so search/AI engines resolve both spellings to the same entity.
+  alternateName: 'Cuneyt Bozok',
   tagline: 'ServiceNow Solution Architect | Lead Engineer | ITSM, CSM/SOM, CMDB/CSDM, Integrations, AI Enablement | CSA · CIS-ITSM · CAD',
   // SEO
   siteUrl: 'https://cuneytbozok.com',
@@ -19,7 +21,8 @@ export const siteConfig = {
     { name: 'Experience', url: '/#experience', number: '02' },
     { name: 'Toolbox', url: '/#toolbox', number: '03' },
     { name: 'Certifications', url: '/#certifications', number: '04' },
-    { name: 'Contact', url: '/#contact', number: '05' },
+    { name: 'FAQ', url: '/#faq', number: '05' },
+    { name: 'Contact', url: '/#contact', number: '06' },
   ],
 
   socialMedia: [

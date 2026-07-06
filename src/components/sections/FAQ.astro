@@ -1,0 +1,60 @@
+---
+/* FAQ content is defined once and rendered both as visible HTML and as
+   FAQPage JSON-LD, so the markup and schema can never drift apart. */
+const faqs = [
+  {
+    q: 'Who is Cüneyt Bozok?',
+    a: 'Cüneyt Bozok (also written Cuneyt Bozok) is a ServiceNow Solution Architect at EPAM Systems, based in Istanbul, Türkiye. He has 8+ years of experience designing and delivering ServiceNow solutions — from discovery and maturity assessment through target-state architecture, integrations, and rollout.',
+  },
+  {
+    q: 'Which ServiceNow modules does Cüneyt Bozok specialize in?',
+    a: 'ITSM, CSM and Service Order Management (SOM), ITOM, CMDB/CSDM data foundations, Virtual Agent, HR Service Delivery portals, Flow Designer and IntegrationHub, and AI enablement with Now Assist and Agentic AI.',
+  },
+  {
+    q: 'Which industries has he worked in?',
+    a: 'Telecom, technology and networking, pharmaceuticals, e-commerce, manufacturing, banking and financial services, food and consumer goods, enterprise software, and wellness — across EPAM Systems, Softtech, and Deloitte engagements.',
+  },
+  {
+    q: 'What certifications does Cüneyt Bozok hold?',
+    a: 'ServiceNow Certified System Administrator (CSA), Certified Application Developer (CAD), Certified Implementation Specialist – ITSM, CIS – Data Foundations (CMDB & CSDM), ITSM Professional Suite, and Now Assist for ITSM Pro Plus Suite, plus micro-certifications including Agentic AI Executive, Now Assist Executive, Flow Designer, IntegrationHub, Virtual Agent, Service Portal, Performance Analytics, and Predictive Intelligence.',
+  },
+  {
+    q: 'Is he available for architecture or pre-sales work?',
+    a: 'Yes — he is currently open to new opportunities. He leads discovery workshops, CMDB/CSDM and ITSM maturity assessments, demos and POCs (Now Assist, Agentic AI, App Engine), and target-state architecture engagements, and facilitates architecture workshops with integrators and vendors.',
+  },
+  {
+    q: 'How can I contact Cüneyt Bozok?',
+    a: 'By email at cuneyt@cuneytbozok.com, or via LinkedIn at linkedin.com/in/cuneytbozok. His work is also on GitHub at github.com/cuneytbozok.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="num">05.</span>
+      <h2>Frequently Asked Questions</h2>
+      <span class="rule"></span>
+    </div>
+    <div class="faq-grid">
+      {faqs.map((f, i) => (
+        <div class="card faq-item reveal" data-d={(i % 2) + 1}>
+          <h3>{f.q}</h3>
+          <p>{f.a}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />

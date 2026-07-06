@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { siteConfig } from '../config';
+import { certMain, certMicro } from '../data/portfolio';
 
 interface Props {
   title?: string;
@@ -85,6 +86,7 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, siteConfig.siteUrl
         '@type': 'Person',
         '@id': `${siteConfig.siteUrl}/#person`,
         name: siteConfig.name,
+        alternateName: siteConfig.alternateName,
         url: siteConfig.siteUrl,
         image: image,
         jobTitle: siteConfig.jobTitle,
@@ -97,7 +99,12 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, siteConfig.siteUrl
           addressCountry: siteConfig.location.countryCode,
         },
         knowsLanguage: siteConfig.knowsLanguage,
-        knowsAbout: ['ServiceNow', 'ITSM', 'IT Service Management', 'CSM', 'SOM', 'ITOM', 'CMDB', 'CSDM', 'ITIL', 'Virtual Agent', 'Now Assist', 'Agentic AI', 'GenAI', 'Flow Designer', 'IntegrationHub', 'TMF', 'Telecom', 'IT transformation', 'Enterprise Automation', 'Platform Governance'],
+        knowsAbout: ['ServiceNow', 'ITSM', 'IT Service Management', 'CSM', 'SOM', 'ITOM', 'HRSD', 'HR Service Delivery', 'CMDB', 'CSDM', 'ITIL', 'Virtual Agent', 'Now Assist', 'Agentic AI', 'GenAI', 'Flow Designer', 'IntegrationHub', 'REST API Integration', 'DevOps Change Velocity', 'TMF', 'Telecom', 'IT transformation', 'Enterprise Automation', 'Platform Governance'],
+        hasCredential: [...certMain, ...certMicro].map((c) => ({
+          '@type': 'EducationalOccupationalCredential',
+          name: c.startsWith('ServiceNow') ? c : `ServiceNow ${c}`,
+          credentialCategory: 'Professional Certification',
+        })),
         sameAs: siteConfig.socialMedia.map((s) => s.url),
       },
     })} />

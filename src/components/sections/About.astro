@@ -46,6 +46,7 @@ const stats = [
           </span>
           <h3>Strategy. Architecture. Impact.</h3>
         </div>
+        <p class="entity-lead">Cüneyt Bozok (Cuneyt Bozok) is a ServiceNow Solution Architect at EPAM Systems, based in Istanbul, Türkiye, with 8+ years of expertise in ITSM, CSM/SOM, ITOM, CMDB/CSDM, Virtual Agent, API integrations, and AI enablement with Now Assist and Agentic AI.</p>
         <p>I help enterprises modernize operations by leading discovery, defining target-state architecture, and making fit-to-standard decisions that balance out-of-the-box capabilities with purposeful customization across ITSM/CSM, ITOM, CMDB/CSDM, Virtual Agent, API integrations and more.</p>
         <p>I lead end-to-end engagements from maturity assessment and phased roadmap definition through architecture design, integration patterns, and rollout. I produce durable foundations — architecture blueprints, HLDs/LLDs, ADRs, and API contracts — so delivery teams and stakeholders stay aligned.</p>
         <p>Beyond delivery, I conduct internal ServiceNow trainings, facilitate architecture workshops with integrators and vendors, and participate in senior-level technical interviews to raise hiring quality and delivery standards.</p>
@@ -54,7 +55,7 @@ const stats = [
         {stats.map((s, i) => (
           <div class={`card stat ${s.tone} reveal`} data-d={i + 1}>
             <span class="ic" set:html={s.icon} />
-            <span class="val" data-count={s.count} data-suffix={s.suffix}>0</span>
+            <span class="val" data-count={s.count} data-suffix={s.suffix}>{s.count}{s.suffix}</span>
             <span class="lbl">{s.label}</span>
           </div>
         ))}

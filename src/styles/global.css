@@ -704,6 +704,18 @@ ul { list-style: none; }
 @keyframes ringPulse { 0%,100% { opacity: 0.5; transform: scaleX(1); } 50% { opacity: 0.8; transform: scaleX(0.8); } }
 
 /* ============================================================
+   FAQ
+   ============================================================ */
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.faq-item { padding: clamp(22px, 3vw, 30px); }
+.faq-item h3 { font-size: 1.02rem; font-weight: 650; letter-spacing: -0.01em; }
+.faq-item p { color: var(--text-muted); font-size: 0.92rem; margin-top: 10px; }
+
+/* ============================================================
    CONTACT
    ============================================================ */
 .contact-grid {
@@ -808,6 +820,7 @@ html.anim .reveal[data-d="4"] { transition-delay: 0.32s; }
   .orbit { max-width: 340px; margin: 12px auto 0; }
   .about-grid { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
+  .faq-grid { grid-template-columns: 1fr; }
   .cert-wrap { grid-template-columns: 1fr; gap: 30px; }
   .hexbadge { display: none; }
   .tools { grid-template-columns: repeat(3, 1fr); }

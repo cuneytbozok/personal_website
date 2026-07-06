@@ -27,13 +27,13 @@ export const experience: ExperienceEntry[] = [
   {
     company: 'EPAM Systems',
     period: '2022 – Present',
-    progression: 'Senior Developer → Lead Developer → Solution Architect',
+    progression: 'Senior Developer → Lead Developer',
     summary:
       'Leading ServiceNow architecture, integrations, and AI enablement initiatives for global enterprises across Telecom, Technology & Pharma.',
     open: true,
     roles: [
       {
-        title: 'Solution Architect / Lead ServiceNow Developer',
+        title: 'Lead ServiceNow Developer',
         period: 'Sep 2024 – Present',
         industry: 'Telecom · Technology & Networking · Pharma',
         promo: false,
