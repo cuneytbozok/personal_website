@@ -22,6 +22,10 @@
 
 ServiceNow CSA, CAD, CIS-ITSM, CIS Data Foundations (CMDB & CSDM), ITSM Professional Suite, Now Assist for ITSM Pro Plus Suite; micro-certifications include Agentic AI Executive, Now Assist Executive, Flow Designer, IntegrationHub, Virtual Agent, Service Portal, Performance Analytics, Predictive Intelligence.
 
+## Projects
+
+- [AssistMe](https://github.com/cuneytbozok/assistme): an open-source, read-only connector that lets Claude, ChatGPT Codex or Mistral Vibe investigate a ServiceNow instance through the user's own Chrome session. The user approves access with a code, and the AI assistant never sees their password, cookies or session tokens. Independent project, not affiliated with ServiceNow.
+
 ## Links
 
 - [Website](https://cuneytbozok.com)
