@@ -29,7 +29,7 @@ export const experience: ExperienceEntry[] = [
     period: '2022 – Present',
     progression: 'Senior Developer → Lead Developer',
     summary:
-      'Leading ServiceNow architecture, integrations, and AI enablement initiatives for global enterprises across Telecom, Technology & Pharma.',
+      'Discovery, maturity assessments, solution architecture, and AI enablement for global enterprises across Telecom, Technology & Pharma, backed by hands-on integration delivery.',
     open: true,
     roles: [
       {
@@ -38,11 +38,10 @@ export const experience: ExperienceEntry[] = [
         industry: 'Telecom · Technology & Networking · Pharma',
         promo: false,
         highlights: [
-          'Created target-state architecture and implementation guidelines for a headless B2B telco marketplace on ServiceNow (CSM, SOM, TNI, telco orchestration), mapping TM Forum Open APIs to ServiceNow data models and REST interfaces.',
-          'Defined API-driven channel-to-platform integration patterns, responsibility boundaries, and lifecycle/state flows across lead-to-order-to-fulfillment.',
-          'Produced delivery-ready architecture artifacts — HLDs, sequence diagrams, domain model/state diagrams, ADRs, and API contracts — to align teams and vendors.',
           'Led discovery and future-state design across ITSM, Employee Experience, and AI; assessed CMDB/CSDM and ITSM maturity and produced a phased roadmap with executive presentation.',
-          'Delivered demos and POCs covering Now Assist, Agentic AI, App Engine/Creator Studio, Employee Center Pro, and DevOps Change Velocity.',
+          'Supported pre-sales with demos and POCs covering Now Assist, Agentic AI, App Engine/Creator Studio, Employee Center Pro, and DevOps Change Velocity.',
+          'Created target-state architecture and implementation guidelines for a headless B2B telco marketplace on ServiceNow (CSM, SOM, TNI, telco orchestration), mapping TM Forum Open APIs to ServiceNow data models and REST interfaces.',
+          'Defined API-driven channel-to-platform integration patterns and lifecycle/state flows across lead-to-order-to-fulfillment, documented as HLDs, sequence and state diagrams, ADRs, and API contracts.',
         ],
       },
       {
@@ -84,7 +83,7 @@ export const experience: ExperienceEntry[] = [
         promo: true,
         highlights: [
           'Deployed MID Servers; integrated Azure SSO/LDAP; implemented custom inbound actions for event sources without APIs.',
-          'Designed custom HR Service Delivery Portal with bespoke widgets and Angular-based header menu components.',
+          'Designed a custom HR service portal with bespoke widgets and Angular-based header menu components.',
           'Delivered portal/workflow implementations for ITSM and HR use cases across multiple clients.',
         ],
       },
@@ -133,15 +132,40 @@ export const experience: ExperienceEntry[] = [
   },
 ];
 
-export const tools: Tool[] = [
-  { name: 'ServiceNow ITSM / ITOM / CSM', icon: 'layers' },
-  { name: 'CMDB / CSDM Alignment', icon: 'database' },
-  { name: 'Virtual Agent & Messaging', icon: 'bot' },
-  { name: 'API Integration (REST / SOAP)', icon: 'api' },
-  { name: 'Flow Designer & IntegrationHub', icon: 'flow' },
-  { name: 'Discovery & Assessment', icon: 'search' },
-  { name: 'AI / GenAI · Now Assist', icon: 'spark' },
-  { name: 'DevOps & Change Velocity', icon: 'devops' },
+export interface ToolGroup {
+  title: string;
+  /* Desktop column count, so each group fills complete rows. */
+  cols: 3 | 4;
+  tools: Tool[];
+}
+
+export const toolGroups: ToolGroup[] = [
+  {
+    title: 'Consulting & Advisory',
+    cols: 3,
+    tools: [
+      { name: 'Discovery & Stakeholder Workshops', icon: 'people' },
+      { name: 'ITSM & CMDB/CSDM Maturity Assessments', icon: 'search' },
+      { name: 'Target-State Architecture', icon: 'target' },
+      { name: 'Phased Transformation Roadmaps', icon: 'roadmap' },
+      { name: 'Fit-to-Standard Evaluation', icon: 'check' },
+      { name: 'Pre-Sales Demos & Proofs of Concept', icon: 'present' },
+    ],
+  },
+  {
+    title: 'Architecture & Delivery',
+    cols: 4,
+    tools: [
+      { name: 'ServiceNow ITSM / CSM / ITOM', icon: 'layers' },
+      { name: 'CMDB / CSDM Data Foundations', icon: 'database' },
+      { name: 'REST / SOAP Integrations', icon: 'api' },
+      { name: 'Flow Designer & IntegrationHub', icon: 'flow' },
+      { name: 'Virtual Agent & Messaging', icon: 'bot' },
+      { name: 'UI Builder & Custom Applications', icon: 'app' },
+      { name: 'Now Assist & Agentic AI Enablement', icon: 'spark' },
+      { name: 'DevOps Change Velocity', icon: 'devops' },
+    ],
+  },
 ];
 
 export const certMain: string[] = [
@@ -151,6 +175,7 @@ export const certMain: string[] = [
   'Certified Implementation Specialist – ITSM',
   'CIS – Data Foundations (CMDB & CSDM)',
   'Certified System Administrator',
+  'Pre-Sales Core',
 ];
 
 export const certMicro: string[] = [
@@ -180,6 +205,18 @@ export const toolIcons = {
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>',
   spark:
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/><circle cx="12" cy="12" r="2.5"/></svg>',
+  people:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><path d="M16 5.2a3.2 3.2 0 0 1 0 5.6M18 14.8c1.8.7 3 2.4 3 5.2"/></svg>',
+  target:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></svg>',
+  roadmap:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="5" cy="18" r="2"/><circle cx="19" cy="6" r="2"/><path d="M7 18h6a3 3 0 0 0 3-3v0a3 3 0 0 0-3-3h-2a3 3 0 0 1-3-3v0a3 3 0 0 1 3-3h6"/></svg>',
+  check:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="m8 9 1.5 1.5L12 8M8 15l1.5 1.5L12 14M15 9.5h1.5M15 15.5h1.5"/></svg>',
+  present:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 4h18M5 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4"/><path d="M12 15v3M8 21l4-3 4 3"/><path d="m10 8 4 2.5-4 2.5z"/></svg>',
+  app:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11"/></svg>',
   devops:
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg>',
 } as const;

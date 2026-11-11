@@ -1,0 +1,50 @@
+---
+/* Selected engagements, summarised from the Experience entries below.
+   Each card states its stage so assessment, design and delivery work are
+   never confused. No client names or unverified metrics. */
+const engagements = [
+  {
+    stage: 'Assessment & Roadmap',
+    title: 'ITSM & CMDB/CSDM Maturity Assessment',
+    scope: 'Current-state review of ITSM, Employee Experience, and AI readiness, including CMDB/CSDM maturity.',
+    contribution: 'Led discovery, assessed ITSM and CMDB/CSDM maturity, and shaped the future-state design.',
+    output: 'Phased roadmap and an executive presentation of findings and priorities.',
+  },
+  {
+    stage: 'Architecture Design',
+    title: 'Telco B2B Marketplace Architecture',
+    scope: 'A headless B2B marketplace on ServiceNow (CSM, SOM, TNI, telco orchestration) with API-driven customer channels.',
+    contribution: 'Defined the target-state architecture, mapped TM Forum Open APIs to ServiceNow data models, and set responsibility boundaries across lead-to-order-to-fulfillment.',
+    output: 'HLDs, sequence and state diagrams, ADRs, API contracts, and implementation guidelines for teams and vendors.',
+  },
+  {
+    stage: 'Proof of Concept',
+    title: 'AI-Enabled Service Automation',
+    scope: 'Automated processing of incoming financial request emails.',
+    contribution: 'Designed and built the flow: AI classification of incoming emails, ticket creation in ServiceNow, and integration with SAP and UiPath.',
+    output: 'A working proof of concept of the end-to-end automation flow.',
+  },
+];
+---
+
+<section class="section" id="engagements">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Selected Engagements</h2>
+      <span class="rule"></span>
+    </div>
+    <div class="eng-grid">
+      {engagements.map((e, i) => (
+        <article class="card eng reveal" data-d={i + 1}>
+          <p class="eng-stage">{e.stage}</p>
+          <h3>{e.title}</h3>
+          <dl>
+            <div><dt>Scope</dt><dd>{e.scope}</dd></div>
+            <div><dt>Contribution</dt><dd>{e.contribution}</dd></div>
+            <div><dt>Output</dt><dd>{e.output}</dd></div>
+          </dl>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

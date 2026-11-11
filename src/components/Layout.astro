@@ -143,6 +143,9 @@ const { title, description } = Astro.props;
       };
       burger.addEventListener('click', function () { setOpen(!menu.classList.contains('open')); });
       menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && menu.classList.contains('open')) { setOpen(false); burger.focus(); }
+      });
     }
 
     /* ---------- scroll reveal (rect-based, IO-independent) ---------- */
@@ -175,12 +178,12 @@ const { title, description } = Astro.props;
 
     /* ---------- count-up stats (rect-based trigger) ----------
        The server-rendered HTML holds the real final value so crawlers and
-       no-JS visitors see it; JS resets to 0 only when it will animate. */
+       no-JS visitors see it. It is left untouched until the stat scrolls into
+       view, so JS-rendering readers that never scroll still get real values. */
     function initCounters() {
       var nums = Array.prototype.slice.call(document.querySelectorAll('[data-count]'));
       if (!nums.length) return;
       var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (!reduce) { nums.forEach(function (el) { el.textContent = '0'; }); }
       var run = function (el) {
         var target = parseInt(el.getAttribute('data-count'), 10) || 0;
         var suffix = el.getAttribute('data-suffix') || '';

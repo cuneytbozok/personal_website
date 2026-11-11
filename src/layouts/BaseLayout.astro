@@ -36,7 +36,7 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, siteConfig.siteUrl
     <meta property="og:image" content={image} />
     <meta property="og:image:width" content="2848" />
     <meta property="og:image:height" content="1504" />
-    <meta property="og:image:alt" content="Cüneyt Bozok — ServiceNow Solution Architect" />
+    <meta property="og:image:alt" content="Cüneyt Bozok — Technology Consulting &amp; ServiceNow Solution Architecture" />
     <meta property="og:site_name" content="Cüneyt Bozok" />
     <meta property="og:locale" content="en_US" />
     <meta property="profile:first_name" content="Cüneyt" />
@@ -46,7 +46,7 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, siteConfig.siteUrl
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={image} />
-    <meta name="twitter:image:alt" content="Cüneyt Bozok — ServiceNow Solution Architect" />
+    <meta name="twitter:image:alt" content="Cüneyt Bozok — Technology Consulting &amp; ServiceNow Solution Architecture" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- Load fonts without blocking first paint -->
@@ -99,7 +99,7 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, siteConfig.siteUrl
           addressCountry: siteConfig.location.countryCode,
         },
         knowsLanguage: siteConfig.knowsLanguage,
-        knowsAbout: ['ServiceNow', 'ITSM', 'IT Service Management', 'CSM', 'SOM', 'ITOM', 'HRSD', 'HR Service Delivery', 'CMDB', 'CSDM', 'ITIL', 'Virtual Agent', 'Now Assist', 'Agentic AI', 'GenAI', 'Flow Designer', 'IntegrationHub', 'REST API Integration', 'DevOps Change Velocity', 'TMF', 'Telecom', 'IT transformation', 'Enterprise Automation', 'Platform Governance'],
+        knowsAbout: ['Technology Consulting', 'Solution Architecture', 'IT Maturity Assessment', 'Transformation Roadmaps', 'ServiceNow', 'ITSM', 'IT Service Management', 'CSM', 'SOM', 'ITOM', 'CMDB', 'CSDM', 'ITIL', 'Virtual Agent', 'Now Assist', 'Agentic AI', 'GenAI', 'Flow Designer', 'IntegrationHub', 'REST API Integration', 'DevOps Change Velocity', 'TMF', 'Telecom', 'IT transformation', 'Enterprise Automation', 'Platform Governance'],
         hasCredential: [...certMain, ...certMicro].map((c) => ({
           '@type': 'EducationalOccupationalCredential',
           name: c.startsWith('ServiceNow') ? c : `ServiceNow ${c}`,

@@ -1,21 +1,26 @@
 ---
-import { tools, toolIcons } from '../../data/portfolio';
+import { toolGroups, toolIcons } from '../../data/portfolio';
 ---
 
 <section class="section" id="toolbox">
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="num">03.</span>
-      <h2>Toolbox</h2>
+      <h2>Capabilities</h2>
       <span class="rule"></span>
     </div>
-    <div class="tools" id="tools">
-      {tools.map((t, i) => (
-        <div class="card tool reveal" data-d={(i % 4) + 1}>
-          <span class="ic" set:html={toolIcons[t.icon]} />
-          <span class="name">{t.name}</span>
+    {toolGroups.map((g) => (
+      <div class="tool-group">
+        <h3 class="tool-group-title reveal">{g.title}</h3>
+        <div class:list={['tools', `cols-${g.cols}`]}>
+          {g.tools.map((t, i) => (
+            <div class="card tool reveal" data-d={(i % g.cols) + 1}>
+              <span class="ic" set:html={toolIcons[t.icon]} />
+              <span class="name">{t.name}</span>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
+      </div>
+    ))}
   </div>
 </section>

@@ -1,15 +1,24 @@
 # Cüneyt Bozok
 
-> Cüneyt Bozok (also written Cuneyt Bozok) is a ServiceNow Solution Architect at EPAM Systems, based in Istanbul, Türkiye, with 8+ years of experience delivering ITSM, CSM/SOM, ITOM, CMDB/CSDM, Virtual Agent, API integrations, and AI enablement (Now Assist, Agentic AI) for global enterprises.
+> Cüneyt Bozok (also written Cuneyt Bozok) is a Lead ServiceNow Developer at EPAM Systems, based in Istanbul, Türkiye, working across solution architecture, client discovery, maturity assessments, and pre-sales. Since 2017 he has delivered ITSM, CSM/SOM, ITOM, CMDB/CSDM, Virtual Agent, API integrations, and AI enablement (Now Assist, Agentic AI) for global enterprises.
 
 ## About
 
-- Current role: Solution Architect / Lead ServiceNow Developer at EPAM Systems (2022 – present)
+- Current role: Lead ServiceNow Developer at EPAM Systems (Senior ServiceNow Developer 2022 – 2024, Lead since 2024); scope includes solution architecture, discovery, and pre-sales
 - Previously: ServiceNow Architect & Consultant at Softtech (2018 – 2022); ServiceNow Consultant at Deloitte Turkey (2017 – 2018)
 - Industries: telecom, technology & networking, pharma, e-commerce, manufacturing, banking & financial services, food & consumer goods, enterprise software, wellness
 - Location: Istanbul, Türkiye · Languages: English, Turkish
 
-## Expertise
+## Consulting focus
+
+- Discovery and stakeholder workshops
+- ITSM and CMDB/CSDM maturity assessments
+- Target-state architecture and fit-to-standard evaluation
+- Phased transformation roadmaps and executive presentations
+- Pre-sales demos and proofs of concept
+- Open to technology consulting, service transformation, and solution architecture roles
+
+## Technical expertise
 
 - ServiceNow ITSM, CSM, Service Order Management (SOM), ITOM
 - CMDB / CSDM data foundations and maturity assessments
@@ -20,7 +29,7 @@
 
 ## Certifications
 
-ServiceNow CSA, CAD, CIS-ITSM, CIS Data Foundations (CMDB & CSDM), ITSM Professional Suite, Now Assist for ITSM Pro Plus Suite; micro-certifications include Agentic AI Executive, Now Assist Executive, Flow Designer, IntegrationHub, Virtual Agent, Service Portal, Performance Analytics, Predictive Intelligence.
+ServiceNow CSA, CAD, CIS-ITSM, CIS Data Foundations (CMDB & CSDM), ITSM Professional Suite, Now Assist for ITSM Pro Plus Suite, Pre-Sales Core; micro-certifications include Agentic AI Executive, Now Assist Executive, Flow Designer, IntegrationHub, Virtual Agent, Service Portal, Performance Analytics, Predictive Intelligence.
 
 ## Projects
 
