@@ -1,6 +1,6 @@
 # Cüneyt Bozok
 
-> Cüneyt Bozok (also written Cuneyt Bozok) is a Lead ServiceNow Developer at EPAM Systems, based in Istanbul, Türkiye, working across solution architecture, client discovery, maturity assessments, and pre-sales. Since 2017 he has delivered ITSM, CSM/SOM, ITOM, CMDB/CSDM, Virtual Agent, API integrations, and AI enablement (Now Assist, Agentic AI) for global enterprises.
+> Cüneyt Bozok (also written Cuneyt Bozok) is a Lead ServiceNow Developer at EPAM Systems, based in Istanbul, Türkiye, working across technology consulting, solution architecture, client discovery, maturity assessments, and pre-sales. Since 2017 he has delivered ITSM, CSM/SOM, ITOM, CMDB/CSDM, Virtual Agent, API integrations, and AI enablement (Now Assist, Agentic AI) for global enterprises.
 
 ## About
 
@@ -13,10 +13,12 @@
 
 - Discovery and stakeholder workshops
 - ITSM and CMDB/CSDM maturity assessments
+- Business process improvement
 - Target-state architecture and fit-to-standard evaluation
+- AI readiness and use-case evaluation
 - Phased transformation roadmaps and executive presentations
 - Pre-sales demos and proofs of concept
-- Open to technology consulting, service transformation, and solution architecture roles
+- Open to technology consulting, digital transformation, and advisory opportunities
 
 ## Technical expertise
 
@@ -33,7 +35,7 @@ ServiceNow CSA, CAD, CIS-ITSM, CIS Data Foundations (CMDB & CSDM), ITSM Professi
 
 ## Projects
 
-- [AssistMe](https://github.com/cuneytbozok/assistme): an open-source, read-only connector that lets Claude, ChatGPT Codex or Mistral Vibe investigate a ServiceNow instance through the user's own Chrome session. The user approves access with a code, and the AI assistant never sees their password, cookies or session tokens. Independent project, not affiliated with ServiceNow.
+- [AssistMe](https://github.com/cuneytbozok/assistme): an open-source project that lets AI assistants (Claude, ChatGPT Desktop, Mistral Vibe) investigate a ServiceNow instance through the user's existing authenticated Chrome session, using read-only tools and the user's own permissions. Access is approved in the browser; no integration user, OAuth application, or instance-side installation is needed. Early-stage: so far tested on Mac with an admin account. Independent project, not affiliated with ServiceNow.
 
 ## Links
 

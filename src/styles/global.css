@@ -636,7 +636,6 @@ ul { list-style: none; }
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
 }
-.tools.cols-3 { grid-template-columns: repeat(3, 1fr); }
 .tool-group + .tool-group { margin-top: 38px; }
 .tool-group-title { font-family: var(--font-mono); font-size: 0.86rem; color: var(--accent); margin-bottom: 16px; }
 .tool {
@@ -795,14 +794,26 @@ ul { list-style: none; }
 /* ============================================================
    FAQ
    ============================================================ */
-.faq-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+/* Native <details> accordion: keyboard and screen-reader support built in. */
+.faq-list { display: flex; flex-direction: column; gap: 12px; max-width: 900px; }
+.faq-item { padding: 0; }
+.faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: clamp(16px, 2.2vw, 20px) clamp(18px, 3vw, 26px);
+  cursor: pointer;
+  list-style: none;
+  border-radius: inherit;
 }
-.faq-item { padding: clamp(22px, 3vw, 30px); }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 2px; }
 .faq-item h3 { font-size: 1.02rem; font-weight: 650; letter-spacing: -0.01em; }
-.faq-item p { color: var(--text-muted); font-size: 0.92rem; margin-top: 10px; }
+.faq-item .chev { flex: none; width: 18px; height: 18px; color: var(--accent); transition: transform 0.25s var(--ease); }
+.faq-item[open] .chev { transform: rotate(180deg); }
+.faq-item summary:hover h3 { color: var(--accent-bright); }
+.faq-item p { color: var(--text-muted); font-size: 0.92rem; padding: 0 clamp(18px, 3vw, 26px) clamp(18px, 2.4vw, 22px); }
 
 /* ============================================================
    CONTACT
@@ -915,7 +926,6 @@ html.anim .reveal[data-d="4"] { transition-delay: 0.32s; }
   .orbit { max-width: 340px; margin: 12px auto 0; }
   .about-grid { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
-  .faq-grid { grid-template-columns: 1fr; }
   .eng-grid { grid-template-columns: 1fr; }
   .cert-wrap { grid-template-columns: 1fr; gap: 30px; }
   .hexbadge { display: none; }
@@ -924,7 +934,7 @@ html.anim .reveal[data-d="4"] { transition-delay: 0.32s; }
   .spotlight-points { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 620px) {
-  .tools, .tools.cols-3 { grid-template-columns: repeat(2, 1fr); }
+  .tools { grid-template-columns: repeat(2, 1fr); }
   /* Icon only, so the button doesn't cover the poster's small text. */
   .spotlight-play { padding: 10px; }
   .spotlight-play .pill { padding: 10px; }

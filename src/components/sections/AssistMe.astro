@@ -3,20 +3,20 @@ const repoUrl = 'https://github.com/cuneytbozok/assistme';
 
 const points = [
   {
-    title: 'Read-only.',
-    text: "It can't create, change or delete anything, or run scripts.",
+    title: 'Designed for read-only investigation.',
+    text: 'No direct record modification tools are exposed.',
   },
   {
-    title: 'You approve access.',
-    text: 'Your AI assistant shows a code, and nothing is read until you approve it in Chrome.',
+    title: 'Approved in the browser.',
+    text: 'Nothing is read until you approve the request in Chrome.',
   },
   {
-    title: 'Your credentials stay put.',
-    text: 'Your AI assistant never sees your password, cookies or session tokens.',
+    title: 'Your existing permissions.',
+    text: 'No integration user or OAuth application to set up.',
   },
   {
-    title: 'Tested to prove it.',
-    text: '30,000 fuzzed tool calls, and every one was a GET.',
+    title: 'Nothing on the instance.',
+    text: 'No app, plugin or update set to install in ServiceNow.',
   },
 ];
 ---
@@ -24,7 +24,7 @@ const points = [
 <section class="section" id="assistme">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>Something I Built</h2>
+      <h2>Innovation &amp; Open Source</h2>
       <span class="rule"></span>
     </div>
     <div class="card spotlight reveal">
@@ -50,20 +50,21 @@ const points = [
         </button>
       </div>
       <div class="spotlight-body">
-        <p class="tag">Independent open-source project · ServiceNow × AI</p>
+        <p class="tag">Open-source side project · ServiceNow × AI</p>
         <h3>AssistMe</h3>
-        <p class="line">Your AI reads your ServiceNow. You stay in control.</p>
+        <p class="line">AI-assisted ServiceNow investigation.</p>
         <p class="desc">
-          AI assistants are good at investigating a ServiceNow instance, but most teams
-          can't hand one credentials or write access. I built this connector so Claude,
-          ChatGPT Codex or Mistral Vibe can do it through your own Chrome session. Ask why an incident changed or
-          which scripts touch a field, and it reads the answer with your permissions.
+          Working out why a record changed, what depends on a field, or why the platform
+          behaved unexpectedly takes time. AssistMe lets an AI assistant (Claude, ChatGPT
+          Desktop or Mistral Vibe) investigate a ServiceNow instance through your existing
+          authenticated Chrome session. I built it to explore how AI can help people get to
+          the cause of real operational problems faster.
         </p>
         <a href={repoUrl} class="btn btn-primary" target="_blank" rel="noopener noreferrer">
           View on GitHub
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg>
         </a>
-        <p class="note">Mac + Chrome · about 10 minutes to set up. Independent project, not affiliated with ServiceNow.</p>
+        <p class="note">Early-stage project. So far tested on Mac with an admin account; other setups aren't validated yet. Not affiliated with ServiceNow.</p>
       </div>
       <ul class="spotlight-points">
         {points.map((p) => (

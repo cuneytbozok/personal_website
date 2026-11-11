@@ -4,19 +4,15 @@
 const faqs = [
   {
     q: 'Who is Cüneyt Bozok?',
-    a: 'Cüneyt Bozok is a Lead ServiceNow Developer at EPAM Systems, based in Istanbul, Türkiye, with responsibilities spanning client discovery, solution architecture, maturity assessments, and pre-sales. He has been designing and delivering ServiceNow solutions since 2017 — from discovery and maturity assessment through target-state architecture, integrations, and rollout.',
+    a: 'Cüneyt Bozok is a Lead ServiceNow Developer at EPAM Systems, based in Istanbul, Türkiye. His work spans technology consulting and solution architecture: client discovery, maturity assessments, target-state design, transformation roadmaps, and pre-sales. He has worked with ServiceNow since 2017, at Deloitte Turkey, Softtech, and EPAM Systems.',
   },
   {
-    q: 'What kinds of consulting engagements does Cüneyt Bozok focus on?',
-    a: 'Discovery workshops, ITSM and CMDB/CSDM maturity assessments, target-state architecture, fit-to-standard evaluation, phased transformation roadmaps, and pre-sales demos and proofs of concept, mostly around service management and AI enablement on ServiceNow.',
+    q: 'What kinds of consulting work does he focus on?',
+    a: 'Discovery and stakeholder workshops, ITSM and CMDB/CSDM maturity assessments, business process improvement, fit-to-standard evaluation, target-state architecture, and phased transformation roadmaps. Most of this work is in service management and AI enablement on ServiceNow, and it often starts in pre-sales with demos and proofs of concept.',
   },
   {
     q: 'How does his technical background support his advisory work?',
-    a: 'He has built on ServiceNow since 2017: integrations, portals, Virtual Agent experiences, and custom applications. That delivery experience lets him judge integration dependencies, data quality, and platform constraints when recommending a target state, and hand over HLDs, ADRs, and API contracts that engineering teams can build from.',
-  },
-  {
-    q: 'Which ServiceNow capabilities has he worked with?',
-    a: 'ITSM, CSM and Service Order Management (SOM), ITOM, CMDB/CSDM data foundations, Virtual Agent, custom HR service portals, Flow Designer and IntegrationHub, and AI enablement with Now Assist and Agentic AI.',
+    a: 'He has built on ServiceNow since 2017 across ITSM, CSM and Service Order Management (SOM), ITOM, CMDB/CSDM, Virtual Agent, service portals, Flow Designer and IntegrationHub, and Now Assist and Agentic AI. That delivery experience lets him weigh platform constraints, integration dependencies, and data quality when recommending a target state, and give engineering teams direction they can build from.',
   },
   {
     q: 'Which industries has he worked in?',
@@ -27,12 +23,12 @@ const faqs = [
     a: 'ServiceNow Certified System Administrator (CSA), Certified Application Developer (CAD), Certified Implementation Specialist – ITSM, CIS – Data Foundations (CMDB & CSDM), ITSM Professional Suite, Now Assist for ITSM Pro Plus Suite, and Pre-Sales Core, plus micro-certifications including Agentic AI Executive, Now Assist Executive, Flow Designer, IntegrationHub, Virtual Agent, Service Portal, Performance Analytics, and Predictive Intelligence.',
   },
   {
-    q: 'Is he open to new opportunities?',
-    a: 'Yes. He is interested in technology consulting, service transformation, and solution architecture roles that connect business priorities with practical technology decisions and delivery.',
+    q: 'What is AssistMe?',
+    a: 'AssistMe is his open-source side project. It lets AI assistants such as Claude, ChatGPT Desktop, and Mistral Vibe investigate a ServiceNow instance through the user\'s existing Chrome session, with read-only tools, the user\'s own permissions, and access approved in the browser. It is an early-stage project, so far tested on Mac with an admin account, and is available at github.com/cuneytbozok/assistme.',
   },
   {
-    q: 'How can I contact Cüneyt Bozok?',
-    a: 'By email at cuneyt@cuneytbozok.com, or via LinkedIn at linkedin.com/in/cuneytbozok. His work is also on GitHub at github.com/cuneytbozok.',
+    q: 'Is he open to new opportunities, and how can I reach him?',
+    a: 'Yes. He is interested in opportunities around technology consulting, digital transformation, and advisory. Reach him by email at cuneyt@cuneytbozok.com or on LinkedIn at linkedin.com/in/cuneytbozok.',
   },
 ];
 
@@ -54,12 +50,15 @@ const faqSchema = {
       <h2>Frequently Asked Questions</h2>
       <span class="rule"></span>
     </div>
-    <div class="faq-grid">
+    <div class="faq-list">
       {faqs.map((f, i) => (
-        <div class="card faq-item reveal" data-d={(i % 2) + 1}>
-          <h3>{f.q}</h3>
+        <details class="card faq-item reveal" open={i === 0}>
+          <summary>
+            <h3>{f.q}</h3>
+            <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+          </summary>
           <p>{f.a}</p>
-        </div>
+        </details>
       ))}
     </div>
   </div>

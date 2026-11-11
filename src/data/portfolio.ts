@@ -135,20 +135,22 @@ export const experience: ExperienceEntry[] = [
 export interface ToolGroup {
   title: string;
   /* Desktop column count, so each group fills complete rows. */
-  cols: 3 | 4;
+  cols: 4;
   tools: Tool[];
 }
 
 export const toolGroups: ToolGroup[] = [
   {
     title: 'Consulting & Advisory',
-    cols: 3,
+    cols: 4,
     tools: [
       { name: 'Discovery & Stakeholder Workshops', icon: 'people' },
       { name: 'ITSM & CMDB/CSDM Maturity Assessments', icon: 'search' },
+      { name: 'Business Process Improvement', icon: 'process' },
       { name: 'Target-State Architecture', icon: 'target' },
       { name: 'Phased Transformation Roadmaps', icon: 'roadmap' },
       { name: 'Fit-to-Standard Evaluation', icon: 'check' },
+      { name: 'AI Readiness & Use-Case Evaluation', icon: 'bulb' },
       { name: 'Pre-Sales Demos & Proofs of Concept', icon: 'present' },
     ],
   },
@@ -213,6 +215,10 @@ export const toolIcons = {
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="5" cy="18" r="2"/><circle cx="19" cy="6" r="2"/><path d="M7 18h6a3 3 0 0 0 3-3v0a3 3 0 0 0-3-3h-2a3 3 0 0 1-3-3v0a3 3 0 0 1 3-3h6"/></svg>',
   check:
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="m8 9 1.5 1.5L12 8M8 15l1.5 1.5L12 14M15 9.5h1.5M15 15.5h1.5"/></svg>',
+  process:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 12a8 8 0 0 1 13.7-5.7L20 8.5"/><path d="M20 4v4.5h-4.5"/><path d="M20 12a8 8 0 0 1-13.7 5.7L4 15.5"/><path d="M4 20v-4.5h4.5"/></svg>',
+  bulb:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg>',
   present:
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 4h18M5 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4"/><path d="M12 15v3M8 21l4-3 4 3"/><path d="m10 8 4 2.5-4 2.5z"/></svg>',
   app:
