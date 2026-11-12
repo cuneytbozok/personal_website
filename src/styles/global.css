@@ -481,7 +481,9 @@ html:has(.mobile-menu[open]) { overflow: hidden; }
   .focus-list li::before { animation: focus-bar 0.5s var(--ease) both; animation-delay: calc(0.55s + var(--i) * 0.09s); }
   @keyframes focus-bar { from { transform: scaleY(0); opacity: 0; } }
 }
-.hero-cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+/* equal-width buttons, sized to the wider label */
+.hero-cta { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; width: fit-content; gap: 14px; margin-top: 30px; }
+.hero-cta .btn { justify-content: center; }
 
 /* ---------- hero orbit graphic ---------- */
 .orbit {
@@ -1075,8 +1077,8 @@ a.cinfo:hover .meta .v { color: var(--accent); }
 }
 /* narrow two-column hero: shrink the buttons so they stay side by side */
 @media (min-width: 781px) and (max-width: 940px) {
-  .hero-cta { flex-wrap: nowrap; gap: 10px; }
-  .hero-cta .btn { font-size: 0.76rem; padding: 12px 14px; gap: 8px; }
+  .hero-cta { gap: 10px; }
+  .hero-cta .btn { font-size: 0.8rem; padding: 12px 16px; gap: 8px; }
 }
 @media (max-width: 780px) {
   .hero .wrap { grid-template-columns: 1fr; }
@@ -1102,9 +1104,8 @@ a.cinfo:hover .meta .v { color: var(--accent); }
   .hero { padding-top: calc(var(--nav-h) + 12px); }
   .hero .eyebrow { font-size: 0.68rem; letter-spacing: 0.12em; margin-bottom: 16px; }
   .hero p.lede { margin-top: 20px; }
-  .hero-cta { gap: 8px; margin-top: 24px; }
-  .hero-cta .btn { flex: 1 1 auto; justify-content: center; font-size: 0.76rem; padding: 13px 10px; gap: 6px; }
-  .hero-cta .btn-ghost svg { display: none; }
+  .hero-cta { width: 100%; gap: 10px; margin-top: 24px; }
+  .hero-cta .btn { font-size: 0.8rem; padding: 13px 12px; gap: 8px; }
   .hero-facts { margin-top: 24px; }
 }
 /* Keep all six orbit nodes visible on every phone size: shrink the
