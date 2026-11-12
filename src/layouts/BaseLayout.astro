@@ -11,6 +11,7 @@ interface Props {
 }
 
 const { title = siteConfig.seoTitle, description = siteConfig.seoDescription, image = `${siteConfig.siteUrl}/images/og-image.png`, canonical } = Astro.props;
+const portraitUrl = `${siteConfig.siteUrl}/images/cuneyt-bozok.jpg`;
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, siteConfig.siteUrl).toString();
 ---
 
@@ -88,7 +89,14 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, siteConfig.siteUrl
         name: siteConfig.name,
         alternateName: siteConfig.alternateName,
         url: siteConfig.siteUrl,
-        image: image,
+        image: {
+          '@type': 'ImageObject',
+          url: portraitUrl,
+          contentUrl: portraitUrl,
+          width: 1301,
+          height: 1626,
+          caption: siteConfig.name,
+        },
         jobTitle: siteConfig.jobTitle,
         description: siteConfig.seoDescription,
         email: `mailto:${siteConfig.email}`,
