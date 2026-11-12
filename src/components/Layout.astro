@@ -126,7 +126,13 @@ const { title, description } = Astro.props;
           if (!s) continue;
           if (mid >= s.offsetTop) activeId = s.id;
         }
-        links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('data-sec') === activeId); });
+        links.forEach(function (a) {
+          var isActive = a.getAttribute('data-sec') === activeId;
+          a.classList.toggle('active', isActive);
+          // Mirror the visual state for assistive technology.
+          if (isActive) a.setAttribute('aria-current', 'true');
+          else a.removeAttribute('aria-current');
+        });
       });
     }
 

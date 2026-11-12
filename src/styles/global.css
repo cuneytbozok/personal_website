@@ -1,6 +1,33 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Minimal base reset (replaces the Tailwind preflight this site used to load;
+   only the rules the markup actually relies on are kept). */
+*, ::before, ::after {
+  box-sizing: border-box;
+  border: 0 solid #e5e7eb;
+}
+html {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+  -webkit-tap-highlight-color: transparent;
+}
+h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; }
+h1, h2, h3 { text-wrap: balance; }
+p, li { text-wrap: pretty; }
+b, strong { font-weight: bolder; }
+small { font-size: 80%; }
+button {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  text-transform: none;
+  -webkit-appearance: button;
+  background-color: transparent;
+  background-image: none;
+}
+summary { display: list-item; }
+img, svg, video, canvas, audio, iframe, embed, object { display: block; vertical-align: middle; }
+img, video { max-width: 100%; height: auto; }
+[hidden]:where(:not([hidden="until-found"])) { display: none; }
 
 /* ============================================================
    Cüneyt Bozok — Redesign
@@ -333,6 +360,7 @@ ul { list-style: none; }
    ============================================================ */
 .hero {
   min-height: calc(100vh - var(--nav-h));
+  min-height: calc(100svh - var(--nav-h));
   display: flex;
   align-items: center;
   padding-top: calc(var(--nav-h) + 24px);
