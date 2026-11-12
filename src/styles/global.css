@@ -438,20 +438,35 @@ html:has(.mobile-menu[open]) { overflow: hidden; }
   font-size: clamp(1rem, 1.4vw, 1.12rem);
   color: var(--text-muted);
 }
-.cert-chips { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 28px; }
-.chip {
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  letter-spacing: 0.04em;
-  color: var(--text-muted);
-  padding: 7px 13px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: rgba(255,255,255,0.015);
-  transition: border-color 0.2s, color 0.2s, background 0.2s;
+.hero-facts { margin-top: 34px; max-width: 46ch; }
+.focus-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 26px;
 }
-.chip:hover { border-color: var(--border-accent); color: var(--accent); background: var(--accent-dim); }
-.hero-cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
+.focus-list li {
+  position: relative;
+  padding-left: 16px;
+  font-size: 0.95rem;
+  font-weight: 550;
+  color: var(--text);
+}
+/* accent bar that draws in after the hero copy has landed */
+.focus-list li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0.2em; bottom: 0.2em;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(var(--accent-bright), var(--accent-deep));
+  transform-origin: top;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .focus-list li::before { animation: focus-bar 0.5s var(--ease) both; animation-delay: calc(0.55s + var(--i) * 0.09s); }
+  @keyframes focus-bar { from { transform: scaleY(0); opacity: 0; } }
+}
+.hero-cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
 
 /* ---------- hero orbit graphic ---------- */
 .orbit {
@@ -459,7 +474,9 @@ html:has(.mobile-menu[open]) { overflow: hidden; }
   width: 100%;
   aspect-ratio: 1 / 1;
   max-width: 460px;
-  margin: 0 auto;
+  /* sits near the top of the taller copy column rather than centred against it */
+  align-self: start;
+  margin: 36px auto 0;
   display: grid;
   place-items: center;
 }
@@ -1025,8 +1042,10 @@ a.cinfo:hover .meta .v { color: var(--accent); }
   .nav-links { display: none; }
   .nav-cta .btn { display: none; }
   .burger { display: flex; }
-  .hero .wrap { grid-template-columns: 1fr; }
-  .orbit { max-width: 340px; margin: 12px auto 0; }
+  /* the hero keeps its two columns here; it only stacks below 780px */
+  .hero .wrap { grid-template-columns: 1.1fr 0.9fr; gap: clamp(24px, 4vw, 40px); }
+  .orbit { max-width: 340px; }
+  .orbit-node { font-size: 0.62rem; max-width: 104px; padding: 6px 8px; }
   .about-lead { grid-template-columns: 1fr; }
   .about-lead h3 { white-space: normal; }
   .about-body { padding-left: 0; border-left: 0; }
@@ -1038,6 +1057,15 @@ a.cinfo:hover .meta .v { color: var(--accent); }
   .tools { grid-template-columns: repeat(3, 1fr); }
   .spotlight { grid-template-columns: 1fr; }
   .spotlight-points { grid-template-columns: repeat(2, 1fr); }
+}
+/* narrow two-column hero: shrink the buttons so they stay side by side */
+@media (min-width: 781px) and (max-width: 940px) {
+  .hero-cta { flex-wrap: nowrap; gap: 10px; }
+  .hero-cta .btn { font-size: 0.76rem; padding: 12px 14px; gap: 8px; }
+}
+@media (max-width: 780px) {
+  .hero .wrap { grid-template-columns: 1fr; }
+  .orbit { margin: 12px auto 0; }
 }
 @media (max-width: 620px) {
   .tools { grid-template-columns: repeat(2, 1fr); }
