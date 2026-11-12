@@ -12,35 +12,39 @@ import { experience } from '../../data/portfolio';
     </div>
     <div class="xp" id="xp">
       {experience.map((c) => (
-        <article class:list={['xp-item', { open: c.open }]}>
+        <article class="xp-item">
           <div class="xp-period">{c.period}</div>
           <div class="xp-body">
-            <div class="xp-head" role="button" tabindex="0" aria-expanded={c.open ? 'true' : 'false'}>
-              <div>
-                <h3 class="xp-company">{c.company}</h3>
-                <div class="xp-prog">{c.progression}</div>
-                <div class="xp-summary">{c.summary}</div>
+            {/* Native disclosure: keyboard, screen-reader state and find-in-page
+                come from the browser, and it still opens without JavaScript. */}
+            <details class="xp-disclosure" open={c.open}>
+              <summary class="xp-head">
+                <span class="xp-head-text">
+                  <h3 class="xp-company">{c.company}</h3>
+                  <span class="xp-prog">{c.progression}</span>
+                  <span class="xp-summary">{c.summary}</span>
+                </span>
+                <span class="xp-toggle" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                </span>
+              </summary>
+              <div class="xp-detail">
+                {c.roles.map((r) => (
+                  <div class="role">
+                    {r.promo && (
+                      <span class="promo"><span aria-hidden="true">↑</span> Promotion</span>
+                    )}
+                    <div class="role-title">{r.title} <span class="when">— {r.period}</span></div>
+                    <div class="role-ind">{r.industry}</div>
+                    <ul>
+                      {r.highlights.map((h) => (
+                        <li><span class="b">▹</span><span>{h}</span></li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
               </div>
-              <span class="xp-toggle" aria-hidden="true">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-              </span>
-            </div>
-            <div class="xp-detail"><div class="xp-detail-inner">
-              {c.roles.map((r) => (
-                <div class="role">
-                  {r.promo && (
-                    <span class="promo"><span aria-hidden="true">↑</span> Promotion</span>
-                  )}
-                  <div class="role-title">{r.title} <span class="when">— {r.period}</span></div>
-                  <div class="role-ind">{r.industry}</div>
-                  <ul>
-                    {r.highlights.map((h) => (
-                      <li><span class="b">▹</span><span>{h}</span></li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div></div>
+            </details>
           </div>
         </article>
       ))}

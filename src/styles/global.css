@@ -241,6 +241,12 @@ ul { list-style: none; }
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   border-bottom-color: var(--border);
 }
+.nav-sentinel {
+  position: absolute;
+  top: 0; left: 0;
+  width: 1px; height: 24px;
+  pointer-events: none;
+}
 .nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: clamp(20px, 2.6vw, 36px); width: 100%; }
 .brand { white-space: nowrap; display: flex; align-items: center; gap: 11px; font-weight: 600; font-size: 1.02rem; letter-spacing: -0.01em; }
 .brand .mark {
@@ -255,7 +261,11 @@ ul { list-style: none; }
   font-size: 0.92rem;
   box-shadow: inset 0 0 18px rgba(45,226,197,0.12);
 }
-.nav-links { display: flex; align-items: center; gap: clamp(16px, 2vw, 30px); }
+.nav-links {
+  display: flex; align-items: center; gap: clamp(16px, 2vw, 30px);
+  /* Lets the browser track which linked section is in view (:target-current). */
+  scroll-target-group: auto;
+}
 .nav-links a {
   font-family: var(--font-mono);
   font-size: 0.82rem;
@@ -278,8 +288,8 @@ ul { list-style: none; }
 }
 .nav-links a:hover { color: var(--text); }
 .nav-links a:hover::after,
-.nav-links a.active::after { width: 100%; }
-.nav-links a.active { color: var(--text); }
+.nav-links a:is(:target-current, .active)::after { width: 100%; }
+.nav-links a:is(:target-current, .active) { color: var(--text); }
 .nav-cta { display: flex; align-items: center; gap: 14px; }
 .nav-cta .btn { white-space: nowrap; padding: 10px 18px; font-size: 0.82rem; }
 
@@ -299,27 +309,54 @@ ul { list-style: none; }
 .burger.open span:nth-child(2) { opacity: 0; }
 .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* mobile menu */
+/* mobile menu: a modal <dialog> in the top layer. The browser makes the
+   page behind it inert, handles Escape, and returns focus to the burger. */
 .mobile-menu {
   position: fixed;
-  inset: var(--nav-h) 0 0 0;
-  z-index: 90;
+  inset: 0;
+  width: auto; height: auto;
+  max-width: none; max-height: none;
+  margin: 0;
+  border: 0;
+  color: var(--text);
   background: rgba(8, 11, 16, 0.96);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  display: flex;
   flex-direction: column;
-  padding: 28px clamp(20px, 6vw, 40px);
+  padding: 0 clamp(20px, 6vw, 40px) 28px;
   gap: 6px;
-  transform: translateY(-12px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   opacity: 0;
-  pointer-events: none;
-  /* Hidden once the fade-out ends, so the closed menu leaves the tab order. */
-  visibility: hidden;
-  transition: opacity 0.28s var(--ease), transform 0.28s var(--ease), visibility 0s linear 0.28s;
+  transform: translateY(-12px);
 }
-.mobile-menu.open { opacity: 1; transform: translateY(0); pointer-events: auto; visibility: visible; transition-delay: 0s; }
-.mobile-menu a {
+.mobile-menu[open] { display: flex; opacity: 1; transform: none; }
+.mobile-menu::backdrop { background: transparent; }
+@media (prefers-reduced-motion: no-preference) {
+  .mobile-menu {
+    transition: opacity 0.28s var(--ease), transform 0.28s var(--ease),
+      display 0.28s allow-discrete, overlay 0.28s allow-discrete;
+  }
+  @starting-style {
+    .mobile-menu[open] { opacity: 0; transform: translateY(-12px); }
+  }
+}
+/* Keep the page from scrolling underneath the open menu. */
+html:has(.mobile-menu[open]) { overflow: hidden; }
+/* Mirrors the nav bar, so the close button sits exactly where the burger was. */
+.mobile-menu-bar {
+  height: var(--nav-h);
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px; /* + the 6px gap = the old 28px top padding */
+  /* Offset the menu's own side padding so the bar lines up with .nav .wrap. */
+  margin-inline: calc(clamp(20px, 5vw, 40px) - clamp(20px, 6vw, 40px));
+}
+.mobile-menu-bar .burger { display: flex; }
+/* Brand link in the menu bar keeps its nav styling. */
+.mobile-menu a:not(.brand) {
   font-family: var(--font-mono);
   font-size: 1.15rem;
   padding: 16px 4px;
@@ -606,17 +643,21 @@ ul { list-style: none; }
   background: var(--bg);
   transition: background 0.25s, box-shadow 0.25s;
 }
-.xp-item.open .xp-body::before { background: var(--accent); box-shadow: 0 0 12px var(--accent-glow); }
+.xp-item:has(details[open]) .xp-body::before { background: var(--accent); box-shadow: 0 0 12px var(--accent-glow); }
 .xp-head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
   cursor: pointer;
+  list-style: none;
+  border-radius: 6px;
 }
+.xp-head::-webkit-details-marker { display: none; }
+.xp-head-text { display: block; }
 .xp-company { font-size: 1.18rem; font-weight: 650; letter-spacing: -0.01em; }
-.xp-prog { font-family: var(--font-mono); font-size: 0.76rem; color: var(--accent); margin-top: 5px; }
-.xp-summary { color: var(--text-muted); font-size: 0.94rem; margin-top: 10px; max-width: 62ch; }
+.xp-prog { display: block; font-family: var(--font-mono); font-size: 0.76rem; color: var(--accent); margin-top: 5px; }
+.xp-summary { display: block; color: var(--text-muted); font-size: 0.94rem; margin-top: 10px; max-width: 62ch; }
 .xp-toggle {
   flex-shrink: 0;
   width: 34px; height: 34px;
@@ -628,16 +669,28 @@ ul { list-style: none; }
   transition: transform 0.3s var(--ease), border-color 0.2s, color 0.2s;
 }
 .xp-head:hover .xp-toggle { border-color: var(--border-accent); color: var(--accent); }
-.xp-item.open .xp-toggle { transform: rotate(45deg); border-color: var(--border-accent); color: var(--accent); }
+details[open] > .xp-head .xp-toggle { transform: rotate(45deg); border-color: var(--border-accent); color: var(--accent); }
 
-.xp-detail {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.4s var(--ease), opacity 0.3s;
+.xp-detail { padding-top: 18px; }
+
+/* Disclosure open/close animation, shared by Experience and FAQ.
+   ::details-content holds the collapsible part of a <details>. Height
+   animates where interpolate-size is supported (Chromium); elsewhere the
+   content still fades in. Without either, it simply opens instantly. */
+:is(.xp-disclosure, .faq-item)::details-content {
+  interpolate-size: allow-keywords;
+  overflow: clip;
+  contain: layout;
+}
+:is(.xp-disclosure, .faq-item):not([open])::details-content {
+  block-size: 0;
   opacity: 0;
 }
-.xp-item.open .xp-detail { grid-template-rows: 1fr; opacity: 1; margin-top: 18px; }
-.xp-detail-inner { overflow: hidden; }
+@media (prefers-reduced-motion: no-preference) {
+  :is(.xp-disclosure, .faq-item)::details-content {
+    transition: block-size 0.4s var(--ease), opacity 0.3s, content-visibility 0.4s allow-discrete;
+  }
+}
 .role { padding: 16px 0; border-top: 1px solid var(--border-soft); }
 .role:first-child { border-top: none; padding-top: 0; }
 .role-title { font-size: 0.98rem; font-weight: 600; }
@@ -921,21 +974,40 @@ a.cinfo:hover .meta .v { color: var(--accent); }
 .footer .fsoc svg { width: 19px; height: 19px; }
 
 /* ============================================================
-   SCROLL REVEAL  (enhancement only — content is visible by
-   default; hiding is applied via html.anim which JS removes
-   if the animation clock isn't advancing)
+   SCROLL REVEAL  (CSS only, progressive enhancement)
+   Content is visible by default. Below the hero, each .reveal fades
+   in as it scrolls into view, driven by a view() timeline. Browsers
+   without scroll-driven animations simply show the content.
+   The hero, already on screen at load, plays a one-time intro.
    ============================================================ */
-.reveal { opacity: 1; }
-html.anim .reveal {
-  opacity: 0;
-  transform: translateY(26px);
-  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+@keyframes reveal-in {
+  from { opacity: 0; transform: translateY(26px); }
 }
-html.anim .reveal.in { opacity: 1; transform: none; }
-html.anim .reveal[data-d="1"] { transition-delay: 0.08s; }
-html.anim .reveal[data-d="2"] { transition-delay: 0.16s; }
-html.anim .reveal[data-d="3"] { transition-delay: 0.24s; }
-html.anim .reveal[data-d="4"] { transition-delay: 0.32s; }
+@media (prefers-reduced-motion: no-preference) {
+  .hero .reveal {
+    animation: reveal-in 0.7s var(--ease) both;
+  }
+  .hero .reveal[data-d="1"] { animation-delay: 0.08s; }
+  .hero .reveal[data-d="2"] { animation-delay: 0.16s; }
+  .hero .reveal[data-d="3"] { animation-delay: 0.24s; }
+  .hero .reveal[data-d="4"] { animation-delay: 0.32s; }
+
+  @supports ((animation-timeline: view()) and (animation-range: entry)) {
+    .reveal:not(.hero .reveal) {
+      animation: reveal-in linear both;
+      /* Declared after the shorthand, which would otherwise reset them. */
+      animation-timeline: view();
+      /* Fully revealed once its top edge is ~200px inside the viewport,
+         so tall cards don't stay half-faded. */
+      animation-range: entry 0% entry 200px;
+    }
+    /* Stagger sibling cards by starting each one a little later. */
+    .reveal[data-d="1"]:not(.hero .reveal) { animation-range: entry 24px entry 224px; }
+    .reveal[data-d="2"]:not(.hero .reveal) { animation-range: entry 48px entry 248px; }
+    .reveal[data-d="3"]:not(.hero .reveal) { animation-range: entry 72px entry 272px; }
+    .reveal[data-d="4"]:not(.hero .reveal) { animation-range: entry 96px entry 296px; }
+  }
+}
 
 /* ============================================================
    RESPONSIVE

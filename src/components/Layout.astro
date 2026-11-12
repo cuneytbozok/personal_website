@@ -19,6 +19,8 @@ const { title, description } = Astro.props;
   <div class="bg-field"></div>
   <div class="bg-grid"></div>
 
+  <!-- Scrolling past this marker gives the nav its solid "scrolled" style. -->
+  <div class="nav-sentinel" id="navSentinel" aria-hidden="true"></div>
   <Nav />
   <MobileMenu />
   <SocialRail />
@@ -33,23 +35,6 @@ const { title, description } = Astro.props;
 <script>
   (function () {
     'use strict';
-
-    /* ---------- experience expand/collapse ---------- */
-    function initExperience() {
-      document.querySelectorAll('.xp-head').forEach(function (head) {
-        var toggle = function () {
-          var item = head.closest('.xp-item');
-          if (!item) return;
-          var willOpen = !item.classList.contains('open');
-          item.classList.toggle('open', willOpen);
-          head.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
-        };
-        head.addEventListener('click', toggle);
-        head.addEventListener('keydown', function (e) {
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
-        });
-      });
-    }
 
     /* ---------- orbit connectors: keep the dashed lines attached to each
        node's dot at any viewport size (node chips don't scale with the
@@ -80,114 +65,100 @@ const { title, description } = Astro.props;
           paths[i].setAttribute('d', 'M' + x.toFixed(1) + ' ' + y.toFixed(1) + ' L230 230');
         });
       };
-      // Redraw on the next frame so measurement happens after layout settles.
-      var raf;
-      var schedule = function () {
-        if (raf) cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(draw);
-      };
-      schedule();
-      setTimeout(draw, 250);                 // catch late reflows / font swaps
-      window.addEventListener('resize', schedule, { passive: true });
-      window.addEventListener('orientationchange', schedule, { passive: true });
-      window.addEventListener('load', schedule);
+      // Redraw whenever the graphic changes size (also fires once on observe),
+      // and once fonts settle, since chip widths depend on them.
+      new ResizeObserver(draw).observe(orbit);
+      window.addEventListener('load', draw);
       if (document.fonts && document.fonts.ready) { document.fonts.ready.then(draw); }
     }
 
-    /* ---------- scroll engine: drives nav state, reveals, active link ---------- */
-    var scrollSubs = [];
-    function onScrollTick() { for (var i = 0; i < scrollSubs.length; i++) scrollSubs[i](); }
-    function startScrollEngine() {
-      var ticking = false;
-      var handler = function () {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(function () { onScrollTick(); ticking = false; });
-      };
-      window.addEventListener('scroll', handler, { passive: true });
-      window.addEventListener('resize', handler, { passive: true });
-      window.addEventListener('load', onScrollTick);
-      onScrollTick();
+    /* ---------- nav "scrolled" state: observe a 24px marker at the top
+       of the page instead of listening to every scroll event ---------- */
+    function initNavState() {
+      var nav = document.getElementById('nav');
+      var sentinel = document.getElementById('navSentinel');
+      if (!nav || !sentinel) return;
+      new IntersectionObserver(function (entries) {
+        nav.classList.toggle('scrolled', !entries[0].isIntersecting);
+      }).observe(sentinel);
     }
 
-    /* ---------- nav scroll state + active section ---------- */
-    function initNav() {
-      var nav = document.getElementById('nav');
-      if (!nav) return;
+    /* ---------- scrollspy: highlight the nav link of the section in view.
+       Where CSS can track it natively (scroll-target-group + :target-current)
+       the browser handles the visuals and we only mirror aria-current.
+       Elsewhere an IntersectionObserver drives both. ---------- */
+    function initScrollspy() {
       var links = Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
-      var sections = links.map(function (a) { return document.getElementById(a.getAttribute('data-sec')); });
-
-      scrollSubs.push(function () {
-        nav.classList.toggle('scrolled', window.scrollY > 24);
-        var mid = window.scrollY + window.innerHeight * 0.4;
-        var activeId = null;
-        for (var i = 0; i < sections.length; i++) {
-          var s = sections[i];
-          if (!s) continue;
-          if (mid >= s.offsetTop) activeId = s.id;
-        }
+      if (!links.length) return;
+      var setCurrent = function (activeLink) {
         links.forEach(function (a) {
-          var isActive = a.getAttribute('data-sec') === activeId;
+          var isActive = a === activeLink;
           a.classList.toggle('active', isActive);
-          // Mirror the visual state for assistive technology.
           if (isActive) a.setAttribute('aria-current', 'true');
           else a.removeAttribute('aria-current');
         });
+      };
+
+      if (CSS.supports('scroll-target-group: auto')) {
+        var sync = function () {
+          var current = null;
+          links.forEach(function (a) { if (a.matches(':target-current')) current = a; });
+          setCurrent(current);
+        };
+        window.addEventListener('scrollend', sync);
+        window.addEventListener('load', sync);
+        sync();
+        return;
+      }
+
+      // Sections without a nav link (e.g. AssistMe) keep the previous link
+      // highlighted; the hero, before any linked section, highlights none.
+      var linkFor = {};
+      links.forEach(function (a) { linkFor[a.getAttribute('data-sec')] = a; });
+      var sections = Array.prototype.slice.call(document.querySelectorAll('main section[id]'));
+      var owner = new Map();
+      var last = null;
+      sections.forEach(function (sec) {
+        if (linkFor[sec.id]) last = linkFor[sec.id];
+        owner.set(sec, last);
       });
+      // A thin band 40% down the viewport: whichever section crosses it is current.
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) setCurrent(owner.get(e.target) || null);
+        });
+      }, { rootMargin: '-40% 0px -59% 0px' });
+      sections.forEach(function (sec) { io.observe(sec); });
     }
 
-    /* ---------- mobile menu ---------- */
+    /* ---------- mobile menu: a modal <dialog>. The browser handles Escape,
+       focus containment, inert background and focus return. ---------- */
     function initMobile() {
       var burger = document.getElementById('burger');
       var menu = document.getElementById('mobileMenu');
-      if (!burger || !menu) return;
-      var setOpen = function (open) {
-        burger.classList.toggle('open', open);
-        menu.classList.toggle('open', open);
-        burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-        document.body.style.overflow = open ? 'hidden' : '';
-      };
-      burger.addEventListener('click', function () { setOpen(!menu.classList.contains('open')); });
-      menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && menu.classList.contains('open')) { setOpen(false); burger.focus(); }
+      var close = document.getElementById('mobileMenuClose');
+      if (!burger || !menu || typeof menu.showModal !== 'function') return;
+      burger.addEventListener('click', function () {
+        menu.showModal();
+        burger.setAttribute('aria-expanded', 'true');
+      });
+      menu.addEventListener('close', function () { burger.setAttribute('aria-expanded', 'false'); });
+      if (close) close.addEventListener('click', function () { menu.close(); });
+      menu.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () { menu.close(); });
+      });
+      // Close it if the viewport grows past the burger breakpoint.
+      window.matchMedia('(min-width: 1101px)').addEventListener('change', function (e) {
+        if (e.matches && menu.open) menu.close();
       });
     }
 
-    /* ---------- scroll reveal (rect-based, IO-independent) ---------- */
-    function inViewport(el, margin) {
-      var r = el.getBoundingClientRect();
-      var vh = window.innerHeight || document.documentElement.clientHeight;
-      return r.top < vh - (margin || 0) && r.bottom > 0;
-    }
-    function initReveal() {
-      var els = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
-      var armed = document.documentElement.classList.contains('anim');
-      var reveal = function (el) {
-        el.classList.add('in');
-        if (!armed) return;
-        // Failsafe: if the transition never completes, force the final state.
-        setTimeout(function () {
-          if (parseFloat(getComputedStyle(el).opacity) < 0.9) {
-            el.style.transition = 'none';
-            el.style.opacity = '1';
-            el.style.transform = 'none';
-          }
-        }, 900);
-      };
-      scrollSubs.push(function () {
-        for (var i = els.length - 1; i >= 0; i--) {
-          if (inViewport(els[i], 40)) { reveal(els[i]); els.splice(i, 1); }
-        }
-      });
-    }
-
-    /* ---------- count-up stats (rect-based trigger) ----------
+    /* ---------- count-up stats ----------
        The server-rendered HTML holds the real final value so crawlers and
        no-JS visitors see it. It is left untouched until the stat scrolls into
        view, so JS-rendering readers that never scroll still get real values. */
     function initCounters() {
-      var nums = Array.prototype.slice.call(document.querySelectorAll('[data-count]'));
+      var nums = document.querySelectorAll('[data-count]');
       if (!nums.length) return;
       var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var run = function (el) {
@@ -205,21 +176,22 @@ const { title, description } = Astro.props;
         requestAnimationFrame(step);
         setTimeout(function () { if (!done) el.textContent = target + suffix; }, 1600);
       };
-      scrollSubs.push(function () {
-        for (var i = nums.length - 1; i >= 0; i--) {
-          if (inViewport(nums[i], 60)) { run(nums[i]); nums.splice(i, 1); }
-        }
-      });
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          io.unobserve(e.target);
+          run(e.target);
+        });
+      }, { rootMargin: '0px 0px -60px 0px' });
+      nums.forEach(function (el) { io.observe(el); });
     }
 
     function init() {
       initOrbit();
-      initExperience();
-      initNav();
+      initNavState();
+      initScrollspy();
       initMobile();
-      initReveal();
       initCounters();
-      startScrollEngine();
     }
 
     if (document.readyState === 'loading') {

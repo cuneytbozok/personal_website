@@ -63,20 +63,6 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, siteConfig.siteUrl
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
       />
     </noscript>
-    <script is:inline>
-      /* Arm reveal animations before first paint (avoids FOUC).
-         A rAF probe disarms them if the animation clock isn't advancing
-         so content can never get stuck hidden. */
-      (function () {
-        var html = document.documentElement;
-        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        html.className += ' anim';
-        var frames = 0, ok = false;
-        function tick() { frames++; if (frames >= 2) ok = true; else requestAnimationFrame(tick); }
-        requestAnimationFrame(tick);
-        setTimeout(function () { if (!ok) html.classList.remove('anim'); }, 650);
-      })();
-    </script>
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'ProfilePage',

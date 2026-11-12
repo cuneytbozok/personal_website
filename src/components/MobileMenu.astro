@@ -9,7 +9,16 @@ const links = [
 ];
 ---
 
-<div class="mobile-menu" id="mobileMenu">
+<dialog class="mobile-menu" id="mobileMenu" aria-label="Menu">
+  <div class="mobile-menu-bar">
+    <a href="#hero" class="brand">
+      <span class="mark">CB</span>
+      <span>Cüneyt Bozok</span>
+    </a>
+    <button class="burger open" id="mobileMenuClose" type="button" aria-label="Close menu" autofocus>
+      <span></span><span></span><span></span>
+    </button>
+  </div>
   {links.map((l) => (
     <a href={`#${l.sec}`}><span class="ix">{l.ix}</span> {l.label}</a>
   ))}
@@ -25,4 +34,4 @@ const links = [
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
     </a>
   </div>
-</div>
+</dialog>
