@@ -548,9 +548,7 @@ html:has(.mobile-menu[open]) { overflow: hidden; }
    ============================================================ */
 .about-grid {
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 28px;
-  align-items: stretch;
+  gap: 16px;
 }
 .card {
   background: linear-gradient(160deg, var(--surface-1), var(--surface-2));
@@ -560,40 +558,45 @@ html:has(.mobile-menu[open]) { overflow: hidden; }
   overflow: hidden;
 }
 .about-lead {
-  padding: clamp(24px, 3.4vw, 38px);
+  padding: clamp(24px, 3.4vw, 40px);
+  display: grid;
+  grid-template-columns: minmax(min-content, 0.7fr) 1.3fr;
+  gap: clamp(28px, 4.5vw, 60px);
 }
-.about-lead .heading {
-  display: flex; align-items: center; gap: 13px;
-  margin-bottom: 20px;
+.about-body {
+  padding-left: clamp(28px, 4.5vw, 60px);
+  border-left: 1px solid var(--border);
 }
-.about-lead .heading .ic {
-  width: 42px; height: 42px;
-  flex-shrink: 0;
-  display: grid; place-items: center;
-  border-radius: 10px;
-  background: var(--accent-dim);
-  border: 1px solid var(--border-accent);
-  color: var(--accent);
+.about-lead h3 {
+  font-size: 1.18rem; font-weight: 650; letter-spacing: -0.01em;
+  margin-bottom: 16px;
+  white-space: nowrap;
 }
-.about-lead .heading h3 { font-size: 1.18rem; font-weight: 650; letter-spacing: -0.01em; }
 .about-lead p { color: var(--text-muted); font-size: 0.96rem; margin-bottom: 14px; }
 .about-lead p:last-child { margin-bottom: 0; }
+.about-lead .entity-lead {
+  color: var(--text);
+  font-size: clamp(1.02rem, 1.5vw, 1.14rem);
+  line-height: 1.6;
+}
 
 .stats {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
 }
 .stat {
-  padding: clamp(18px, 2.4vw, 26px);
+  padding: 16px 18px;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  gap: 14px;
   transition: transform 0.25s var(--ease), border-color 0.25s;
 }
-.stat:hover { transform: translateY(-4px); border-color: var(--border-accent); }
+.stat:hover { transform: translateY(-3px); border-color: var(--border-accent); }
+.stat .meta { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
 .stat .ic {
   width: 40px; height: 40px;
+  flex-shrink: 0;
   display: grid; place-items: center;
   border-radius: 10px;
   border: 1px solid currentColor;
@@ -604,13 +607,13 @@ html:has(.mobile-menu[open]) { overflow: hidden; }
 .stat.amber  .ic { color: var(--hue-amber);  background: oklch(0.78 0.13 78 / 0.12); }
 .stat.rose   .ic { color: var(--hue-rose);   background: oklch(0.74 0.13 18 / 0.12); }
 .stat .val {
-  font-size: clamp(1.9rem, 3.4vw, 2.5rem);
+  font-size: 1.6rem;
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1;
   color: var(--text);
 }
-.stat .lbl { font-size: 0.85rem; color: var(--text-muted); }
+.stat .lbl { font-size: 0.82rem; line-height: 1.3; color: var(--text-muted); }
 
 /* ============================================================
    EXPERIENCE
@@ -1024,7 +1027,10 @@ a.cinfo:hover .meta .v { color: var(--accent); }
   .burger { display: flex; }
   .hero .wrap { grid-template-columns: 1fr; }
   .orbit { max-width: 340px; margin: 12px auto 0; }
-  .about-grid { grid-template-columns: 1fr; }
+  .about-lead { grid-template-columns: 1fr; }
+  .about-lead h3 { white-space: normal; }
+  .about-body { padding-left: 0; border-left: 0; }
+  .stats { grid-template-columns: 1fr 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
   .eng-grid { grid-template-columns: 1fr; }
   .cert-wrap { grid-template-columns: 1fr; gap: 30px; }

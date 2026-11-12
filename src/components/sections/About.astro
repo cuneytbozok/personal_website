@@ -11,7 +11,7 @@ const stats = [
     count: yearsExperience,
     suffix: '+',
     label: 'Years Experience',
-    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
   },
   {
     tone: 'teal',
@@ -25,14 +25,14 @@ const stats = [
     count: 20,
     suffix: '+',
     label: 'Integrations & APIs',
-    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7V5a2 2 0 0 1 2-2h2"/><path d="M16 3h2a2 2 0 0 1 2 2v2"/><path d="M20 17v2a2 2 0 0 1-2 2h-2"/><path d="M8 21H6a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3"/><path d="m15 9 3-3M9 15l-3 3"/></svg>',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-5"/><path d="M9 8V2M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8z"/></svg>',
   },
   {
     tone: 'rose',
     count: 9,
     suffix: '',
     label: 'Industries',
-    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg>',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4M10 10h4M10 14h4M10 18h4"/></svg>',
   },
 ];
 ---
@@ -46,23 +46,24 @@ const stats = [
     </div>
     <div class="about-grid">
       <div class="card about-lead reveal">
-        <div class="heading">
-          <span class="ic">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/><path d="M3 12h18"/></svg>
-          </span>
+        <div class="about-intro">
           <h3>Strategy. Architecture. Impact.</h3>
+          <p class="entity-lead">I'm a Lead ServiceNow Developer at EPAM Systems, based in Istanbul, Türkiye, working across solution architecture, client discovery, and pre-sales. Since 2017 I've delivered ITSM, CSM/SOM, ITOM, CMDB/CSDM, Virtual Agent, API integrations, and AI enablement with Now Assist and Agentic AI.</p>
         </div>
-        <p class="entity-lead">I'm a Lead ServiceNow Developer at EPAM Systems, based in Istanbul, Türkiye, working across solution architecture, client discovery, and pre-sales. Since 2017 I've delivered ITSM, CSM/SOM, ITOM, CMDB/CSDM, Virtual Agent, API integrations, and AI enablement with Now Assist and Agentic AI.</p>
-        <p>I help enterprises turn business needs into practical technology decisions, solution architectures, and phased transformation roadmaps. I work with business and technical stakeholders to assess current capabilities, identify improvement opportunities, and communicate recommendations, risks, and implementation priorities.</p>
-        <p>Hands-on delivery experience keeps my recommendations practical. It helps me evaluate platform constraints, integration dependencies, data quality, and the trade-offs between standard capabilities and customization. I use that experience to help stakeholders make informed technology decisions and give engineering teams clear direction.</p>
-        <p>I also run internal ServiceNow trainings, facilitate architecture workshops with integrators and vendors, and take part in senior-level technical interviews.</p>
+        <div class="about-body">
+          <p>I help enterprises turn business needs into practical technology decisions, solution architectures, and phased transformation roadmaps. I work with business and technical stakeholders to assess current capabilities, identify improvement opportunities, and communicate recommendations, risks, and implementation priorities.</p>
+          <p>Hands-on delivery experience keeps my recommendations practical. It helps me evaluate platform constraints, integration dependencies, data quality, and the trade-offs between standard capabilities and customization. I use that experience to help stakeholders make informed technology decisions and give engineering teams clear direction.</p>
+          <p>I also run internal ServiceNow trainings, facilitate architecture workshops with integrators and vendors, and take part in senior-level technical interviews.</p>
+        </div>
       </div>
       <div class="stats">
         {stats.map((s, i) => (
           <div class={`card stat ${s.tone} reveal`} data-d={i + 1}>
             <span class="ic" set:html={s.icon} />
-            <span class="val" data-count={s.count} data-suffix={s.suffix}>{s.count}{s.suffix}</span>
-            <span class="lbl">{s.label}</span>
+            <span class="meta">
+              <span class="val" data-count={s.count} data-suffix={s.suffix}>{s.count}{s.suffix}</span>
+              <span class="lbl">{s.label}</span>
+            </span>
           </div>
         ))}
       </div>
